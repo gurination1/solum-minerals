@@ -214,14 +214,15 @@ img, svg {
 .icon-menu {
   justify-content: center;
   align-items: center;
-  width: 0.95em;
-  height: 0.95em;
+  width: 1.05em;
+  height: 1.05em;
   margin-top: 0;
   display: flex;
   position: relative;
   flex-shrink: 0;
   overflow: visible;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center center;
 }
 
 .icon-menu svg {
@@ -247,7 +248,33 @@ img, svg {
 }
 
 .menu-btn-wrap:hover .icon-menu {
-  transform: scale(1.08);
+  transform: scale(1.18);
+}
+
+.menu-btn-wrap.is-bloomed .icon-menu {
+  transform: rotate(90deg) scale(1.15);
+}
+
+.menu-btn-wrap.pulse-click .icon-menu {
+  animation: cleverIconPulse 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cleverIconPulse {
+  0% { transform: scale(1) rotate(0deg); }
+  35% { transform: scale(1.4) rotate(-18deg); }
+  70% { transform: scale(0.9) rotate(104deg); }
+  100% { transform: scale(1.15) rotate(90deg); }
+}
+
+.menu-btn-wrap.pulse-click-reverse .icon-menu {
+  animation: cleverIconPulseRev 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cleverIconPulseRev {
+  0% { transform: scale(1.15) rotate(90deg); }
+  35% { transform: scale(1.35) rotate(108deg); }
+  70% { transform: scale(0.88) rotate(-12deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .menu-text {
@@ -284,14 +311,14 @@ img, svg {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2em;
+  height: 2.85em;
 }
 
 .logo-header.web svg,
 .logo-inside-wrap svg {
-  height: 1.8em;
+  height: 2.5em;
   width: auto;
-  max-width: 8.5em;
+  max-width: 13.5em;
   display: block;
 }
 
@@ -1266,8 +1293,13 @@ img, svg {
     display: none !important;
   }
 
+  .logo-header.web {
+    height: 2.4em;
+  }
+
   .logo-header.web svg {
-    height: 1.5em;
+    height: 2.1em;
+    max-width: 12em;
     width: auto;
   }
 
@@ -2866,19 +2898,83 @@ img, svg {
 }
 
 .fiels-trial-box-info {
-  z-index:1;grid-column-gap:.75em;grid-row-gap:.75em;background-color:var(--beige);flex-flow:column;width:15.8em;height:15.5em;padding:0;display:flex;position:absolute;inset:0% 0% auto auto
+  z-index: 2;
+  grid-column-gap: .75em;
+  grid-row-gap: .75em;
+  background-color: #596a33;
+  color: #ffffff !important;
+  flex-flow: column;
+  width: 15.8em;
+  height: 15.5em;
+  padding: 0;
+  display: flex;
+  position: absolute;
+  inset: 0% 0% auto auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+.fiels-trial-box-info.first {
+  background-color: #7c914c !important;
+  color: #ffffff !important;
 }
 
 .fiels-trial-box-info.second {
-  top:15.55em;right:15.9em
+  background-color: #596a33 !important;
+  color: #ffffff !important;
+  top: 15.55em;
+  right: 15.9em;
 }
 
-.text-27-regular {
-  color:#4c5b20;letter-spacing:-.01em;margin-top:0;margin-bottom:0;font-family:Aeonik,Arial,sans-serif;font-size:1.69em;font-weight:500;line-height:120%
+.fiels-trial-box-info--inside {
+  grid-column-gap: .75em;
+  grid-row-gap: .75em;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+  padding: 1.5em;
+  display: flex;
+  color: #ffffff !important;
 }
 
-.text-27-regular.h-100 {
-  line-height:110%
+.fiels-trial-box-info .next-update,
+.fiels-trial-box-info .div-block-4 {
+  color: #ffffff !important;
+}
+
+.fiels-trial-box-info .text-27-regular {
+  color: #ffffff !important;
+  letter-spacing: -.01em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Aeonik, Arial, sans-serif;
+  font-size: 1.69em;
+  font-weight: 500;
+  line-height: 120%;
+  display: block !important;
+}
+
+.fiels-trial-box-info .text-27-regular-mobile {
+  display: none !important;
+}
+
+.fiels-trial-box-info .text-27-regular.h-100 {
+  line-height: 110%;
+}
+
+.fiels-trial-box-info .text-14-caps,
+.fiels-trial-box-info .sub-heading-white,
+.fiels-trial-box-info .text-14-caps.green,
+.fiels-trial-box-info .text-14-caps.mobile-white,
+.sub-heading-white {
+  color: #ffffff !important;
+  font-size: 0.88em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 140%;
+  opacity: 0.95 !important;
+  display: block !important;
 }
 
 .community-hero {
@@ -3723,15 +3819,25 @@ img, svg {
   }
 
   .fiels-trial-box-info.first {
-    background-color:#7c914c;width:50vw;height:11.38em;display:flex;inset:-11.38em auto auto 0%
+    background-color:#7c914c !important;width:50vw;height:11.38em;display:flex !important;inset:-11.38em auto auto 0% !important;border:none;box-shadow:none;
   }
 
   .fiels-trial-box-info.second {
-    background-color:#596a33;width:50vw;height:11.38em;display:flex;inset:-11.38em 0% auto auto
+    background-color:#596a33 !important;width:50vw;height:11.38em;display:flex !important;inset:-11.38em 0% auto auto !important;border:none;box-shadow:none;
   }
 
-  .text-27-regular {
-    color:#fff;font-size:1.3em;line-height:105%;display:none
+  .fiels-trial-box-info .text-27-regular-mobile {
+    color:#fff !important;font-size:1.3em;line-height:105%;display:block !important;
+  }
+
+  .fiels-trial-box-info .text-27-regular {
+    color:#fff !important;font-size:1.3em;line-height:105%;display:none !important;
+  }
+
+  .fiels-trial-box-info .text-14-caps,
+  .fiels-trial-box-info .sub-heading-white,
+  .sub-heading-white {
+    color:#fff !important;font-size:.8em;display:block !important;opacity:1 !important;
   }
 
   .community-hero {
@@ -3984,12 +4090,20 @@ img, svg {
     background-color:#596a33;width:50vw;height:11.38em;display:flex;inset:-11.38em 0% auto auto
   }
 
-  .text-14-caps-2.green.mobile-white {
-    color:#fff;font-size:.8em;display:none
+  .text-14-caps-2.green.mobile-white,
+  .text-14-caps.green.mobile-white,
+  .text-14-caps.mobile-white,
+  .sub-heading-white {
+    color: #ffffff !important;
+    font-size: .8em;
+    display: block !important;
+    opacity: 1 !important;
   }
 
-  .text-14-caps-2.green.mobile-white.without-animation {
-    display:block
+  .text-14-caps-2.green.mobile-white.without-animation,
+  .text-14-caps.green.mobile-white.without-animation {
+    display: block !important;
+    color: #ffffff !important;
   }
 
   .text-14-caps-2.green.xx {
