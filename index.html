@@ -503,6 +503,117 @@
         </div>
       </div>
     </section>
+
+    <!-- ========================================================================
+         Section 5: Cleaner for the Planet — Without the Carbon Cost (#s-carbon)
+         ======================================================================== -->
+    <section class="carbon-cost" id="s-carbon">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="carbon-cost-wrap">
+          <div class="carbon-content">
+            <h2 class="h2-style green" text-split="">
+              Cleaner for the Planet — Without the&nbsp;Carbon Cost
+            </h2>
+            <div class="carbon-description">
+              <div class="text-18-caps">
+                Most ag companies pay to offset their emissions.<br /><br />
+                With SOLUM Minerals, you don’t have to. Our fertilizers are made clean from the start — so you can lower your footprint without buying credits or paying compliance fees.
+              </div>
+              <a href="#apply-form" class="btn-green w-inline-block" id="carbon-learn-more-btn" apply="open">
+                <div class="btn-content">
+                  <img src="assets/green_dot.svg" loading="lazy" alt="" class="dot-icon left" aria-hidden="true" />
+                  <div class="text-16-regular-caps green">learn more</div>
+                  <img src="assets/green_dot.svg" loading="lazy" alt="" class="dot-icon right" aria-hidden="true" />
+                </div>
+                <div class="btn-background green"></div>
+              </a>
+            </div>
+          </div>
+          <div class="w-layout-vflex potato-wrap">
+            <img src="assets/carbon.webp" loading="eager" sizes="100vw" alt="Sustainable Carbon Agriculture" class="potato-img" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Section 6: For Better Plants. For Healthier Animals. (#products)
+         ======================================================================== -->
+    <section class="products" id="products">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="products-wrap">
+          <div class="products-heading-wrap">
+            <div class="products-heading">
+              <h2 class="h2-style green" text-split="">
+                For Better Plants.<br />
+                For Healthier Animals.
+              </h2>
+            </div>
+          </div>
+          <div class="products-items">
+            <!-- Product 1: CropTab -->
+            <a href="#apply-form" class="product-item product-1 w-inline-block" apply="open">
+              <img src="assets/croptab_npk.webp" loading="eager" alt="CropTab™ NPK" class="product-image" />
+              <div class="product-description">
+                <div class="_w-336">
+                  <h3 class="text-32-regular">CropTab™ NPK</h3>
+                  <div class="text-16-regular-caps">
+                    High-performance macronutrient fertilizers powered by zero-emission carbon capsule technology.
+                  </div>
+                </div>
+              </div>
+              <div class="product-link" aria-label="Explore CropTab NPK">
+                <div class="arrow w-embed">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.7627 11.5605H10.3623V3.25098L1.55762 12.0557L0.567383 11.0654L9.37207 2.26074H1.0625V0.860352H11.7627V11.5605Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+            </a>
+
+            <!-- Product 2: NutriPeak -->
+            <a href="#apply-form" class="product-item product-2 w-inline-block" apply="open">
+              <img src="assets/nutripeak_npk.webp" loading="eager" alt="NutriPeak™ Micronutrient Fertilizers" class="product-image" />
+              <div class="product-description">
+                <div class="_w-400">
+                  <h3 class="text-32-regular">NutriPeak™<br />Micronutrient Fertilizers</h3>
+                  <div class="text-16-regular-caps">
+                    Liquid supplements work alongside your main fertilizer to address specific nutrient needs — for stronger growth, even in tough soil.
+                  </div>
+                </div>
+              </div>
+              <div class="product-link" aria-label="Explore NutriPeak Micronutrient Fertilizers">
+                <div class="arrow w-embed">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.7627 11.5605H10.3623V3.25098L1.55762 12.0557L0.567383 11.0654L9.37207 2.26074H1.0625V0.860352H11.7627V11.5605Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+            </a>
+
+            <!-- Product 3: ElevateFeed -->
+            <a href="#apply-form" class="product-item product-3 w-inline-block" apply="open">
+              <img src="assets/elevatefeed.webp" loading="eager" alt="ElevateFeed™ Feed Additives" class="product-image" />
+              <div class="product-description">
+                <div class="_w-380">
+                  <h3 class="text-32-regular">ElevateFeed™<br />Feed Additives</h3>
+                  <div class="text-16-regular-caps">
+                    Smart nutrition for livestock. Boosts animal health and farm productivity — clean, effective, and easy to use.
+                  </div>
+                </div>
+              </div>
+              <div class="product-link" aria-label="Explore ElevateFeed Feed Additives">
+                <div class="arrow w-embed">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.7627 11.5605H10.3623V3.25098L1.55762 12.0557L0.567383 11.0654L9.37207 2.26074H1.0625V0.860352H11.7627V11.5605Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ========================================================================
@@ -1301,6 +1412,112 @@
             }
           );
         });
+
+        // ====================================================================
+        // Section 5: Cleaner for the Planet — Without the Carbon Cost (#s-carbon)
+        // ====================================================================
+        const carbonSec = document.querySelector('#s-carbon');
+        if (carbonSec) {
+          const carbonH2 = carbonSec.querySelector('h2');
+          if (carbonH2) {
+            const splitCarbonH2 = new SplitText(carbonH2, { type: "chars, words" });
+            gsap.fromTo(splitCarbonH2.chars,
+              { autoAlpha: 0 },
+              {
+                autoAlpha: 1,
+                duration: 0.5,
+                ease: "power2.out",
+                stagger: { each: 0.015, from: "random" },
+                scrollTrigger: {
+                  trigger: carbonSec,
+                  start: "top 75%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+          }
+
+          const carbonDesc = carbonSec.querySelector('.carbon-description');
+          if (carbonDesc) {
+            gsap.fromTo(carbonDesc,
+              { y: 35, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.7,
+                delay: 0.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: carbonSec,
+                  start: "top 70%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+          }
+
+          const potatoImg = carbonSec.querySelector('.potato-img');
+          if (potatoImg) {
+            gsap.fromTo(potatoImg,
+              { y: "-8%" },
+              {
+                y: "8%",
+                ease: "none",
+                scrollTrigger: {
+                  trigger: carbonSec,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 1.2
+                }
+              }
+            );
+          }
+        }
+
+        // ====================================================================
+        // Section 6: For Better Plants. For Healthier Animals. (#products)
+        // ====================================================================
+        const productsSec = document.querySelector('#products');
+        if (productsSec) {
+          const prodH2 = productsSec.querySelector('h2');
+          if (prodH2) {
+            const splitProdH2 = new SplitText(prodH2, { type: "words, lines", linesClass: "split-line" });
+            gsap.fromTo(splitProdH2.words,
+              { y: "100%", opacity: 0 },
+              {
+                y: "0%",
+                opacity: 1,
+                duration: 0.75,
+                stagger: 0.025,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: productsSec,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+          }
+
+          const productItems = productsSec.querySelectorAll('.product-item');
+          if (productItems.length) {
+            gsap.fromTo(productItems,
+              { y: 60, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: productsSec.querySelector('.products-items') || productsSec,
+                  start: "top 82%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+          }
+        }
 
       }
     })();
