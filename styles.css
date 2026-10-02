@@ -842,7 +842,7 @@ img, svg {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: logos-marquee 14s linear infinite;
+  animation: logos-marquee 18.3s linear infinite;
   will-change: transform;
 }
 
@@ -1333,7 +1333,7 @@ img, svg {
   }
 
   .logos-marquee {
-    animation-duration: 12s;
+    animation-duration: 16s;
   }
 
   /* Second Section Responsive (Matches Webflow Architecture) */
@@ -1436,7 +1436,7 @@ img, svg {
   }
 
   .logos-marquee {
-    animation-duration: 10s;
+    animation-duration: 14s;
   }
 
   .most-fertilizers-mobile {
