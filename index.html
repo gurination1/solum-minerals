@@ -341,7 +341,7 @@
           <div class="capsule-start-text">
             <div class="capsule-heading">
               <div class="capsule-first-heading">
-                <h2 text-split-delay="0.5" class="h2-style beige">How much could you grow — if nothing was wasted?</h2>
+                <h2 class="h2-style beige">How much could you grow — if nothing was wasted?</h2>
               </div>
               <div class="capsule-second-heading step-2-mobile new">
                 <div class="capsule-second-heading-wrap">
@@ -364,7 +364,7 @@
             <div class="capsule-second-block">
               <div class="capsule-second-heading">
                 <div class="capsule-second-heading-wrap">
-                  <h2 text-split-delay="0.5" class="h2-style beige">We found a&nbsp;better way</h2>
+                  <h2 class="h2-style beige">We found a&nbsp;better way</h2>
                   <div animate="better-way" class="text-16-regular-caps">
                     Meet SolumTab™. Powered by precision-engineered carbon capsules, it marks the first major innovation in fertilizers in over 35 years.
                   </div>
@@ -868,39 +868,7 @@
             }
           });
 
-          // Heading 1 & Heading 2 scroll crossfade (Webflow t-893abf6b)
-          const firstHeading = document.querySelector('.capsule-first-heading');
-          const secondHeadingDesktop = document.querySelector('.capsule-second-block .capsule-second-heading');
-          if (firstHeading) {
-            gsap.to(firstHeading, {
-              opacity: 0,
-              ease: 'power1.out',
-              scrollTrigger: {
-                trigger: '#s-capsule',
-                start: 'top top',
-                end: '22% top',
-                scrub: 0.5
-              }
-            });
-          }
-          if (secondHeadingDesktop) {
-            gsap.fromTo(secondHeadingDesktop,
-              { opacity: 0, y: 25 },
-              {
-                opacity: 1,
-                y: 0,
-                ease: 'power1.out',
-                scrollTrigger: {
-                  trigger: '#s-capsule',
-                  start: '20% top',
-                  end: '32% top',
-                  scrub: 0.5
-                }
-              }
-            );
-          }
-
-          // Bento Feature Cards Stagger & Delivery Steps handled below in Typography section
+          // Bento Feature Cards Stagger & Delivery Steps handled below in Section 3 section
         }
       }
 
@@ -911,13 +879,13 @@
         function createScrollTrigger(triggerElement, timeline) {
           ScrollTrigger.create({
             trigger: triggerElement,
-            start: "top bottom",
+            start: "top 95%",
+            onEnter: () => timeline.play(),
+            onEnterBack: () => timeline.play()
           });
-          ScrollTrigger.create({
-            trigger: triggerElement,
-            start: "top 90%",
-            onEnter: () => timeline.play()
-          });
+          if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.isInViewport(triggerElement, 0.15)) {
+            timeline.play();
+          }
         }
 
         // [text-split]: Character scramble/randomize dissolve on entering viewport
@@ -978,49 +946,6 @@
           cardSplits.push({ el, split });
         });
 
-        // Synchronized Bento Cards + Masked Words Entrance (Webflow t-8164b887 & t-b51a3b60)
-        const cardsWrap = document.querySelector('.capsule-cards-wrap');
-        if (cardsWrap) {
-          const bentoTL = gsap.timeline({
-            scrollTrigger: {
-              trigger: cardsWrap,
-              start: 'top 75%',
-              toggleActions: 'play reverse play reverse'
-            }
-          });
-
-          const bentoConfigs = [
-            { id: '#card-1', time: 0 },
-            { id: '#card-2', time: 0.18 },
-            { id: '#card-3', time: 0.36 }
-          ];
-
-          bentoConfigs.forEach(({ id, time }) => {
-            const cardEl = document.querySelector(id);
-            if (cardEl) {
-              bentoTL.fromTo(cardEl,
-                { y: 60, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' },
-                time
-              );
-
-              const innerTexts = cardEl.querySelectorAll('[card-inner-text]');
-              const words = [];
-              innerTexts.forEach(tEl => {
-                const cs = cardSplits.find(c => c.el === tEl);
-                if (cs) words.push(...cs.split.words);
-              });
-
-              if (words.length) {
-                bentoTL.fromTo(words,
-                  { y: "110%", opacity: 0 },
-                  { y: "0%", opacity: 1, duration: 0.65, ease: 'power2.out', stagger: 0.012 },
-                  time + 0.22
-                );
-              }
-            }
-          });
-        }
 
         // Delivery Steps Entrance + Masked Words Reveal
         const steps = document.querySelectorAll('.meet-tablet-step');
@@ -1075,112 +1000,212 @@
           );
         }
 
-        // "We found a better way" Subtitle & Button reveal on scroll (Webflow t-598f17ae)
-        document.querySelectorAll('[animate="better-way"]').forEach((el) => {
-          const splitBW = new SplitText(el, { type: "words, lines", linesClass: "split-line" });
-          const parentBlock = el.closest('.capsule-second-heading') || el;
-          const btnBW = parentBlock.querySelector('[animate="better-way-btn"]');
-
-          const tlBW = gsap.timeline({
-            scrollTrigger: {
-              trigger: el,
-              start: "top bottom",
-              toggleActions: "play reverse play reverse"
-            }
-          });
-
-          tlBW.fromTo(splitBW.words,
-            { y: "100%", opacity: 0 },
-            { y: "0%", opacity: 1, duration: 0.7, stagger: 0.015, ease: "power2.out" },
-            0.2
-          );
-          if (btnBW) {
-            tlBW.fromTo(btnBW,
-              { autoAlpha: 0 },
-              { autoAlpha: 1, duration: 0.5, ease: "power2.out" },
-              0.4
-            );
-          }
-        });
-
         // ====================================================================
-        // Section 3: Bento Feature Cards Horizontal Rail + Vertical Rise Stagger
+        // Section 3: Dual Headlines Animation (Desktop & Mobile)
         // ====================================================================
+        const capsuleSec = document.querySelector('.capsule');
+        const capsuleStartText = document.querySelector('.capsule-start-text');
+        const capsuleFirstH = document.querySelector('.capsule-first-heading');
+        const capsuleSecondBlock = document.querySelector('.capsule-second-block');
+        const capsuleSecondMob = document.querySelector('.capsule-second-heading.step-2-mobile');
         const capsuleCardsWrap = document.querySelector('.capsule-cards-wrap');
         const capsuleCardsRail = document.querySelector('.capsule-cards-new');
         const bentoCards = document.querySelectorAll('.capsule-card-new');
 
-        if (capsuleCardsWrap && capsuleCardsRail && bentoCards.length) {
-          // Calculate overflow distance so rail glides across viewport smoothly
-          const calcCardRailTravel = () => {
-            const railWidth = capsuleCardsRail.scrollWidth;
-            const viewWidth = window.innerWidth;
-            return Math.max(300, railWidth - viewWidth + viewWidth * 0.15);
-          };
+        if (capsuleSec && capsuleStartText) {
+          // 1. Heading 1 Character Scramble / Dissolve Reveal
+          const h1Text = capsuleFirstH ? capsuleFirstH.querySelector('h2') : null;
+          if (h1Text) {
+            const splitH1 = new SplitText(h1Text, { type: "chars, words" });
+            const tlH1 = gsap.timeline({ paused: true });
+            gsap.set(splitH1.chars, { autoAlpha: 0 });
+            tlH1.fromTo(splitH1.chars,
+              { autoAlpha: 0 },
+              { autoAlpha: 1, duration: 0.45, ease: "power2.out", stagger: { each: 0.02, from: "random" } }
+            );
 
-          const cardsTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: capsuleCardsWrap,
-              start: 'top 80%',
-              end: 'bottom 15%',
-              scrub: 1.2
+            ScrollTrigger.create({
+              trigger: capsuleStartText,
+              start: "top 80%",
+              onEnter: () => tlH1.play(),
+              onEnterBack: () => tlH1.play()
+            });
+            if (ScrollTrigger.isInViewport(capsuleStartText, 0.15)) {
+              tlH1.play();
+            }
+          }
+
+          // 2. Heading 2 Character Scramble + Subtitle Words Mask + Button Reveal (Desktop)
+          const h2Text = capsuleSecondBlock ? capsuleSecondBlock.querySelector('h2') : null;
+          const h2Sub = capsuleSecondBlock ? capsuleSecondBlock.querySelector('[animate="better-way"]') : null;
+          const h2Btn = capsuleSecondBlock ? capsuleSecondBlock.querySelector('[animate="better-way-btn"]') : null;
+
+          if (h2Text) {
+            const splitH2 = new SplitText(h2Text, { type: "chars, words" });
+            const tlH2 = gsap.timeline({ paused: true });
+            gsap.set(splitH2.chars, { autoAlpha: 0 });
+            tlH2.fromTo(splitH2.chars,
+              { autoAlpha: 0 },
+              { autoAlpha: 1, duration: 0.45, ease: "power2.out", stagger: { each: 0.02, from: "random" } },
+              0.1
+            );
+
+            if (h2Sub) {
+              const splitSub = new SplitText(h2Sub, { type: "words, lines", linesClass: "split-line" });
+              tlH2.fromTo(splitSub.words,
+                { y: "110%", opacity: 0 },
+                { y: "0%", opacity: 1, duration: 0.6, ease: "power2.out", stagger: 0.015 },
+                0.25
+              );
+            }
+            if (h2Btn) {
+              tlH2.fromTo(h2Btn,
+                { autoAlpha: 0, scale: 0.95 },
+                { autoAlpha: 1, scale: 1, duration: 0.5, ease: "power2.out" },
+                0.4
+              );
+            }
+
+            ScrollTrigger.create({
+              trigger: capsuleStartText,
+              start: "top 80%",
+              onEnter: () => tlH2.play(),
+              onEnterBack: () => tlH2.play()
+            });
+            if (ScrollTrigger.isInViewport(capsuleStartText, 0.15)) {
+              tlH2.play();
+            }
+          }
+
+          // 3. Responsive MatchMedia: Mobile Sequential Crossfade vs Desktop
+          ScrollTrigger.matchMedia({
+            // Mobile & Tablet (< 992px)
+            "(max-width: 991px)": function() {
+              const mobHeadingsTl = gsap.timeline({
+                scrollTrigger: {
+                  trigger: capsuleStartText,
+                  start: "top top",
+                  end: "bottom top",
+                  scrub: true
+                }
+              });
+
+              const capsuleHeadingEl = document.querySelector('.capsule-heading');
+
+              if (capsuleFirstH) {
+                // Heading 1 fades out first
+                mobHeadingsTl.to(capsuleFirstH, { autoAlpha: 0, y: -20, ease: "power1.out", duration: 0.12 }, 0.02);
+              }
+              if (capsuleSecondMob) {
+                // Heading 2 fades in after Heading 1 is gone
+                mobHeadingsTl.fromTo(capsuleSecondMob,
+                  { autoAlpha: 0, y: 20 },
+                  { autoAlpha: 1, y: 0, ease: "power1.out", duration: 0.10 },
+                  0.14
+                );
+                // Heading 2 stays visible, then fades out completely
+                mobHeadingsTl.to(capsuleSecondMob,
+                  { autoAlpha: 0, y: -20, ease: "power1.in", duration: 0.10 },
+                  0.28
+                );
+              }
+              if (capsuleHeadingEl) {
+                // Ensure the entire sticky container disappears completely
+                mobHeadingsTl.to(capsuleHeadingEl,
+                  { autoAlpha: 0, duration: 0.06 },
+                  0.34
+                );
+              }
+              // Pad timeline to 1.0 so timeline duration matches 100% of scrollTrigger distance
+              mobHeadingsTl.set({}, {}, 1.0);
             }
           });
+        }
 
-          // Staggered vertical rise entrances (matching Webflow t-8164b887 & t-893abf6b)
-          cardsTl.fromTo('#card-1',
-            { y: '10em', opacity: 0.1 },
-            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
-            0.04
-          );
-          cardsTl.fromTo('#card-2',
-            { y: '12em', opacity: 0.1 },
-            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
-            0.12
-          );
-          cardsTl.fromTo('#card-3',
-            { y: '14em', opacity: 0.1 },
-            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
-            0.20
-          );
-
-          // Horizontal slide rail scrub
-          cardsTl.to(capsuleCardsRail, {
-            x: () => -calcCardRailTravel(),
-            ease: 'none',
-            duration: 0.72
-          }, 0.10);
-
-          // Graceful fade & elevate exit before next sequence
-          cardsTl.to(bentoCards, {
-            y: '-5em',
-            opacity: 0,
-            ease: 'power1.in',
-            stagger: 0.04,
-            duration: 0.18
-          }, 0.82);
-
-          // Card inner text mask reveal on each card
-          bentoCards.forEach((card) => {
-            const innerTexts = card.querySelectorAll('[card-inner-text]');
-            innerTexts.forEach((txtEl) => {
-              const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
-              gsap.fromTo(split.words,
-                { y: '110%', opacity: 0 },
-                {
-                  y: '0%',
-                  opacity: 1,
-                  duration: 0.5,
-                  stagger: 0.015,
-                  ease: 'power2.out',
-                  scrollTrigger: {
-                    trigger: card,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                  }
+        // ====================================================================
+        // Section 3: Bento Feature Cards (Desktop 3-Column vs Mobile Rail)
+        // ====================================================================
+        if (capsuleCardsWrap && bentoCards.length) {
+          ScrollTrigger.matchMedia({
+            // Desktop (>= 992px): 3-column row with staggered rise from below
+            "(min-width: 992px)": function() {
+              const bentoTL = gsap.timeline({
+                scrollTrigger: {
+                  trigger: capsuleCardsWrap,
+                  start: 'top 85%',
+                  toggleActions: 'play reverse play reverse'
                 }
-              );
-            });
+              });
+
+              bentoCards.forEach((cardEl, idx) => {
+                bentoTL.fromTo(cardEl,
+                  { y: 80, opacity: 0 },
+                  { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' },
+                  idx * 0.14
+                );
+
+                const innerTexts = cardEl.querySelectorAll('[card-inner-text]');
+                innerTexts.forEach(tEl => {
+                  const split = new SplitText(tEl, { type: 'words, lines', linesClass: 'split-line' });
+                  bentoTL.fromTo(split.words,
+                    { y: '110%', opacity: 0 },
+                    { y: '0%', opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.012 },
+                    idx * 0.14 + 0.2
+                  );
+                });
+              });
+            },
+
+            // Mobile & Tablet (< 992px): Sticky horizontal scrub rail
+            "(max-width: 991px)": function() {
+              if (capsuleCardsRail) {
+                const calcCardRailTravel = () => {
+                  const c1 = document.querySelector('#card-1');
+                  const c3 = document.querySelector('#card-3');
+                  if (c1 && c3) {
+                    return Math.max(400, c3.offsetLeft - c1.offsetLeft);
+                  }
+                  return 720;
+                };
+
+                gsap.fromTo(capsuleCardsRail,
+                  { x: 0 },
+                  {
+                    x: () => -calcCardRailTravel(),
+                    ease: 'none',
+                    scrollTrigger: {
+                      trigger: capsuleCardsWrap,
+                      start: 'top 20%',
+                      end: '+=1500',
+                      scrub: 0.8,
+                      invalidateOnRefresh: true
+                    }
+                  }
+                );
+
+                bentoCards.forEach((card) => {
+                  const innerTexts = card.querySelectorAll('[card-inner-text]');
+                  innerTexts.forEach((txtEl) => {
+                    const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
+                    gsap.fromTo(split.words,
+                      { y: '110%', opacity: 0 },
+                      {
+                        y: '0%',
+                        opacity: 1,
+                        duration: 0.5,
+                        stagger: 0.015,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                          trigger: card,
+                          start: 'top 85%',
+                          toggleActions: 'play none none reverse'
+                        }
+                      }
+                    );
+                  });
+                });
+              }
+            }
           });
         }
 
@@ -1277,7 +1302,6 @@
           );
         });
 
-        gsap.set("[text-split], [text-split-delay], [card-inner-text], [subtitle], [hero-btn], [animate=\"better-way\"], [animate=\"better-way-btn\"], [numberstext]", { autoAlpha: 1 });
       }
     })();
   </script>

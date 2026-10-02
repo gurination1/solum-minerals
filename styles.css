@@ -57,6 +57,8 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 body {
@@ -69,7 +71,7 @@ body {
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @media screen and (max-width: 991px) {
@@ -1629,26 +1631,25 @@ img, svg {
   display: flex;
 }
 
-/* 3 Bento Feature Cards (Sticky Horizontal Scrub Rail) */
+/* 3 Bento Feature Cards (Desktop 3-Column Grid / Flex) */
 .capsule-cards-wrap {
-  height: 120vh;
+  width: 100%;
   position: relative;
   overflow: visible;
-  margin-top: 5em;
+  margin-top: 10em;
+  padding: 0 var(--padding-web);
 }
 
 .capsule-cards-new {
   z-index: 5;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 2.2em;
-  width: max-content;
-  position: sticky;
-  top: 24vh;
-  padding-left: max(5vw, calc((100vw - 1280px) / 2));
-  padding-right: 25vw;
-  will-change: transform;
+  justify-content: space-between;
+  gap: 1.88em;
+  width: 100%;
+  position: relative;
+  margin-top: 0;
+  padding: 0;
 }
 
 .capsule-card-new {
@@ -1657,10 +1658,9 @@ img, svg {
   flex-flow: column;
   justify-content: space-between;
   align-items: flex-start;
-  flex: 0 0 25.5em;
-  width: 25.5em;
-  min-width: 25.5em;
-  min-height: 18em;
+  flex: 1 1 0;
+  width: auto;
+  min-height: 16.13em;
   height: auto;
   padding: 1.8em;
   display: flex;
@@ -1837,43 +1837,80 @@ img, svg {
   }
   .capsule-heading {
     position: sticky;
-    top: 7em;
+    top: 5.5em;
     width: 100%;
+    z-index: 4;
   }
   .capsule-start-text {
     height: 100vh;
     padding-top: 3em;
     padding-left: var(--padding-tablet);
     padding-right: var(--padding-tablet);
+    position: relative;
   }
   .capsule-second-block {
-    display: none;
+    display: none !important;
   }
   .capsule-first-heading {
-    margin-bottom: 2em;
+    margin-bottom: 0;
   }
   .capsule-second-heading.step-2-mobile {
     display: flex;
-    position: relative;
-    inset: auto;
+    position: absolute;
+    inset: 0% auto auto 0%;
+    opacity: 0;
     width: 100%;
-    margin-top: 2em;
+    grid-column-gap: 1.25em;
+    grid-row-gap: 1.25em;
+    pointer-events: auto;
+  }
+  .capsule-second-heading.step-2-mobile .h2-style {
+    color: var(--beige);
+  }
+  .capsule-second-heading.step-2-mobile .text-16-regular-caps {
+    color: var(--beige);
+    max-width: 92%;
   }
   .capsule-cards-wrap {
-    padding-top: 6em;
-    padding-bottom: 6em;
-    overflow-x: auto;
+    height: 150em;
+    position: relative;
+    overflow: visible;
+    margin-top: 8em;
+    padding: 0;
+    width: 100vw;
   }
   .capsule-cards-new {
-    width: 100%;
+    width: max-content;
+    display: flex;
+    flex-direction: row;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-left: var(--padding-tablet);
-    padding-right: var(--padding-tablet);
+    overflow: visible;
+    position: sticky;
+    top: 31em;
+    padding: 0 1.25em 5em;
+    gap: 1.5em;
+    z-index: 5;
+    will-change: transform;
   }
   .capsule-card-new {
-    flex: none;
-    width: 20em;
+    flex: 0 0 22em;
+    width: 22em;
+    min-width: 22em;
+    height: 13.5em;
+    min-height: 13.5em;
+    padding: 1.25em;
+  }
+  .capsule-card-inner {
+    min-height: 11em;
+  }
+  .meet-tablet-steps-new {
+    padding-top: 45em;
+    padding-bottom: 40em;
+    grid-row-gap: 12em;
+  }
+  .meet-tablet-step {
+    width: 90vw;
+    max-width: 24em;
   }
   .meet-tablet-steps-line-left {
     padding-left: var(--padding-tablet);
@@ -1885,28 +1922,42 @@ img, svg {
 
 @media screen and (max-width: 479px) {
   .capsule {
-    height: 320em;
+    height: 300em;
+  }
+  .capsule-heading {
+    top: 4.8em;
   }
   .capsule-start-text {
-    height: auto;
-    min-height: 100vh;
-    padding-top: 5em;
-    padding-bottom: 4em;
+    height: 100vh;
+    padding-top: 4.8em;
     padding-left: 1.25em;
     padding-right: 1.25em;
+    position: relative;
   }
-  .capsule-card-new {
-    width: 18em;
-    height: 14em;
+  .capsule-cards-wrap {
+    height: 150em;
+    margin-top: 6em;
+    width: 100vw;
+    overflow: visible;
   }
   .capsule-cards-new {
-    padding-left: 1em;
-    padding-right: 1em;
-    gap: 1em;
+    position: sticky;
+    top: 30em;
+    padding: 0 1em 5em;
+    gap: 1.25em;
+  }
+  .capsule-card-new {
+    flex: 0 0 21.5em;
+    width: 21.5em;
+    min-width: 21.5em;
+    height: 13em;
+    min-height: 13em;
+    padding: 1.2em;
   }
   .meet-tablet-step {
-    width: 100%;
-    max-width: 20em;
+    width: 92vw;
+    max-width: 22em;
+    padding: 1.5em;
   }
   .meet-tablet-steps-line-left,
   .meet-tablet-steps-line-right {
