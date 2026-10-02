@@ -73,11 +73,11 @@ const server = http.createServer((req, res) => {
       'Connection': 'keep-alive'
     };
 
-    if (ext === '.html' || ext === '.css' || ext === '.js') {
+    if (ext === '.html' || ext === '.css' || ext === '.js' || ext === '.png' || ext === '.svg' || ext === '.jpg') {
       headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
       headers['Pragma'] = 'no-cache';
       headers['Expires'] = '0';
-    } else if (ext === '.webp' || ext === '.png' || ext === '.jpg' || ext === '.svg' || ext === '.mp4') {
+    } else if (ext === '.webp' || ext === '.mp4') {
       headers['Cache-Control'] = 'public, max-age=3600';
     }
 

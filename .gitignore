@@ -16,6 +16,7 @@ node_modules/
 !assets/crop_specimen_dormant.png
 !assets/crop_specimen_base.png
 !assets/crop_specimen_absorbed.png
+!assets/corn_broad_*.png
 !assets/tab_frames/*.jpg
 
 # Backup frame dirs
