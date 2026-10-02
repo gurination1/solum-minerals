@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Farm Minerals - Cleanroom Design System & Interaction Engine
-   Matched to farmminerals.com Webflow Architecture & Scroll River Kinematics
+   Solum Minerals - Cleanroom Design System & Interaction Engine
+   Matched to Solum Minerals Webflow Architecture & Scroll River Kinematics
    ========================================================================== */
 
 :root {
@@ -4243,3 +4243,43 @@ img, svg {
   }
 }
 
+/* ==========================================================================
+   Footer Hero Curtain Reveal Transition
+   ========================================================================== */
+.footer-hero {
+  position: relative;
+  width: 100%;
+}
+
+.cta-block {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+}
+
+.footer-hero-wrap {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (min-width: 992px) {
+  .cta-block {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .footer-hero-wrap {
+    position: relative;
+  }
+}
