@@ -2681,7 +2681,7 @@ img, svg {
 }
 
 .community-hero {
-  background-image:url(assets/community_field_bg.webp).avif);background-position:50%;background-size:cover;height:57em
+  background-image:url(assets/community_field_bg.webp);background-position:50%;background-size:cover;height:57em
 }
 
 .community-wrap {

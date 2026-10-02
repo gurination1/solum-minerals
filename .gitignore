@@ -6,6 +6,7 @@ node_modules/
 *.jpg
 !assets/farm_main_preview.jpg
 !assets/farm_main_preview2.jpg
+!assets/community_man.jpg
 !assets/green_gradient.png
 !assets/tab_frames/*.jpg
 
