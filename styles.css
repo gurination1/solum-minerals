@@ -1510,7 +1510,7 @@ img, svg {
 .capsule {
   z-index: 3;
   background-color: var(--main-green);
-  height: 250em;
+  height: 360em;
   position: relative;
 }
 
@@ -1629,50 +1629,54 @@ img, svg {
   display: flex;
 }
 
-/* 3 Bento Feature Cards */
+/* 3 Bento Feature Cards (Sticky Horizontal Scrub Rail) */
 .capsule-cards-wrap {
-  height: 75em;
+  height: 120vh;
   position: relative;
+  overflow: visible;
+  margin-top: 5em;
 }
 
 .capsule-cards-new {
-  z-index: 2;
-  grid-column-gap: 1.88em;
-  grid-row-gap: 1.88em;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-columns: 1fr;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 16.13em;
-  margin-top: 12.5em;
-  padding-left: var(--padding-web);
-  padding-right: var(--padding-web);
+  z-index: 5;
   display: flex;
-  position: relative;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2.2em;
+  width: max-content;
+  position: sticky;
+  top: 24vh;
+  padding-left: max(5vw, calc((100vw - 1280px) / 2));
+  padding-right: 25vw;
+  will-change: transform;
 }
 
 .capsule-card-new {
-  background-color: var(--beige);
-  border-radius: 0.4em;
+  background-color: var(--beige, #f4ede6);
+  border-radius: 6px;
   flex-flow: column;
   justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
-  min-height: 17.5em;
+  flex: 0 0 25.5em;
+  width: 25.5em;
+  min-width: 25.5em;
+  min-height: 18em;
   height: auto;
-  padding: 1.5em;
+  padding: 1.8em;
   display: flex;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  position: relative;
+  will-change: transform, opacity;
 }
 
 .capsule-card-inner {
   flex-flow: column;
   width: 100%;
   height: 100%;
+  min-height: 14.5em;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 2em;
   display: flex;
 }
 
@@ -1682,14 +1686,14 @@ img, svg {
 }
 
 .card-title {
-  color: #4c5b20;
-  letter-spacing: -0.01em;
+  color: #38461b;
+  letter-spacing: -0.015em;
   font-family: 'Aeonik', Arial, sans-serif;
-  font-size: 1.69em;
-  font-weight: 400;
-  line-height: 110%;
+  font-size: 1.7em;
+  font-weight: 500;
+  line-height: 112%;
   margin-top: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.6em;
 }
 
 .capsule-card-description,
@@ -1700,6 +1704,19 @@ img, svg {
   flex-flow: column;
   width: 100%;
   display: flex;
+}
+
+.text-14-caps.green,
+.capsule-card-description .text-14-caps,
+.capsule-card-description-2 .text-14-caps,
+.capsule-card-description-3 .text-14-caps {
+  color: #4d5c22 !important;
+  font-family: 'Aeonik', Arial, sans-serif;
+  font-size: 0.88em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 145%;
+  text-transform: uppercase;
 }
 
 /* Meet the Tablet Vector Watermark */
@@ -1715,6 +1732,7 @@ img, svg {
   top: 0;
   pointer-events: none;
   overflow: hidden;
+  opacity: 0.45;
 }
 
 .meet-croptab-headline-img {
@@ -1739,11 +1757,11 @@ img, svg {
 
 .meet-tablet-steps-new {
   z-index: 4;
-  grid-column-gap: 14em;
-  grid-row-gap: 14em;
+  grid-column-gap: 16em;
+  grid-row-gap: 16em;
   flex-flow: column;
-  padding-top: 50em;
-  padding-bottom: 40em;
+  padding-top: 55em;
+  padding-bottom: 50em;
   display: flex;
   position: relative;
 }
@@ -1764,19 +1782,18 @@ img, svg {
 
 .meet-tablet-step {
   z-index: 2;
-  grid-column-gap: 2em;
-  grid-row-gap: 2em;
-  -webkit-backdrop-filter: blur(30px);
-  backdrop-filter: blur(30px);
-  background-color: rgba(57, 68, 32, 0.5);
-  border: 1px solid rgba(244, 237, 230, 0.16);
-  border-radius: 0.4em;
+  background: rgba(30, 42, 18, 0.72);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(244, 237, 230, 0.22);
+  border-radius: 8px;
   flex-flow: column;
-  width: 24em;
-  padding: 1.6em;
+  width: 25em;
+  padding: 2em;
   display: flex;
   position: relative;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.38);
+  will-change: transform, opacity;
 }
 
 .text-30-regular {
@@ -1785,8 +1802,28 @@ img, svg {
   margin-bottom: 0;
   font-family: 'Aeonik', Arial, sans-serif;
   font-size: 1.88em;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 120%;
+  letter-spacing: -0.01em;
+}
+
+.white-line {
+  height: 1px;
+  background: rgba(244, 237, 230, 0.4);
+  width: 0%;
+  margin-top: 0.6em;
+  margin-bottom: 0.9em;
+  transform-origin: left center;
+}
+
+.text-16-regular-caps {
+  color: rgba(244, 237, 230, 0.9);
+  font-family: 'Aeonik', Arial, sans-serif;
+  font-size: 0.92em;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .text-16-regular-caps._0-run-off {

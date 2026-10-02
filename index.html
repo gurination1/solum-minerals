@@ -425,24 +425,28 @@
               <div class="meet-tablet-steps-line-left">
                 <div id="meet-tablet-step-1" class="meet-tablet-step">
                   <h3 class="text-30-regular" text-split="">Just drop it</h3>
+                  <div class="white-line l-1"></div>
                   <div id="card-text-1" class="text-16-regular-caps" card-inner-text="">No new equipment needed. Just drop it into water — it dissolves evenly on its own.</div>
                 </div>
               </div>
               <div class="meet-tablet-steps-line-right">
                 <div id="meet-tablet-step-2" class="meet-tablet-step">
                   <h3 class="text-30-regular" text-split="">Zero emissions</h3>
+                  <div class="white-line l-2"></div>
                   <div id="card-text-2" class="text-16-regular-caps" card-inner-text="">We skip energy-intensive processes entirely, cutting CO₂ at the source. Cleaner to make, better for the planet.</div>
                 </div>
               </div>
               <div class="meet-tablet-steps-line-left">
                 <div id="meet-tablet-step-3" class="meet-tablet-step">
                   <h3 class="text-30-regular" text-split="">Reinventing delivery</h3>
+                  <div class="white-line l-3"></div>
                   <div id="card-text-3" class="text-16-regular-caps" card-inner-text="">1,000 tablets (2,500 acres) — just 29 lb / 13 kg. Fits in a courier box. Ships with FedEx, DHL, even Amazon. Thousands of acres, delivered overnight.</div>
                 </div>
               </div>
               <div class="meet-tablet-steps-line-right">
                 <div id="meet-tablet-step-4" class="meet-tablet-step">
                   <h3 class="text-30-regular" text-split="">0 run-off</h3>
+                  <div class="white-line l-4"></div>
                   <div id="card-text-4" class="text-16-regular-caps _0-run-off" card-inner-text="">0 events recorded in 12 months of monitoring. Waste eliminated.</div>
                 </div>
               </div>
@@ -1099,57 +1103,139 @@
           }
         });
 
-        // Horizontal scrub rail for Bento Cards (Webflow t-893abf6b)
-        const capsuleCardsNew = document.querySelector('.capsule-cards-new');
-        if (capsuleCardsNew) {
-          gsap.fromTo(capsuleCardsNew,
-            { x: '0em' },
-            {
-              x: '-14em',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.capsule-cards-wrap',
-                start: 'top 80%',
-                end: 'bottom 20%',
-                scrub: 0.8
-              }
+        // ====================================================================
+        // Section 3: Bento Feature Cards Horizontal Rail + Vertical Rise Stagger
+        // ====================================================================
+        const capsuleCardsWrap = document.querySelector('.capsule-cards-wrap');
+        const capsuleCardsRail = document.querySelector('.capsule-cards-new');
+        const bentoCards = document.querySelectorAll('.capsule-card-new');
+
+        if (capsuleCardsWrap && capsuleCardsRail && bentoCards.length) {
+          // Calculate overflow distance so rail glides across viewport smoothly
+          const calcCardRailTravel = () => {
+            const railWidth = capsuleCardsRail.scrollWidth;
+            const viewWidth = window.innerWidth;
+            return Math.max(300, railWidth - viewWidth + viewWidth * 0.15);
+          };
+
+          const cardsTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: capsuleCardsWrap,
+              start: 'top 80%',
+              end: 'bottom 15%',
+              scrub: 1.2
             }
+          });
+
+          // Staggered vertical rise entrances (matching Webflow t-8164b887 & t-893abf6b)
+          cardsTl.fromTo('#card-1',
+            { y: '10em', opacity: 0.1 },
+            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
+            0.04
           );
+          cardsTl.fromTo('#card-2',
+            { y: '12em', opacity: 0.1 },
+            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
+            0.12
+          );
+          cardsTl.fromTo('#card-3',
+            { y: '14em', opacity: 0.1 },
+            { y: '0em', opacity: 1, ease: 'power2.out', duration: 0.25 },
+            0.20
+          );
+
+          // Horizontal slide rail scrub
+          cardsTl.to(capsuleCardsRail, {
+            x: () => -calcCardRailTravel(),
+            ease: 'none',
+            duration: 0.72
+          }, 0.10);
+
+          // Graceful fade & elevate exit before next sequence
+          cardsTl.to(bentoCards, {
+            y: '-5em',
+            opacity: 0,
+            ease: 'power1.in',
+            stagger: 0.04,
+            duration: 0.18
+          }, 0.82);
+
+          // Card inner text mask reveal on each card
+          bentoCards.forEach((card) => {
+            const innerTexts = card.querySelectorAll('[card-inner-text]');
+            innerTexts.forEach((txtEl) => {
+              const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
+              gsap.fromTo(split.words,
+                { y: '110%', opacity: 0 },
+                {
+                  y: '0%',
+                  opacity: 1,
+                  duration: 0.5,
+                  stagger: 0.015,
+                  ease: 'power2.out',
+                  scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                  }
+                }
+              );
+            });
+          });
         }
 
-        // Horizontal lateral drift for staggered delivery steps
-        const stepsLeft = document.querySelectorAll('.meet-tablet-steps-line-left');
-        const stepsRight = document.querySelectorAll('.meet-tablet-steps-line-right');
-        if (stepsLeft.length) {
-          gsap.fromTo(stepsLeft,
-            { x: '4em' },
+        // ====================================================================
+        // Section 3: 4 Staggered Delivery Steps & Expanding Laser Lines
+        // ====================================================================
+        const stepItems = [
+          { step: '#meet-tablet-step-1', drift: 'left' },
+          { step: '#meet-tablet-step-2', drift: 'right' },
+          { step: '#meet-tablet-step-3', drift: 'left' },
+          { step: '#meet-tablet-step-4', drift: 'right' }
+        ];
+
+        stepItems.forEach((item) => {
+          const stepEl = document.querySelector(item.step);
+          if (!stepEl) return;
+          const lineEl = stepEl.querySelector('.white-line');
+
+          // Entrance animation with line laser reveal
+          const stepTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: stepEl,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse'
+            }
+          });
+
+          stepTl.fromTo(stepEl,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }
+          );
+
+          if (lineEl) {
+            stepTl.fromTo(lineEl,
+              { width: '0%' },
+              { width: '100%', duration: 0.8, ease: 'power2.out' },
+              0.2
+            );
+          }
+
+          // Lateral parallax drift as user scrubs past
+          gsap.fromTo(stepEl,
+            { x: item.drift === 'left' ? '3em' : '-3em' },
             {
-              x: '-4em',
+              x: item.drift === 'left' ? '-3em' : '3em',
               ease: 'none',
               scrollTrigger: {
-                trigger: '.meet-tablet-steps-new-wrap',
+                trigger: stepEl,
                 start: 'top bottom',
                 end: 'bottom top',
                 scrub: 1
               }
             }
           );
-        }
-        if (stepsRight.length) {
-          gsap.fromTo(stepsRight,
-            { x: '-4em' },
-            {
-              x: '4em',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.meet-tablet-steps-new-wrap',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
-              }
-            }
-          );
-        }
+        });
 
         // Section 4: Green Lines Expand Laser Animation (Webflow t-f03374aa)
         const numberLines = document.querySelectorAll('.numbers .green-line');
