@@ -12,6 +12,7 @@ node_modules/
 !assets/nutripeak_npk.png
 !assets/elevatefeed.png
 !assets/corn_plant_*.png
+!assets/crop_specimen_ai.png
 !assets/tab_frames/*.jpg
 
 # Backup frame dirs

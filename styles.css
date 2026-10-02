@@ -152,7 +152,25 @@ img, svg {
 }
 
 .navbar.dark-mode {
-  color: var(--main-green);
+  color: #404F1D !important;
+}
+
+.navbar.dark-mode .menu-btn-wrap,
+.navbar.dark-mode .menu-text,
+.navbar.dark-mode .icon-menu,
+.navbar.dark-mode .logo-header-wrap,
+.navbar.dark-mode .logo-header-wrap svg text {
+  color: #404F1D !important;
+  fill: #404F1D !important;
+}
+
+.navbar.dark-mode .menu-line {
+  stroke: #404F1D !important;
+}
+
+.navbar.dark-mode .logo-header-wrap svg path,
+.navbar.dark-mode .logo-header-wrap svg circle {
+  fill: #404F1D !important;
 }
 
 .nav-wrap {
@@ -966,6 +984,7 @@ img, svg {
   position: relative;
 }
 
+.corn-ai-specimen,
 .corn-outlined {
   width: 100%;
   max-width: 32em;
@@ -973,27 +992,12 @@ img, svg {
   display: block;
   user-select: none;
   pointer-events: none;
+  filter: drop-shadow(0 12px 30px rgba(74, 83, 56, 0.08));
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.corn-filled {
-  width: 100%;
-  max-width: 32em;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  clip-path: inset(100% 0 0 0);
-  -webkit-clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-  user-select: none;
-  pointer-events: none;
-}
-
-.corn-filled.animated {
-  clip-path: inset(64% 0 0 0);
-  -webkit-clip-path: inset(64% 0 0 0);
+.corn-ai-specimen:hover {
+  transform: translateY(-4px) scale(1.01);
 }
 
 /* Right Column (Mirrored Reciprocal of Parent Left): Video Card */
@@ -1397,6 +1401,7 @@ img, svg {
     line-height: 94%;
   }
 
+  .corn-ai-specimen,
   .corn-outlined,
   .corn-filled {
     width: 100%;
@@ -1456,6 +1461,7 @@ img, svg {
     line-height: 100%;
   }
 
+  .corn-ai-specimen,
   .corn-outlined,
   .corn-filled {
     width: 100%;

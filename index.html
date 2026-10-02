@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/splide.min.css" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261002_03" />
 </head>
 <body>
 
@@ -285,8 +285,7 @@
               <div class="text-16-regular green">Source: FAO, 2023</div>
             </div>
             <div class="corn-animated-wrap">
-              <img src="assets/corn_plant_muted.png" loading="lazy" alt="Crop before nutrient absorption" class="corn-outlined" />
-              <img src="assets/corn_plant_vibrant.png" loading="lazy" id="corn-filled-img" alt="Crop with nutrient absorption" class="corn-filled" />
+              <img src="assets/crop_specimen_ai.png" loading="lazy" alt="Crop specimen" class="corn-ai-specimen" />
             </div>
           </div>
 
@@ -826,9 +825,11 @@
         });
       }
 
-      // 4. Navbar Dynamic Color Shift on Beige Section Overlap (Script 22)
+      // 4. Navbar Dynamic Color Shift on Beige Section Overlap (Exact Parent Script Replica)
       const navbar = document.getElementById('navbar');
       const targetSections = ['#s-second', '#s-numbers', '#s-carbon', '#products', '#s-trials'];
+      const LIGHT_NAV = '#F4EDE6';
+      const DARK_NAV  = '#404F1D';
 
       function updateNavbarColor() {
         if (!navbar) return;
@@ -844,63 +845,44 @@
           }
         });
 
+        const activeColor = isBeigeSection ? DARK_NAV : LIGHT_NAV;
         if (isBeigeSection) {
           navbar.classList.add('dark-mode');
         } else {
           navbar.classList.remove('dark-mode');
         }
+
+        navbar.style.color = activeColor;
+        const menuText = navbar.querySelector('.menu-text');
+        if (menuText) menuText.style.color = activeColor;
+        const menuLines = navbar.querySelectorAll('.menu-line');
+        menuLines.forEach(l => l.setAttribute('stroke', activeColor));
+        const logoTexts = navbar.querySelectorAll('.logo-header-wrap svg text');
+        logoTexts.forEach(t => t.setAttribute('fill', activeColor));
+        const logoPaths = navbar.querySelectorAll('.logo-header-wrap svg path, .logo-header-wrap svg circle');
+        logoPaths.forEach(p => p.setAttribute('fill', activeColor));
       }
 
       window.addEventListener('scroll', updateNavbarColor, { passive: true });
       window.addEventListener('resize', updateNavbarColor);
+      if (window.lenis) {
+        window.lenis.on('scroll', updateNavbarColor);
+      }
       updateNavbarColor();
 
-      // 5. Corn Plant Nitrogen Fill Animation (Webflow a-8 Exact Replica)
-      const cornWrap = document.querySelector('.corn-animated-wrap');
-      const cornFilled = document.getElementById('corn-filled-img');
-      let cornTimer = null;
-
-      function triggerCornAnimation() {
-        if (!cornFilled) return;
-        clearTimeout(cornTimer);
-        cornTimer = setTimeout(() => {
-          cornFilled.classList.add('animated');
-        }, 150);
-      }
-
-      function resetCornAnimation() {
-        if (!cornFilled) return;
-        clearTimeout(cornTimer);
-        cornTimer = null;
-        cornFilled.classList.remove('animated');
-      }
-
-      if (cornWrap && cornFilled && 'IntersectionObserver' in window) {
-        const cornObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              triggerCornAnimation();
-            } else {
-              resetCornAnimation();
+      // 5. Section 2: High-efficiency Crop Specimen Entrance
+      const cornSpecimen = document.querySelector('.corn-ai-specimen');
+      if (cornSpecimen && 'IntersectionObserver' in window) {
+        const cropObserver = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              cornSpecimen.style.opacity = '1';
+              cornSpecimen.style.transform = 'translateY(0) scale(1)';
             }
           });
-        }, { threshold: 0.25 });
-        cornObserver.observe(cornWrap);
+        }, { threshold: 0.1 });
+        cropObserver.observe(cornSpecimen);
       }
-
-      function checkCornScroll() {
-        if (!cornWrap || !cornFilled) return;
-        const rect = cornWrap.getBoundingClientRect();
-        const isInView = rect.top <= window.innerHeight * 0.85 && rect.bottom >= window.innerHeight * 0.15;
-        if (isInView && !cornFilled.classList.contains('animated') && !cornTimer) {
-          triggerCornAnimation();
-        } else if (!isInView && cornFilled.classList.contains('animated')) {
-          resetCornAnimation();
-        }
-      }
-
-      window.addEventListener('scroll', checkCornScroll, { passive: true });
-      checkCornScroll();
 
       // 6. Section 3: Capsule & SolumTab 3D Canvas Frame-Scrub Sequence
       const scrollCanvas = document.getElementById('scroll-canvas');
