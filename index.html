@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/splide.min.css" />
-  <link rel="stylesheet" href="styles.css?v=20261002_03" />
+  <link rel="stylesheet" href="styles.css?v=20261002_06" />
 </head>
 <body>
 
@@ -284,8 +284,9 @@
               <h2 class="h2-style green" text-split="">Up to 70% of nitrogen is lost before crops can use it.</h2>
               <div class="text-16-regular green">Source: FAO, 2023</div>
             </div>
-            <div class="corn-animated-wrap">
-              <img src="assets/crop_specimen_ai.png" loading="lazy" alt="Crop specimen" class="corn-ai-specimen" />
+            <div class="corn-animated-wrap" id="crop-animated-wrap">
+              <img src="assets/crop_specimen_base.png" alt="Crop before fertilization" class="crop-base-layer" />
+              <img src="assets/crop_specimen_ai.png" alt="Crop with nutrient absorption" id="crop-absorbed-img" class="crop-absorbed-img" />
             </div>
           </div>
 
@@ -870,19 +871,57 @@
       }
       updateNavbarColor();
 
-      // 5. Section 2: High-efficiency Crop Specimen Entrance
-      const cornSpecimen = document.querySelector('.corn-ai-specimen');
-      if (cornSpecimen && 'IntersectionObserver' in window) {
+      // 5. Section 2: Dynamic Nitrogen Absorption Animation (Webflow a-8 Exact Replica)
+      const cropWrap = document.getElementById('crop-animated-wrap');
+      const cropAbsorbed = document.getElementById('crop-absorbed-img');
+      let cropTimer = null;
+
+      function triggerCropAnimation() {
+        if (!cropAbsorbed) return;
+        clearTimeout(cropTimer);
+        cropTimer = setTimeout(() => {
+          cropAbsorbed.classList.add('animated');
+          cropAbsorbed.style.height = '54%';
+        }, 80);
+      }
+
+      function resetCropAnimation() {
+        if (!cropAbsorbed) return;
+        clearTimeout(cropTimer);
+        cropTimer = null;
+        cropAbsorbed.classList.remove('animated');
+        cropAbsorbed.style.height = '0%';
+      }
+
+      if (cropWrap && cropAbsorbed && 'IntersectionObserver' in window) {
         const cropObserver = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
-              cornSpecimen.style.opacity = '1';
-              cornSpecimen.style.transform = 'translateY(0) scale(1)';
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              triggerCropAnimation();
+            } else {
+              resetCropAnimation();
             }
           });
-        }, { threshold: 0.1 });
-        cropObserver.observe(cornSpecimen);
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        cropObserver.observe(cropWrap);
       }
+
+      function checkCropScroll() {
+        if (!cropWrap || !cropAbsorbed) return;
+        const rect = cropWrap.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isInView && !cropAbsorbed.classList.contains('animated') && !cropTimer) {
+          triggerCropAnimation();
+        } else if (!isInView && cropAbsorbed.classList.contains('animated')) {
+          resetCropAnimation();
+        }
+      }
+
+      window.addEventListener('scroll', checkCropScroll, { passive: true });
+      if (window.lenis) {
+        window.lenis.on('scroll', checkCropScroll);
+      }
+      checkCropScroll();
 
       // 6. Section 3: Capsule & SolumTab 3D Canvas Frame-Scrub Sequence
       const scrollCanvas = document.getElementById('scroll-canvas');

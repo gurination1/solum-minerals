@@ -148,7 +148,18 @@ img, svg {
   position: fixed;
   inset: 0% 0% auto;
   pointer-events: none;
+  color: #F4EDE6;
   transition: color 0.4s ease;
+}
+
+.navbar .menu-text,
+.navbar .icon-menu,
+.navbar .logo-header-wrap,
+.navbar .menu-line,
+.navbar .logo-header-wrap svg path,
+.navbar .logo-header-wrap svg circle,
+.navbar .logo-header-wrap svg text {
+  transition: color 0.4s ease, stroke 0.4s ease, fill 0.4s ease, opacity 0.3s ease;
 }
 
 .navbar.dark-mode {
@@ -978,26 +989,49 @@ img, svg {
   justify-content: center;
   align-items: flex-end;
   width: 100%;
-  max-width: 32em;
+  max-width: 44em;
   margin: 0 auto;
   display: flex;
   position: relative;
 }
 
+.crop-base-layer,
 .corn-ai-specimen,
 .corn-outlined {
   width: 100%;
-  max-width: 32em;
+  max-width: 44em;
   height: auto;
   display: block;
   user-select: none;
   pointer-events: none;
   filter: drop-shadow(0 12px 30px rgba(74, 83, 56, 0.08));
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.corn-ai-specimen:hover {
-  transform: translateY(-4px) scale(1.01);
+.crop-absorbed-img,
+.corn-filled {
+  object-fit: cover;
+  object-position: 50% 100%;
+  width: 100%;
+  max-width: 44em;
+  height: 0em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(100% - 32px), rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(100% - 32px), rgba(0,0,0,0) 100%);
+  transition: height 1.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: height;
+  filter: drop-shadow(0 14px 32px rgba(64, 79, 29, 0.15));
+}
+
+.crop-absorbed-img.animated,
+.corn-filled.animated {
+  height: 54% !important;
 }
 
 /* Right Column (Mirrored Reciprocal of Parent Left): Video Card */
@@ -1401,11 +1435,13 @@ img, svg {
     line-height: 94%;
   }
 
+  .crop-base-layer,
+  .crop-absorbed-img,
   .corn-ai-specimen,
   .corn-outlined,
   .corn-filled {
     width: 100%;
-    max-width: 28em;
+    max-width: 36em;
   }
 }
 
@@ -1461,11 +1497,13 @@ img, svg {
     line-height: 100%;
   }
 
+  .crop-base-layer,
+  .crop-absorbed-img,
   .corn-ai-specimen,
   .corn-outlined,
   .corn-filled {
     width: 100%;
-    max-width: 20em;
+    max-width: 25em;
   }
 }
 

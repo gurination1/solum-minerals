@@ -13,6 +13,9 @@ node_modules/
 !assets/elevatefeed.png
 !assets/corn_plant_*.png
 !assets/crop_specimen_ai.png
+!assets/crop_specimen_dormant.png
+!assets/crop_specimen_base.png
+!assets/crop_specimen_absorbed.png
 !assets/tab_frames/*.jpg
 
 # Backup frame dirs
