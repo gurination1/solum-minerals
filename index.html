@@ -426,24 +426,20 @@
             <div class="meet-tablet-steps-new-wrap">
               <div class="meet-tablet-steps-new" id="steps-rail">
                 <div id="meet-tablet-step-1" class="meet-tablet-step" data-step="1">
-                  <h3 class="text-30-regular" text-split="">Just drop it</h3>
-                  <div class="white-line l-1"></div>
-                  <div id="card-text-1" class="text-16-regular-caps" card-inner-text="">No new equipment needed. Just drop it into water — it dissolves evenly on its own.</div>
+                  <h3 class="text-30-regular">Just drop it</h3>
+                  <div id="card-text-1" class="text-16-regular-caps">No new equipment needed. Just drop it into water — it dissolves evenly on its own.</div>
                 </div>
                 <div id="meet-tablet-step-2" class="meet-tablet-step" data-step="2">
-                  <h3 class="text-30-regular" text-split="">Zero emissions</h3>
-                  <div class="white-line l-2"></div>
-                  <div id="card-text-2" class="text-16-regular-caps" card-inner-text="">We skip energy-intensive processes entirely, cutting CO₂ at the source. Cleaner to make, better for the planet.</div>
+                  <h3 class="text-30-regular">Zero emissions</h3>
+                  <div id="card-text-2" class="text-16-regular-caps">We skip energy-intensive processes entirely, cutting CO₂ at the source. Cleaner to make, better for the planet.</div>
                 </div>
                 <div id="meet-tablet-step-3" class="meet-tablet-step" data-step="3">
-                  <h3 class="text-30-regular" text-split="">Reinventing delivery</h3>
-                  <div class="white-line l-3"></div>
-                  <div id="card-text-3" class="text-16-regular-caps" card-inner-text="">1,000 tablets (2,500 acres) — just 29 lb / 13 kg. Fits in a courier box. Ships with FedEx, DHL, even Amazon. Thousands of acres, delivered overnight.</div>
+                  <h3 class="text-30-regular">Reinventing delivery</h3>
+                  <div id="card-text-3" class="text-16-regular-caps">1,000 tablets (2,500 acres) — just 29 lb / 13 kg. Fits in a courier box. Ships with FedEx, DHL, even Amazon. Thousands of acres, delivered overnight.</div>
                 </div>
                 <div id="meet-tablet-step-4" class="meet-tablet-step" data-step="4">
-                  <h3 class="text-30-regular" text-split="">0 run-off</h3>
-                  <div class="white-line l-4"></div>
-                  <div id="card-text-4" class="text-16-regular-caps _0-run-off" card-inner-text="">0 events recorded in 12 months of monitoring. Waste eliminated.</div>
+                  <h3 class="text-30-regular">0 run-off</h3>
+                  <div id="card-text-4" class="text-16-regular-caps _0-run-off">0 events recorded in 12 months of monitoring. Waste eliminated.</div>
                 </div>
               </div>
             </div>
@@ -929,12 +925,17 @@
 
       // 6. Section 3: Capsule & SolumTab 3D Canvas Frame-Scrub Sequence
       const scrollCanvas = document.getElementById('scroll-canvas');
+      const totalFrames = 314;
+      const frameObj = { frame: 0 };
+      let drawCurrentFrame = () => {};
+      window.frameObj = frameObj;
+
       if (scrollCanvas) {
         const ctx = scrollCanvas.getContext('2d');
-        const totalFrames = 314;
-        const frames = [];
+        const frames = new Array(totalFrames);
         let loadedFrames = 0;
         let isFirstDrawn = false;
+        let lastDrawnIndex = -1;
 
         function resizeCanvas() {
           const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -944,9 +945,28 @@
           drawCurrentFrame();
         }
 
+        function getBestLoadedFrame(idx) {
+          const clamped = Math.max(0, Math.min(totalFrames - 1, idx));
+          if (frames[clamped] && frames[clamped].complete && frames[clamped].naturalWidth > 0) {
+            return frames[clamped];
+          }
+          // Immediate outward search across all loaded frames
+          for (let offset = 1; offset < totalFrames; offset++) {
+            const prev = clamped - offset;
+            if (prev >= 0 && frames[prev] && frames[prev].complete && frames[prev].naturalWidth > 0) {
+              return frames[prev];
+            }
+            const next = clamped + offset;
+            if (next < totalFrames && frames[next] && frames[next].complete && frames[next].naturalWidth > 0) {
+              return frames[next];
+            }
+          }
+          return null;
+        }
+
         function drawFrame(index) {
-          const img = frames[index];
-          if (!img || !img.complete || img.naturalWidth === 0) return;
+          const img = getBestLoadedFrame(index);
+          if (!img) return;
 
           const cw = scrollCanvas.clientWidth;
           const ch = scrollCanvas.clientHeight;
@@ -959,26 +979,49 @@
 
           ctx.clearRect(0, 0, cw, ch);
           ctx.drawImage(img, x, y, iw * scale, ih * scale);
+          lastDrawnIndex = index;
         }
 
-        const frameObj = { frame: 0 };
-        function drawCurrentFrame() {
+        drawCurrentFrame = function() {
           drawFrame(Math.round(frameObj.frame));
+        };
+        window.drawCurrentFrame = drawCurrentFrame;
+
+        // Two-phase high-priority frame loading:
+        // Phase 1: Keyframes every 5th frame (1, 6, 11... 314) -> ~60 frames loaded in ~300ms!
+        const keyframeIndices = [];
+        for (let i = 1; i <= totalFrames; i += 5) {
+          keyframeIndices.push(i);
+        }
+        if (keyframeIndices[keyframeIndices.length - 1] !== totalFrames) {
+          keyframeIndices.push(totalFrames);
         }
 
-        // Preload frames from local assets
-        for (let i = 1; i <= totalFrames; i++) {
+        function loadFrame(i) {
+          if (frames[i - 1]) return;
           const img = new Image();
           const numStr = String(i).padStart(3, '0');
-          img.src = `assets/tab_frames/frame_${numStr}.jpg`;
+          img.src = `assets/tab_webp/frame_${numStr}.webp`;
           img.onload = () => {
             loadedFrames++;
             if (!isFirstDrawn && i === 1) {
               isFirstDrawn = true;
               resizeCanvas();
             }
+            const currentTarget = Math.round(frameObj.frame);
+            if (Math.abs(currentTarget - (i - 1)) <= 4 || Math.abs(currentTarget - lastDrawnIndex) > Math.abs(currentTarget - (i - 1))) {
+              drawCurrentFrame();
+            }
           };
-          frames.push(img);
+          frames[i - 1] = img;
+        }
+
+        // Phase 1: Keyframes loaded first
+        keyframeIndices.forEach(i => loadFrame(i));
+
+        // Phase 2: All intermediate frames
+        for (let i = 1; i <= totalFrames; i++) {
+          loadFrame(i);
         }
 
         window.addEventListener('resize', resizeCanvas);
@@ -988,20 +1031,24 @@
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           gsap.registerPlugin(ScrollTrigger);
 
-          // Canvas frame scrub
-          gsap.to(frameObj, {
-            frame: totalFrames - 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '#s-capsule',
-              start: 'top top',
-              end: 'bottom bottom',
-              scrub: 0.5,
-              onUpdate: () => {
-                drawCurrentFrame();
+          // Part 1 Canvas frame scrub: Tablet falls towards water surface (Frames 0 to 145)
+          gsap.fromTo(frameObj,
+            { frame: 0 },
+            {
+              frame: 145,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#s-capsule',
+                start: 'top top',
+                endTrigger: '#meet-steps-track',
+                end: 'top top',
+                scrub: true,
+                onUpdate: () => {
+                  drawCurrentFrame();
+                }
               }
             }
-          });
+          );
 
           // Bento Feature Cards Stagger & Delivery Steps handled below in Section 3 section
         }
@@ -1282,106 +1329,102 @@
         }
 
         // ====================================================================
-        // ====================================================================
-        // Section 3: Meet the Tablet™ Watermark (PINNED AT TOP & PERSISTENT)
+        // Section 3: Meet the Tablet™ Master Synchronized Track
+        // Syncs: Top Watermark + Bottom Steps Rail + Canvas Video Frames (120 -> 313)
         // ====================================================================
         const meetTrack = document.querySelector('#meet-steps-track');
         const meetTabletSec = document.querySelector('.meet-the-tablet-new');
         const stepsRail = document.querySelector('#steps-rail');
         const stepCards = document.querySelectorAll('.meet-tablet-step');
 
-        if (meetTrack && meetTabletSec) {
-          const watermarkTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: meetTrack,
-              start: 'top 85%',
-              end: 'bottom 10%',
-              scrub: true
-            }
-          });
-
-          // Enters from below up to top pinned position (0% - 15% of track)
-          watermarkTl.fromTo(meetTabletSec,
-            { y: 60, opacity: 0 },
-            { y: 0, opacity: 1, ease: 'power2.out', duration: 0.15 }
-          );
-          // Stays pinned at top for full duration of the track (15% - 85%)
-          watermarkTl.to(meetTabletSec, { opacity: 1, duration: 0.70 });
-          // Fades out gracefully as section transitions into Section 4 (85% - 100%)
-          watermarkTl.to(meetTabletSec,
-            { opacity: 0, y: -30, ease: 'power1.in', duration: 0.15 }
-          );
-        }
-
-        // ====================================================================
-        // Section 3: Second Horizontal Strip at BOTTOM (Scrubs Left-to-Right)
-        // ====================================================================
-        if (meetTrack && stepsRail && stepCards.length) {
+        if (meetTrack && meetTabletSec && stepsRail && stepCards.length) {
           const calcStepsRail = () => {
-            const railW = stepsRail.scrollWidth;
             const winW = window.innerWidth;
-            // Starts shifted left so Card 1 enters comfortably from the left
-            const startX = -railW + Math.min(winW * 0.85, 520);
-            // Scrubs to the right so Card 4 finishes comfortably in view
-            const endX = Math.max(winW * 0.08, 40);
+            const card1 = stepCards[0];
+            const card4 = stepCards[stepCards.length - 1];
+            const card1W = card1.offsetWidth || 340;
+            const card4W = card4.offsetWidth || 340;
+            // Card 1 starts dead center in the viewport
+            const startX = (winW - card1W) / 2 - card1.offsetLeft;
+            // Card 4 ends dead center in the viewport
+            const endX = (winW - card4W) / 2 - card4.offsetLeft;
             return { startX, endX };
           };
 
-          gsap.fromTo(stepsRail,
+          const meetMasterTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: meetTrack,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 1.0,
+              invalidateOnRefresh: true
+            }
+          });
+
+          // 1. Watermark: Enters from below in first 10%, stays pinned, fades at very end (92% - 100%)
+          meetMasterTl.fromTo(meetTabletSec,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, ease: 'power2.out', duration: 0.10 },
+            0
+          );
+          meetMasterTl.to(meetTabletSec, { opacity: 1, duration: 0.82 }, 0.10);
+          meetMasterTl.to(meetTabletSec,
+            { opacity: 0, y: -25, ease: 'power1.in', duration: 0.08 },
+            0.92
+          );
+
+          // 2. Horizontal Steps Rail (Left to Right Scrub):
+          // Scrubs Card 1 -> Card 2 -> Card 3 -> Card 4 between 0.05 and 0.70 of the scroll track!
+          meetMasterTl.fromTo(stepsRail,
             { x: () => calcStepsRail().startX },
             {
               x: () => calcStepsRail().endX,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: meetTrack,
-                start: 'top 65%',
-                end: 'bottom 15%',
-                scrub: 1.2,
-                invalidateOnRefresh: true,
-                onUpdate: () => {
-                  // Dynamically expand white laser line as cards cross center
-                  const winCenter = window.innerWidth * 0.5;
-                  stepCards.forEach((card) => {
-                    const rect = card.getBoundingClientRect();
-                    const cardCenter = rect.left + rect.width * 0.5;
-                    const distFromCenter = Math.abs(winCenter - cardCenter);
-                    const line = card.querySelector('.white-line');
-                    if (line) {
-                      if (distFromCenter < window.innerWidth * 0.35) {
-                        const progress = Math.max(0, 1 - distFromCenter / (window.innerWidth * 0.35));
-                        line.style.width = (progress * 100) + '%';
-                      } else {
-                        line.style.width = '0%';
-                      }
-                    }
-                  });
-                }
-              }
-            }
+              ease: 'power1.inOut',
+              duration: 0.65
+            },
+            0.05
+          );
+          // READING HOLD: Card 4 rests dead center from 0.70 to 0.92 (generous reading runway)
+          meetMasterTl.to(stepsRail,
+            { x: () => calcStepsRail().endX, duration: 0.22 },
+            0.70
+          );
+          // Graceful fade into Section 4 at 0.92 to 1.00
+          meetMasterTl.to(stepsRail,
+            { opacity: 0, y: 20, ease: 'power1.in', duration: 0.08 },
+            0.92
           );
 
-          // Card inner text reveals
-          stepCards.forEach((card) => {
-            const innerTexts = card.querySelectorAll('[card-inner-text]');
-            innerTexts.forEach((txtEl) => {
-              const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
-              gsap.fromTo(split.words,
-                { y: '110%', opacity: 0 },
-                {
-                  y: '0%',
-                  opacity: 1,
-                  duration: 0.5,
-                  stagger: 0.015,
-                  ease: 'power2.out',
-                  scrollTrigger: {
-                    trigger: card,
-                    start: 'top 90%',
-                    toggleActions: 'play none none reverse'
-                  }
-                }
-              );
-            });
-          });
+          // 3. Canvas Video Frame-to-Frame Sync:
+          // Synced 1:1 with delivery step cards (0.05 to 0.70):
+          // - Card 1 enters ("Just drop it"): Frame 145 -> 180 (Tablet strikes water, splash, enters water)
+          // - Card 2 enters ("Zero emissions"): Frame 180 -> 220 (Tablet submerged deep underwater)
+          // - Card 3 enters ("Reinventing delivery"): Frame 220 -> 270 (Tablet actively dissolves with fizzy effervescent bubbles)
+          // - Card 4 enters ("0 run-off"): Frame 270 -> 313 (Tablet fully dissolved into crystal-clear water)
+          meetMasterTl.fromTo(frameObj,
+            { frame: 145 },
+            {
+              frame: 313,
+              ease: 'none',
+              duration: 0.65,
+              immediateRender: false,
+              onUpdate: () => {
+                drawCurrentFrame();
+              }
+            },
+            0.05
+          );
+          // READING HOLD (0.70 to 0.92): Holds frame 313 (crystal-clear water) while Card 4 is centered
+          meetMasterTl.to(frameObj,
+            {
+              frame: 313,
+              duration: 0.22,
+              onUpdate: () => {
+                drawCurrentFrame();
+              }
+            },
+            0.70
+          );
         }
 
         // Section 4: Green Lines Expand Laser Animation (Webflow t-f03374aa)
