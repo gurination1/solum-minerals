@@ -28,13 +28,8 @@
       
       <!-- Menu Button (Desktop: Left, Mobile: Right) -->
       <div class="menu-btn-wrap" id="menu-btn" role="button" tabindex="0" aria-label="Open navigation menu">
-        <div class="icon-menu">
-          <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line class="menu-line menu-line-top" x1="1" y1="1.5" x2="17" y2="1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <line class="menu-line menu-line-mid" x1="1" y1="6.5" x2="17" y2="6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <line class="menu-line menu-line-bot" x1="1" y1="11.5" x2="17" y2="11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </div>
+        <div class="icon-menu light" id="menu-lottie-light"></div>
+        <div class="icon-menu green" id="menu-lottie-green"></div>
         <span class="text-14-caps menu-text">Menu</span>
       </div>
 
@@ -704,6 +699,7 @@
   <script src="assets/three.min.js"></script>
   <script src="tablet-3d.js"></script>
   <script src="assets/splide.min.js"></script>
+  <script src="assets/lottie.min.js"></script>
 
   <script>
     // Initialize Lenis Smooth Scroll & Menu Logic
@@ -736,30 +732,97 @@
         }
       }
 
-      // 2. Navigation Drawer Toggle & Hover Kinematics
+      // 2. Navigation Drawer Toggle & Authentic Lottie Emblem Kinematics
       const menuBtn = document.getElementById('menu-btn');
       const closeBtn = document.getElementById('close-menu-btn');
       const sideBar = document.getElementById('menu-side-bar');
       const backdrop = document.getElementById('menu-side-bg');
       const linkItems = document.querySelectorAll('.link-item');
 
+      let animLight = null;
+      let animGreen = null;
+      let isMenuOpen = false;
+
+      if (typeof lottie !== 'undefined') {
+        const lightContainer = document.getElementById('menu-lottie-light');
+        if (lightContainer) {
+          animLight = lottie.loadAnimation({
+            container: lightContainer,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'assets/detail2.json'
+          });
+        }
+
+        const greenContainer = document.getElementById('menu-lottie-green');
+        if (greenContainer) {
+          animGreen = lottie.loadAnimation({
+            container: greenContainer,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'assets/detail2_updated.json'
+          });
+        }
+      }
+
+      function playMenuLottie(forward) {
+        const dir = forward ? 1 : -1;
+        [animLight, animGreen].forEach(a => {
+          if (!a) return;
+          a.setDirection(dir);
+          a.setSpeed(1.2);
+          a.play();
+        });
+      }
+
       function openMenu() {
-        sideBar.classList.add('open');
+        isMenuOpen = true;
+        playMenuLottie(true);
+        if (sideBar) {
+          sideBar.classList.add('open');
+          sideBar.setAttribute('aria-hidden', 'false');
+        }
         if (menuBtn) menuBtn.classList.add('active');
-        sideBar.setAttribute('aria-hidden', 'false');
         if (window.lenis) window.lenis.stop();
         document.body.style.overflow = 'hidden';
       }
 
       function closeMenu() {
-        sideBar.classList.remove('open');
+        isMenuOpen = false;
+        playMenuLottie(false);
+        if (sideBar) {
+          sideBar.classList.remove('open');
+          sideBar.setAttribute('aria-hidden', 'true');
+        }
         if (menuBtn) menuBtn.classList.remove('active');
-        sideBar.setAttribute('aria-hidden', 'true');
         if (window.lenis) window.lenis.start();
         document.body.style.overflow = '';
       }
 
-      if (menuBtn) menuBtn.addEventListener('click', openMenu);
+      if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+          if (isMenuOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        });
+
+        menuBtn.addEventListener('mouseenter', () => {
+          if (!isMenuOpen) {
+            playMenuLottie(true);
+          }
+        });
+
+        menuBtn.addEventListener('mouseleave', () => {
+          if (!isMenuOpen) {
+            playMenuLottie(false);
+          }
+        });
+      }
+
       if (closeBtn) closeBtn.addEventListener('click', closeMenu);
       if (backdrop) backdrop.addEventListener('click', closeMenu);
 
@@ -856,8 +919,6 @@
         navbar.style.color = activeColor;
         const menuText = navbar.querySelector('.menu-text');
         if (menuText) menuText.style.color = activeColor;
-        const menuLines = navbar.querySelectorAll('.menu-line');
-        menuLines.forEach(l => l.setAttribute('stroke', activeColor));
         const logoTexts = navbar.querySelectorAll('.logo-header-wrap svg text');
         logoTexts.forEach(t => t.setAttribute('fill', activeColor));
         const logoPaths = navbar.querySelectorAll('.logo-header-wrap svg path, .logo-header-wrap svg circle');

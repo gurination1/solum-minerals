@@ -175,10 +175,6 @@ img, svg {
   fill: #404F1D !important;
 }
 
-.navbar.dark-mode .menu-line {
-  stroke: #404F1D !important;
-}
-
 .navbar.dark-mode .logo-header-wrap svg path,
 .navbar.dark-mode .logo-header-wrap svg circle {
   fill: #404F1D !important;
@@ -218,51 +214,40 @@ img, svg {
 .icon-menu {
   justify-content: center;
   align-items: center;
-  width: 1.15em;
-  height: 0.85em;
+  width: 0.95em;
+  height: 0.95em;
   margin-top: 0;
   display: flex;
-  color: currentColor;
+  position: relative;
+  flex-shrink: 0;
   overflow: visible;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.menu-line {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-  transform-origin: center;
+.icon-menu svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.icon-menu.green {
+  display: none;
+}
+
+.icon-menu.light {
+  display: flex;
+}
+
+.navbar.dark-mode .icon-menu.light {
+  display: none !important;
+}
+
+.navbar.dark-mode .icon-menu.green {
+  display: flex !important;
 }
 
 .menu-btn-wrap:hover .icon-menu {
-  transform: scale(1.05);
-}
-
-.menu-btn-wrap:hover .menu-line-top {
-  transform: translateX(3px) scaleX(0.82);
-}
-
-.menu-btn-wrap:hover .menu-line-mid {
-  transform: translateX(0px);
-}
-
-.menu-btn-wrap:hover .menu-line-bot {
-  transform: translateX(-3px) scaleX(0.82);
-}
-
-.menu-btn-wrap.active .icon-menu {
-  transform: rotate(90deg);
-}
-
-.menu-btn-wrap.active .menu-line-top {
-  transform: translateY(5px) rotate(45deg);
-}
-
-.menu-btn-wrap.active .menu-line-mid {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.menu-btn-wrap.active .menu-line-bot {
-  transform: translateY(-5px) rotate(-45deg);
+  transform: scale(1.08);
 }
 
 .menu-text {
