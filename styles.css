@@ -960,28 +960,40 @@ img, svg {
   justify-content: center;
   align-items: flex-end;
   width: 100%;
+  max-width: 32em;
+  margin: 0 auto;
   display: flex;
   position: relative;
 }
 
 .corn-outlined {
-  width: 40.63em;
+  width: 100%;
+  max-width: 32em;
   height: auto;
   display: block;
+  user-select: none;
+  pointer-events: none;
 }
 
 .corn-filled {
-  object-fit: cover;
-  object-position: 50% 100%;
-  width: 40.63em;
-  height: 0em;
+  width: 100%;
+  max-width: 32em;
+  height: 100%;
   position: absolute;
   bottom: 0;
-  transition: height 1.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  clip-path: inset(100% 0 0 0);
+  -webkit-clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  pointer-events: none;
 }
 
 .corn-filled.animated {
-  height: 11em;
+  clip-path: inset(64% 0 0 0);
+  -webkit-clip-path: inset(64% 0 0 0);
 }
 
 /* Right Column (Mirrored Reciprocal of Parent Left): Video Card */
