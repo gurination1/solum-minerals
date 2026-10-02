@@ -141,7 +141,7 @@ img, svg {
    Header & Fixed Navigation Bar
    ========================================================================== */
 .navbar {
-  z-index: 100;
+  z-index: 1000;
   background-color: transparent;
   padding-top: 1.2em;
   padding-bottom: 1.2em;
@@ -221,8 +221,7 @@ img, svg {
   position: relative;
   flex-shrink: 0;
   overflow: visible;
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-origin: center center;
+  transition: opacity 0.3s ease;
 }
 
 .icon-menu svg {
@@ -247,34 +246,8 @@ img, svg {
   display: flex !important;
 }
 
-.menu-btn-wrap:hover .icon-menu {
-  transform: scale(1.18);
-}
-
-.menu-btn-wrap.is-bloomed .icon-menu {
-  transform: rotate(90deg) scale(1.15);
-}
-
-.menu-btn-wrap.pulse-click .icon-menu {
-  animation: cleverIconPulse 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-@keyframes cleverIconPulse {
-  0% { transform: scale(1) rotate(0deg); }
-  35% { transform: scale(1.4) rotate(-18deg); }
-  70% { transform: scale(0.9) rotate(104deg); }
-  100% { transform: scale(1.15) rotate(90deg); }
-}
-
-.menu-btn-wrap.pulse-click-reverse .icon-menu {
-  animation: cleverIconPulseRev 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-@keyframes cleverIconPulseRev {
-  0% { transform: scale(1.15) rotate(90deg); }
-  35% { transform: scale(1.35) rotate(108deg); }
-  70% { transform: scale(0.88) rotate(-12deg); }
-  100% { transform: scale(1) rotate(0deg); }
+.menu-btn-wrap:active {
+  opacity: 0.75;
 }
 
 .menu-text {
@@ -282,13 +255,7 @@ img, svg {
   font-size: 0.88em;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.35s ease, opacity 0.3s ease;
-}
-
-.menu-btn-wrap:hover .menu-text {
-  transform: translateX(2px);
-  letter-spacing: 0.12em;
-  opacity: 0.88;
+  transition: opacity 0.2s ease;
 }
 
 /* Brand Logos */

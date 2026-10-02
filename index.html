@@ -732,7 +732,7 @@
         }
       }
 
-      // 2. Menu Button: Clever Multi-Stage Icon Kinematics (Just for Icon)
+      // 2. Navigation Drawer & Authentic Lottie Emblem (Touch / Click Only)
       const menuBtn = document.getElementById('menu-btn');
       const closeBtn = document.getElementById('close-menu-btn');
       const sideBar = document.getElementById('menu-side-bar');
@@ -741,7 +741,7 @@
 
       let animLight = null;
       let animGreen = null;
-      let isBloomed = false;
+      let isMenuOpen = false;
 
       if (typeof lottie !== 'undefined') {
         const lightContainer = document.getElementById('menu-lottie-light');
@@ -768,52 +768,81 @@
       }
 
       function playMenuLottie(forward) {
-        const dir = forward ? 1 : -1;
         [animLight, animGreen].forEach(a => {
           if (!a) return;
-          a.setDirection(dir);
-          a.setSpeed(1.35);
+          a.setDirection(forward ? 1 : -1);
+          a.setSpeed(1.25);
           a.play();
         });
+      }
+
+      function openMenu() {
+        if (isMenuOpen) return;
+        isMenuOpen = true;
+        if (sideBar) {
+          sideBar.classList.add('open');
+          sideBar.setAttribute('aria-hidden', 'false');
+        }
+        if (menuBtn) {
+          menuBtn.setAttribute('aria-expanded', 'true');
+        }
+        playMenuLottie(true);
+        if (window.lenis) window.lenis.stop();
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        if (!isMenuOpen) return;
+        isMenuOpen = false;
+        if (sideBar) {
+          sideBar.classList.remove('open');
+          sideBar.setAttribute('aria-hidden', 'true');
+        }
+        if (menuBtn) {
+          menuBtn.setAttribute('aria-expanded', 'false');
+        }
+        playMenuLottie(false);
+        if (window.lenis) window.lenis.start();
+        document.body.style.overflow = '';
       }
 
       if (menuBtn) {
         menuBtn.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          isBloomed = !isBloomed;
-
-          if (isBloomed) {
-            menuBtn.classList.remove('pulse-click-reverse');
-            menuBtn.classList.add('pulse-click', 'is-bloomed');
-            playMenuLottie(true);
+          if (isMenuOpen) {
+            closeMenu();
           } else {
-            menuBtn.classList.remove('pulse-click');
-            menuBtn.classList.add('pulse-click-reverse');
-            menuBtn.classList.remove('is-bloomed');
-            playMenuLottie(false);
+            openMenu();
           }
         });
+        // Strictly no hover (mouseenter / mouseleave) listeners to eliminate any tickling/jittering
+      }
 
-        menuBtn.addEventListener('mouseenter', () => {
-          if (!isBloomed) {
-            playMenuLottie(true);
-          }
-        });
-
-        menuBtn.addEventListener('mouseleave', () => {
-          if (!isBloomed) {
-            playMenuLottie(false);
-          }
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          closeMenu();
         });
       }
 
-      if (closeBtn) closeBtn.addEventListener('click', () => {
-        if (sideBar) sideBar.classList.remove('open');
-      });
-      if (backdrop) backdrop.addEventListener('click', () => {
-        if (sideBar) sideBar.classList.remove('open');
-      });
+      if (backdrop) {
+        backdrop.addEventListener('click', (e) => {
+          e.preventDefault();
+          closeMenu();
+        });
+      }
+
+      // Close drawer when any navigation link inside drawer is clicked
+      if (sideBar) {
+        const drawerLinks = sideBar.querySelectorAll('a');
+        drawerLinks.forEach(a => {
+          a.addEventListener('click', () => {
+            closeMenu();
+          });
+        });
+      }
+
 
       // 3. Contact Us Slide-Over Drawer (.apply-form)
       const contactLink = document.getElementById('contact-link');
@@ -859,24 +888,23 @@
       });
 
       // Mobile Accordion Toggle (<= 991px matching Webflow Script 16)
-      if (window.innerWidth <= 991) {
-        linkItems.forEach((item) => {
-          item.addEventListener('click', (e) => {
-            if (e.target.tagName.toLowerCase() === 'a') return;
-            const isOpen = item.classList.contains('active');
-            linkItems.forEach((other) => {
-              other.classList.remove('active');
-              other.style.opacity = '0.35';
-            });
-            if (!isOpen) {
-              item.classList.add('active');
-              item.style.opacity = '1';
-            } else {
-              linkItems.forEach((other) => other.style.opacity = '1');
-            }
+      linkItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth > 991) return;
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          const isOpen = item.classList.contains('active');
+          linkItems.forEach((other) => {
+            other.classList.remove('active');
+            other.style.opacity = '0.35';
           });
+          if (!isOpen) {
+            item.classList.add('active');
+            item.style.opacity = '1';
+          } else {
+            linkItems.forEach((other) => other.style.opacity = '1');
+          }
         });
-      }
+      });
 
       // 4. Navbar Dynamic Color Shift on Beige Section Overlap (Exact Parent Script Replica)
       const navbar = document.getElementById('navbar');
