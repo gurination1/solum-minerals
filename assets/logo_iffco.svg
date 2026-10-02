@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <g transform="translate(10, 10)">
+    <path d="M25 0L50 25L25 50L0 25Z" fill="#F4EDE6" opacity="0.9"/>
+    <path d="M25 10L40 25L25 40L10 25Z" fill="#1f2509"/>
+    <circle cx="25" cy="25" r="5" fill="#F4EDE6"/>
+  </g>
+  <text x="72" y="37" font-family="'Aeonik', 'Inter', sans-serif" font-size="24" font-weight="800" fill="#F4EDE6" letter-spacing="2">IFFCO</text>
+  <text x="74" y="49" font-family="'Aeonik', 'Inter', sans-serif" font-size="7.5" font-weight="500" fill="#E2DEC9" opacity="0.75" letter-spacing="1.5">INDIAN FARMERS FERTILISER COOP</text>
+</svg>

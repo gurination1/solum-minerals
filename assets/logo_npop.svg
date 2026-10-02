@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <g transform="translate(12, 10)">
+    <path d="M24 4C14 4 6 12 6 22C6 33 16 44 24 46C32 44 42 33 42 22C42 12 34 4 24 4Z" stroke="#F4EDE6" stroke-width="1.8" fill="none" opacity="0.85"/>
+    <path d="M24 12C20 18 18 26 24 38C26 30 28 22 24 12Z" fill="#F4EDE6" opacity="0.9"/>
+  </g>
+  <text x="68" y="33" font-family="'Aeonik', 'Inter', sans-serif" font-size="17" font-weight="700" fill="#F4EDE6" letter-spacing="1.5">INDIA ORGANIC</text>
+  <text x="70" y="47" font-family="'Aeonik', 'Inter', sans-serif" font-size="7.5" font-weight="500" fill="#E2DEC9" opacity="0.75" letter-spacing="1.5">NPOP CERTIFIED BIO-INPUT</text>
+</svg>

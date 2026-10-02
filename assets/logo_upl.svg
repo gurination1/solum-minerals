@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 70" fill="none">
+  <g transform="translate(10, 12)">
+    <path d="M8 12H18V28C18 31 16 33 13 33C10 33 8 31 8 28V12Z" fill="#F4EDE6"/>
+    <circle cx="32" cy="22" r="11" stroke="#F4EDE6" stroke-width="4" fill="none"/>
+  </g>
+  <text x="58" y="37" font-family="'Aeonik', 'Inter', sans-serif" font-size="26" font-weight="800" fill="#F4EDE6" letter-spacing="3">UPL</text>
+  <text x="60" y="49" font-family="'Aeonik', 'Inter', sans-serif" font-size="7.5" font-weight="500" fill="#E2DEC9" opacity="0.75" letter-spacing="2">OPEN AG BIO-SOLUTIONS</text>
+</svg>

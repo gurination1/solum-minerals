@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <g transform="translate(15, 12)">
+    <circle cx="22" cy="23" r="20" stroke="#F4EDE6" stroke-width="1.8" fill="none" opacity="0.85"/>
+    <!-- Stylized Wheat Stalk -->
+    <path d="M22 8V38" stroke="#F4EDE6" stroke-width="1.8"/>
+    <path d="M22 14C17 12 16 17 22 20" stroke="#F4EDE6" stroke-width="1.5" fill="none"/>
+    <path d="M22 14C27 12 28 17 22 20" stroke="#F4EDE6" stroke-width="1.5" fill="none"/>
+    <path d="M22 22C17 20 16 25 22 28" stroke="#F4EDE6" stroke-width="1.5" fill="none"/>
+    <path d="M22 22C27 20 28 25 22 28" stroke="#F4EDE6" stroke-width="1.5" fill="none"/>
+  </g>
+  <text x="68" y="36" font-family="'Aeonik', 'Inter', sans-serif" font-size="22" font-weight="800" fill="#F4EDE6" letter-spacing="2.5">ICAR</text>
+  <text x="70" y="48" font-family="'Aeonik', 'Inter', sans-serif" font-size="7.5" font-weight="500" fill="#E2DEC9" opacity="0.75" letter-spacing="1.2">AGRI RESEARCH COUNCIL OF INDIA</text>
+</svg>

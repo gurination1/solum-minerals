@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 70" fill="none">
+  <g transform="translate(10, 10)">
+    <circle cx="24" cy="24" r="21" stroke="#F4EDE6" stroke-width="1.6" opacity="0.85"/>
+    <!-- Shield / Seal -->
+    <path d="M24 10L36 15V26C36 33 24 38 24 38C24 38 12 33 12 26V15L24 10Z" stroke="#F4EDE6" stroke-width="1.5" fill="none"/>
+    <path d="M24 17V30M19 23H29" stroke="#F4EDE6" stroke-width="1.5"/>
+  </g>
+  <text x="68" y="34" font-family="'Aeonik', 'Inter', sans-serif" font-size="19" font-weight="800" fill="#F4EDE6" letter-spacing="2">CIB &amp; RC</text>
+  <text x="70" y="47" font-family="'Aeonik', 'Inter', sans-serif" font-size="7.2" font-weight="500" fill="#E2DEC9" opacity="0.75" letter-spacing="1.2">CENTRAL INSECTICIDES BOARD</text>
+</svg>
