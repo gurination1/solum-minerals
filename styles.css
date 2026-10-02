@@ -842,13 +842,18 @@ img, svg {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: logos-marquee 32s linear infinite;
+  animation: logos-marquee 14s linear infinite;
   will-change: transform;
+}
+
+.logos-marquee:hover {
+  animation-play-state: paused;
 }
 
 .logos-items {
   z-index: 3;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 5.5em;
   padding-right: 5.5em;
@@ -1322,9 +1327,13 @@ img, svg {
   }
 
   .logos-items {
-    grid-column-gap: 3em;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 3.5em;
+    padding-right: 3.5em;
+    flex-wrap: nowrap;
+  }
+
+  .logos-marquee {
+    animation-duration: 12s;
   }
 
   /* Second Section Responsive (Matches Webflow Architecture) */
@@ -1421,8 +1430,13 @@ img, svg {
   }
 
   .logos-items {
-    grid-column-gap: 2em;
-    grid-row-gap: 2em;
+    gap: 2.5em;
+    padding-right: 2.5em;
+    flex-wrap: nowrap;
+  }
+
+  .logos-marquee {
+    animation-duration: 10s;
   }
 
   .most-fertilizers-mobile {
