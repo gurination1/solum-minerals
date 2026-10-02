@@ -415,40 +415,39 @@
             </div>
           </div>
 
-          <!-- Meet the Tablet Large Watermark / Banner -->
-          <div class="meet-the-tablet-new">
-            <img src="assets/meet_solum.svg" loading="lazy" alt="Meet SolumTab" class="meet-croptab-headline-img" />
-          </div>
+          <!-- Meet the Tablet Track: Pinned Watermark + Second Horizontal Strip -->
+          <div class="meet-steps-track" id="meet-steps-track">
+            <!-- Meet the Tablet Large Watermark / Banner (STAYS PINNED) -->
+            <div class="meet-the-tablet-new">
+              <img src="assets/meet_solum.svg" loading="lazy" alt="Meet SolumTab" class="meet-croptab-headline-img" />
+            </div>
 
-          <!-- 4 Staggered Delivery Step Cards -->
-          <div class="meet-tablet-steps-new-wrap">
-            <div class="meet-tablet-steps-new">
-              <div class="meet-tablet-steps-line-left">
-                <div id="meet-tablet-step-1" class="meet-tablet-step">
-                  <h3 class="text-30-regular" text-split="">Just drop it</h3>
-                  <div class="white-line l-1"></div>
-                  <div id="card-text-1" class="text-16-regular-caps" card-inner-text="">No new equipment needed. Just drop it into water — it dissolves evenly on its own.</div>
+            <!-- Second Horizontal Strip: 4 Glassmorphic Delivery Step Cards (Scrubs Left-to-Right) -->
+            <div class="meet-tablet-steps-new-wrap">
+              <div class="meet-tablet-steps-new" id="steps-rail">
+                <div id="meet-tablet-step-4" class="meet-tablet-step" data-step="4">
+                  <div class="step-badge">STEP 04</div>
+                  <h3 class="text-30-regular" text-split="">0 run-off</h3>
+                  <div class="white-line l-4"></div>
+                  <div id="card-text-4" class="text-16-regular-caps _0-run-off" card-inner-text="">0 events recorded in 12 months of monitoring. Waste eliminated.</div>
                 </div>
-              </div>
-              <div class="meet-tablet-steps-line-right">
-                <div id="meet-tablet-step-2" class="meet-tablet-step">
-                  <h3 class="text-30-regular" text-split="">Zero emissions</h3>
-                  <div class="white-line l-2"></div>
-                  <div id="card-text-2" class="text-16-regular-caps" card-inner-text="">We skip energy-intensive processes entirely, cutting CO₂ at the source. Cleaner to make, better for the planet.</div>
-                </div>
-              </div>
-              <div class="meet-tablet-steps-line-left">
-                <div id="meet-tablet-step-3" class="meet-tablet-step">
+                <div id="meet-tablet-step-3" class="meet-tablet-step" data-step="3">
+                  <div class="step-badge">STEP 03</div>
                   <h3 class="text-30-regular" text-split="">Reinventing delivery</h3>
                   <div class="white-line l-3"></div>
                   <div id="card-text-3" class="text-16-regular-caps" card-inner-text="">1,000 tablets (2,500 acres) — just 29 lb / 13 kg. Fits in a courier box. Ships with FedEx, DHL, even Amazon. Thousands of acres, delivered overnight.</div>
                 </div>
-              </div>
-              <div class="meet-tablet-steps-line-right">
-                <div id="meet-tablet-step-4" class="meet-tablet-step">
-                  <h3 class="text-30-regular" text-split="">0 run-off</h3>
-                  <div class="white-line l-4"></div>
-                  <div id="card-text-4" class="text-16-regular-caps _0-run-off" card-inner-text="">0 events recorded in 12 months of monitoring. Waste eliminated.</div>
+                <div id="meet-tablet-step-2" class="meet-tablet-step" data-step="2">
+                  <div class="step-badge">STEP 02</div>
+                  <h3 class="text-30-regular" text-split="">Zero emissions</h3>
+                  <div class="white-line l-2"></div>
+                  <div id="card-text-2" class="text-16-regular-caps" card-inner-text="">We skip energy-intensive processes entirely, cutting CO₂ at the source. Cleaner to make, better for the planet.</div>
+                </div>
+                <div id="meet-tablet-step-1" class="meet-tablet-step" data-step="1">
+                  <div class="step-badge">STEP 01</div>
+                  <h3 class="text-30-regular" text-split="">Just drop it</h3>
+                  <div class="white-line l-1"></div>
+                  <div id="card-text-1" class="text-16-regular-caps" card-inner-text="">No new equipment needed. Just drop it into water — it dissolves evenly on its own.</div>
                 </div>
               </div>
             </div>
@@ -1087,34 +1086,6 @@
         });
 
 
-        // Delivery Steps Entrance + Masked Words Reveal
-        const steps = document.querySelectorAll('.meet-tablet-step');
-        steps.forEach((step) => {
-          const stepTL = gsap.timeline({
-            scrollTrigger: {
-              trigger: step,
-              start: 'top 85%',
-              toggleActions: 'play reverse play reverse'
-            }
-          });
-
-          stepTL.fromTo(step,
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }
-          );
-
-          const stepInnerText = step.querySelector('[card-inner-text]');
-          if (stepInnerText) {
-            const cs = cardSplits.find(c => c.el === stepInnerText);
-            if (cs) {
-              stepTL.fromTo(cs.split.words,
-                { y: "110%", opacity: 0 },
-                { y: "0%", opacity: 1, duration: 0.65, ease: 'power2.out', stagger: 0.012 },
-                0.2
-              );
-            }
-          }
-        });
 
         // Hero Subtitle & CTA Button Entrance on load (Webflow t-16058dd6)
         const heroSubtitle = document.querySelector('[subtitle]');
@@ -1315,95 +1286,114 @@
         }
 
         // ====================================================================
-        // Section 3: Meet the Tablet Text Watermark Reveal
+        // Section 3: Meet SolumTab™ Watermark (PINNED & PERSISTENT)
         // ====================================================================
+        const meetTrack = document.querySelector('#meet-steps-track');
         const meetTabletSec = document.querySelector('.meet-the-tablet-new');
-        if (meetTabletSec) {
+        const stepsRail = document.querySelector('#steps-rail');
+        const stepCards = document.querySelectorAll('.meet-tablet-step');
+
+        if (meetTrack && meetTabletSec) {
+          // Watermark enters smoothly as user approaches the track, then KEEPS STAYS
           gsap.fromTo(meetTabletSec,
-            { autoAlpha: 0, scale: 0.92, y: 35 },
+            { autoAlpha: 0, y: 35 },
             {
               autoAlpha: 1,
-              scale: 1,
               y: 0,
-              duration: 1.0,
               ease: 'power2.out',
               scrollTrigger: {
-                trigger: meetTabletSec,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play reverse play reverse'
-              }
-            }
-          );
-        }
-
-        // ====================================================================
-        // Section 3: 4 Delivery Steps (Appear from Left to Right)
-        // ====================================================================
-        const stepItems = [
-          { step: '#meet-tablet-step-1' },
-          { step: '#meet-tablet-step-2' },
-          { step: '#meet-tablet-step-3' },
-          { step: '#meet-tablet-step-4' }
-        ];
-
-        stepItems.forEach((item) => {
-          const stepEl = document.querySelector(item.step);
-          if (!stepEl) return;
-          const lineEl = stepEl.querySelector('.white-line');
-
-          // Entrance animation: cards appear from LEFT to RIGHT
-          const stepTl = gsap.timeline({
-            scrollTrigger: {
-              trigger: stepEl,
-              start: 'top 82%',
-              toggleActions: 'play none none reverse'
-            }
-          });
-
-          // Comes from the left (x: -25vw on desktop, -80px on mobile)
-          const startX = window.innerWidth >= 992 ? -window.innerWidth * 0.25 : -80;
-          stepTl.fromTo(stepEl,
-            { x: startX, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.85, ease: 'power2.out' }
-          );
-
-          if (lineEl) {
-            stepTl.fromTo(lineEl,
-              { width: '0%' },
-              { width: '100%', duration: 0.8, ease: 'power2.out' },
-              0.2
-            );
-          }
-
-          // Subtle forward glide towards the right as user continues scrolling
-          gsap.fromTo(stepEl,
-            { x: 0 },
-            {
-              x: window.innerWidth >= 992 ? 35 : 15,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: stepEl,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.2
+                trigger: meetTrack,
+                start: 'top 85%',
+                end: 'top 35%',
+                scrub: true
               }
             }
           );
 
-          // Smooth exit fade-out so cards dissolve gracefully
-          gsap.to(stepEl, {
-            opacity: 0,
+          // Graceful fade as section transitions into Section 4
+          gsap.to(meetTabletSec, {
+            autoAlpha: 0,
             y: -25,
-            ease: 'power1.out',
+            ease: 'power1.in',
             scrollTrigger: {
-              trigger: stepEl,
-              start: 'bottom 30%',
-              end: 'bottom 10%',
+              trigger: meetTrack,
+              start: 'bottom 105%',
+              end: 'bottom 90%',
               scrub: true
             }
           });
-        });
+        }
+
+        // ====================================================================
+        // Section 3: Second Horizontal Strip (Scrubs from Left to Right)
+        // ====================================================================
+        if (meetTrack && stepsRail && stepCards.length) {
+          const calcStepsRail = () => {
+            const railW = stepsRail.scrollWidth;
+            const winW = window.innerWidth;
+            // Starts shifted to the left so Card 1 enters from left edge
+            const startX = -railW + Math.min(winW * 0.75, 480);
+            // Scrubs to the right so Card 4 finishes comfortably in view
+            const endX = Math.max(winW * 0.12, 50);
+            return { startX, endX };
+          };
+
+          gsap.fromTo(stepsRail,
+            { x: () => calcStepsRail().startX },
+            {
+              x: () => calcStepsRail().endX,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: meetTrack,
+                start: 'top 65%',
+                end: 'bottom 15%',
+                scrub: 1.2,
+                invalidateOnRefresh: true,
+                onUpdate: () => {
+                  // Dynamically expand white laser line as cards cross center
+                  const winCenter = window.innerWidth * 0.5;
+                  stepCards.forEach((card) => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.left + rect.width * 0.5;
+                    const distFromCenter = Math.abs(winCenter - cardCenter);
+                    const line = card.querySelector('.white-line');
+                    if (line) {
+                      if (distFromCenter < window.innerWidth * 0.35) {
+                        const progress = Math.max(0, 1 - distFromCenter / (window.innerWidth * 0.35));
+                        line.style.width = (progress * 100) + '%';
+                      } else {
+                        line.style.width = '0%';
+                      }
+                    }
+                  });
+                }
+              }
+            }
+          );
+
+          // Card inner text reveals
+          stepCards.forEach((card) => {
+            const innerTexts = card.querySelectorAll('[card-inner-text]');
+            innerTexts.forEach((txtEl) => {
+              const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
+              gsap.fromTo(split.words,
+                { y: '110%', opacity: 0 },
+                {
+                  y: '0%',
+                  opacity: 1,
+                  duration: 0.5,
+                  stagger: 0.015,
+                  ease: 'power2.out',
+                  scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none reverse'
+                  }
+                }
+              );
+            });
+          });
+        }
 
         // Section 4: Green Lines Expand Laser Animation (Webflow t-f03374aa)
         const numberLines = document.querySelectorAll('.numbers .green-line');
