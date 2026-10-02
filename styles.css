@@ -1632,40 +1632,43 @@ img, svg {
   display: flex;
 }
 
-/* 3 Bento Feature Cards (Desktop 3-Column Grid / Flex) */
+/* 3 Bento Feature Cards (Horizontal Strip Scrubbing Right-to-Left) */
 .capsule-cards-wrap {
   width: 100%;
   position: relative;
   overflow: visible;
   margin-top: 10em;
-  padding: 0 var(--padding-web);
+  padding: 0;
 }
 
 .capsule-cards-new {
   z-index: 5;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 1.88em;
-  width: 100%;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 2.2em;
+  width: max-content;
   position: relative;
   margin-top: 0;
-  padding: 0;
+  padding: 0 4vw;
+  will-change: transform;
 }
 
 .capsule-card-new {
   background-color: var(--beige, #f4ede6);
-  border-radius: 6px;
+  border-radius: 8px;
   flex-flow: column;
   justify-content: space-between;
   align-items: flex-start;
-  flex: 1 1 0;
-  width: auto;
-  min-height: 16.13em;
+  flex: 0 0 26.5em;
+  width: 26.5em;
+  min-width: 26.5em;
+  min-height: 16.5em;
   height: auto;
-  padding: 1.8em;
+  padding: 2em;
   display: flex;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
   overflow: hidden;
   position: relative;
   will-change: transform, opacity;
@@ -1720,31 +1723,31 @@ img, svg {
   text-transform: uppercase;
 }
 
-/* Meet the Tablet Vector Watermark */
+/* Meet the Tablet Vector Watermark / Banner */
 .meet-the-tablet-new {
   z-index: 2;
-  height: 100vh;
+  height: 50vh;
+  min-height: 220px;
   width: 100%;
-  mix-blend-mode: overlay;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  position: sticky;
-  top: 0;
+  align-items: center;
+  position: relative;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.45;
+  opacity: 0;
+  margin-top: 4em;
+  margin-bottom: 2em;
+  will-change: transform, opacity;
 }
 
 .meet-croptab-headline-img {
-  width: 100vw;
-  max-width: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
+  width: 95vw;
+  max-width: 1400px;
+  height: auto;
+  margin: 0 auto;
   display: block;
+  filter: drop-shadow(0 4px 25px rgba(0, 0, 0, 0.5));
 }
 
 /* 4 Delivery Step Cards */
@@ -1752,17 +1755,17 @@ img, svg {
   z-index: 3;
   width: 100%;
   position: relative;
-  margin-top: -100vh;
+  margin-top: 0;
   overflow: visible;
 }
 
 .meet-tablet-steps-new {
   z-index: 4;
   grid-column-gap: 16em;
-  grid-row-gap: 14em;
+  grid-row-gap: 12em;
   flex-flow: column;
-  padding-top: 50em;
-  padding-bottom: 35em;
+  padding-top: 6em;
+  padding-bottom: 28em;
   display: flex;
   position: relative;
 }
@@ -2689,7 +2692,7 @@ img, svg {
 }
 
 .community-hero {
-  background-image:url(assets/community_field_bg.webp);background-position:50%;background-size:cover;height:57em
+  background-image:url(assets/community_field_bg.webp);background-position:50%;background-size:cover;min-height:100vh;height:auto;padding-bottom:7em;overflow:visible;position:relative;
 }
 
 .community-wrap {
@@ -3532,7 +3535,9 @@ img, svg {
   }
 
   .community-hero {
-    height:48em
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 6em;
   }
 
   .community-wrap {
@@ -4015,3 +4020,115 @@ img, svg {
     visibility: hidden !important;
   }
 }
+
+/* ==========================================================================
+   Section 8 Community Viewport & Splide Arrow Fix
+   ========================================================================== */
+.community-hero {
+  min-height: 100vh !important;
+  height: auto !important;
+  padding-bottom: 7em !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.community-wrap {
+  position: relative !important;
+  overflow: visible !important;
+  padding-bottom: 2em !important;
+}
+
+.blog-post-item {
+  margin-top: 2.19em !important;
+  display: flex !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+.splide.splide--posts {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.splide--posts .splide__arrows {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 0.75em !important;
+  align-items: center !important;
+  position: static !important;
+  transform: none !important;
+  margin-top: 2.5em !important;
+  margin-bottom: 1em !important;
+  z-index: 10 !important;
+}
+
+.splide--posts .splide__arrow {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 3.38em !important;
+  height: 3.38em !important;
+  border-radius: 0.2em !important;
+  background-color: #f4ede6 !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 1em 1em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.splide--posts .splide__arrow--prev {
+  background-image: url(assets/splide_arrow_black.svg) !important;
+}
+
+.splide--posts .splide__arrow--next {
+  background-image: url(assets/splide_arrow_right.svg) !important;
+}
+
+.splide--posts .splide__arrow:hover {
+  background-color: var(--main-green) !important;
+  background-image: url(assets/splide_arrow_white.svg) !important;
+  transform: scale(1.06) !important;
+}
+
+.splide--posts .splide__arrow--next:hover {
+  background-image: url(assets/splide_arrow_right.svg) !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+@media screen and (max-width: 991px) {
+  .community-hero {
+    min-height: 100vh !important;
+    height: auto !important;
+    padding-bottom: 6em !important;
+  }
+  .splide.splide--posts {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1.5em !important;
+  }
+  .splide--posts .splide__arrows {
+    order: 2 !important;
+    margin-top: 1.5em !important;
+    margin-bottom: 2em !important;
+  }
+  .splide--posts .splide__track {
+    order: 1 !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+}
+

@@ -1263,100 +1263,88 @@
         }
 
         // ====================================================================
-        // Section 3: Bento Feature Cards (Desktop 3-Column vs Mobile Rail)
+        // Section 3: Bento Feature Cards Strip (Right-to-Left Scrub)
         // ====================================================================
-        if (capsuleCardsWrap && bentoCards.length) {
-          ScrollTrigger.matchMedia({
-            // Desktop (>= 992px): 3-column row with staggered rise from below
-            "(min-width: 992px)": function() {
-              const bentoTL = gsap.timeline({
-                scrollTrigger: {
-                  trigger: capsuleCardsWrap,
-                  start: 'top 85%',
-                  toggleActions: 'play reverse play reverse'
-                }
-              });
+        if (capsuleCardsWrap && capsuleCardsRail && bentoCards.length) {
+          const calcCardRailTravel = () => {
+            const lastCard = bentoCards[bentoCards.length - 1];
+            if (lastCard) {
+              return Math.max(window.innerWidth * 0.9, (lastCard.offsetLeft + lastCard.offsetWidth) - (window.innerWidth * 0.35));
+            }
+            return window.innerWidth * 1.2;
+          };
 
-              bentoCards.forEach((cardEl, idx) => {
-                bentoTL.fromTo(cardEl,
-                  { y: 80, opacity: 0 },
-                  { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' },
-                  idx * 0.14
-                );
-
-                const innerTexts = cardEl.querySelectorAll('[card-inner-text]');
-                innerTexts.forEach(tEl => {
-                  const split = new SplitText(tEl, { type: 'words, lines', linesClass: 'split-line' });
-                  bentoTL.fromTo(split.words,
-                    { y: '110%', opacity: 0 },
-                    { y: '0%', opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.012 },
-                    idx * 0.14 + 0.2
-                  );
-                });
-              });
-            },
-
-            // Mobile & Tablet (< 992px): Sticky horizontal scrub rail
-            "(max-width: 991px)": function() {
-              if (capsuleCardsRail) {
-                const calcCardRailTravel = () => {
-                  const c1 = document.querySelector('#card-1');
-                  const c3 = document.querySelector('#card-3');
-                  if (c1 && c3) {
-                    return Math.max(400, c3.offsetLeft - c1.offsetLeft);
-                  }
-                  return 720;
-                };
-
-                gsap.fromTo(capsuleCardsRail,
-                  { x: 0 },
-                  {
-                    x: () => -calcCardRailTravel(),
-                    ease: 'none',
-                    scrollTrigger: {
-                      trigger: capsuleCardsWrap,
-                      start: 'top 20%',
-                      end: '+=1500',
-                      scrub: 0.8,
-                      invalidateOnRefresh: true
-                    }
-                  }
-                );
-
-                bentoCards.forEach((card) => {
-                  const innerTexts = card.querySelectorAll('[card-inner-text]');
-                  innerTexts.forEach((txtEl) => {
-                    const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
-                    gsap.fromTo(split.words,
-                      { y: '110%', opacity: 0 },
-                      {
-                        y: '0%',
-                        opacity: 1,
-                        duration: 0.5,
-                        stagger: 0.015,
-                        ease: 'power2.out',
-                        scrollTrigger: {
-                          trigger: card,
-                          start: 'top 85%',
-                          toggleActions: 'play none none reverse'
-                        }
-                      }
-                    );
-                  });
-                });
+          // Horizontal strip: comes from the right and scrubs to the left
+          gsap.fromTo(capsuleCardsRail,
+            { x: () => window.innerWidth * 0.7 },
+            {
+              x: () => -calcCardRailTravel(),
+              ease: 'none',
+              scrollTrigger: {
+                trigger: capsuleCardsWrap,
+                start: 'top 65%',
+                end: 'bottom 10%',
+                scrub: 1,
+                invalidateOnRefresh: true
               }
             }
+          );
+
+          // Card inner text reveals
+          bentoCards.forEach((card) => {
+            const innerTexts = card.querySelectorAll('[card-inner-text]');
+            innerTexts.forEach((txtEl) => {
+              const split = new SplitText(txtEl, { type: 'words, lines', linesClass: 'split-line' });
+              gsap.fromTo(split.words,
+                { y: '110%', opacity: 0 },
+                {
+                  y: '0%',
+                  opacity: 1,
+                  duration: 0.5,
+                  stagger: 0.015,
+                  ease: 'power2.out',
+                  scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                  }
+                }
+              );
+            });
           });
         }
 
         // ====================================================================
-        // Section 3: 4 Staggered Delivery Steps & Expanding Laser Lines
+        // Section 3: Meet the Tablet Text Watermark Reveal
+        // ====================================================================
+        const meetTabletSec = document.querySelector('.meet-the-tablet-new');
+        if (meetTabletSec) {
+          gsap.fromTo(meetTabletSec,
+            { autoAlpha: 0, scale: 0.92, y: 35 },
+            {
+              autoAlpha: 1,
+              scale: 1,
+              y: 0,
+              duration: 1.0,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: meetTabletSec,
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play reverse play reverse'
+              }
+            }
+          );
+        }
+
+        // ====================================================================
+        // Section 3: 4 Delivery Steps (Appear from Left to Right)
         // ====================================================================
         const stepItems = [
-          { step: '#meet-tablet-step-1', drift: 'left' },
-          { step: '#meet-tablet-step-2', drift: 'right' },
-          { step: '#meet-tablet-step-3', drift: 'left' },
-          { step: '#meet-tablet-step-4', drift: 'right' }
+          { step: '#meet-tablet-step-1' },
+          { step: '#meet-tablet-step-2' },
+          { step: '#meet-tablet-step-3' },
+          { step: '#meet-tablet-step-4' }
         ];
 
         stepItems.forEach((item) => {
@@ -1364,7 +1352,7 @@
           if (!stepEl) return;
           const lineEl = stepEl.querySelector('.white-line');
 
-          // Entrance animation with line laser reveal
+          // Entrance animation: cards appear from LEFT to RIGHT
           const stepTl = gsap.timeline({
             scrollTrigger: {
               trigger: stepEl,
@@ -1373,9 +1361,11 @@
             }
           });
 
+          // Comes from the left (x: -25vw on desktop, -80px on mobile)
+          const startX = window.innerWidth >= 992 ? -window.innerWidth * 0.25 : -80;
           stepTl.fromTo(stepEl,
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }
+            { x: startX, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.85, ease: 'power2.out' }
           );
 
           if (lineEl) {
@@ -1386,24 +1376,22 @@
             );
           }
 
-          // Lateral parallax drift as user scrubs past (desktop only to prevent mobile overflow)
-          if (window.innerWidth >= 992) {
-            gsap.fromTo(stepEl,
-              { x: item.drift === 'left' ? '2.5em' : '-2.5em' },
-              {
-                x: item.drift === 'left' ? '-2.5em' : '2.5em',
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: stepEl,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 1
-                }
+          // Subtle forward glide towards the right as user continues scrolling
+          gsap.fromTo(stepEl,
+            { x: 0 },
+            {
+              x: window.innerWidth >= 992 ? 35 : 15,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: stepEl,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.2
               }
-            );
-          }
+            }
+          );
 
-          // Smooth exit fade-out so cards dissolve gracefully without cutting off
+          // Smooth exit fade-out so cards dissolve gracefully
           gsap.to(stepEl, {
             opacity: 0,
             y: -25,

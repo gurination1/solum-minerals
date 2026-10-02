@@ -271,7 +271,7 @@
 }
 
 .community-hero {
-  background-image:url(assets/community_field_bg.webp);background-position:50%;background-size:cover;height:57em
+  background-image:url(assets/community_field_bg.webp);background-position:50%;background-size:cover;min-height:100vh;height:auto;padding-bottom:7em;overflow:visible;position:relative;
 }
 
 .community-wrap {
@@ -1114,7 +1114,9 @@
   }
 
   .community-hero {
-    height:48em
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 6em;
   }
 
   .community-wrap {
