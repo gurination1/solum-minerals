@@ -452,6 +452,53 @@
         </div>
       </div>
     </section>
+
+    <!-- ========================================================================
+         Section 4: Field-Tested. Farmer-Approved. (Numbers & Video Split Section)
+         ======================================================================== -->
+    <section class="numbers" id="s-numbers" data-w-id="96b3b2c6-9eaf-28ca-db7e-bb1bbf0477ce">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="numbers-wrap">
+          <div class="numbers-video">
+            <video autoplay loop muted playsinline webkit-playsinline class="farmer-video">
+              <source src="assets/farm_main_video.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="numbers-content">
+            <h2 class="h2-style green" text-split-delay="0.2">
+              Field-Tested.<br />Farmer-Approved.
+            </h2>
+            <div class="numbers-list">
+              <div class="number-item first">
+                <div class="text-80-regular" numberstext="">4</div>
+                <div class="text-16-regular-caps green" numberstext="">continents tested</div>
+                <div class="green-line"></div>
+              </div>
+              <div class="number-item action">
+                <div class="text-80-regular" numberstext="">100x</div>
+                <div class="text-16-regular-caps green" numberstext="">lower transport&nbsp;cost</div>
+                <div class="green-line"></div>
+              </div>
+              <div class="number-item">
+                <div class="text-80-regular" numberstext="">0.5 ton</div>
+                <div class="text-16-regular-caps green" numberstext="">CO₂ saved per acre – at no extra cost</div>
+                <div class="green-line"></div>
+              </div>
+              <div class="number-item">
+                <div class="text-80-regular" numberstext="">≥5×</div>
+                <div class="text-16-regular-caps green" numberstext="">return* on every dollar invested</div>
+                <div class="green-line"></div>
+              </div>
+              <div class="small-info">
+                <div class="text-14-caps green small-description">
+                  *Equal to or better than the ROI published for leading NPK programs; based on side-by-side trial economics and lower freight + zero-emission practices.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ========================================================================
@@ -664,16 +711,25 @@
         });
       }
 
-      // 4. Navbar Dynamic Color Shift on Second Section Overlap (Script 22)
+      // 4. Navbar Dynamic Color Shift on Beige Section Overlap (Script 22)
       const navbar = document.getElementById('navbar');
-      const secondSection = document.getElementById('s-second');
+      const targetSections = ['#s-second', '#s-numbers', '#s-carbon', '#products', '#s-trials'];
 
       function updateNavbarColor() {
-        if (!navbar || !secondSection) return;
+        if (!navbar) return;
         const navRect = navbar.getBoundingClientRect();
-        const secRect = secondSection.getBoundingClientRect();
-        const isDarkSection = secRect.top <= navRect.bottom && secRect.bottom > navRect.top;
-        if (isDarkSection) {
+        let isBeigeSection = false;
+        targetSections.forEach((sel) => {
+          const sec = document.querySelector(sel);
+          if (sec) {
+            const secRect = sec.getBoundingClientRect();
+            if (secRect.top <= navRect.bottom && secRect.bottom > navRect.top) {
+              isBeigeSection = true;
+            }
+          }
+        });
+
+        if (isBeigeSection) {
           navbar.classList.add('dark-mode');
         } else {
           navbar.classList.remove('dark-mode');
@@ -1043,7 +1099,99 @@
           }
         });
 
-        gsap.set("[text-split], [text-split-delay], [card-inner-text], [subtitle], [hero-btn], [animate=\"better-way\"], [animate=\"better-way-btn\"]", { autoAlpha: 1 });
+        // Horizontal scrub rail for Bento Cards (Webflow t-893abf6b)
+        const capsuleCardsNew = document.querySelector('.capsule-cards-new');
+        if (capsuleCardsNew) {
+          gsap.fromTo(capsuleCardsNew,
+            { x: '0em' },
+            {
+              x: '-14em',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.capsule-cards-wrap',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                scrub: 0.8
+              }
+            }
+          );
+        }
+
+        // Horizontal lateral drift for staggered delivery steps
+        const stepsLeft = document.querySelectorAll('.meet-tablet-steps-line-left');
+        const stepsRight = document.querySelectorAll('.meet-tablet-steps-line-right');
+        if (stepsLeft.length) {
+          gsap.fromTo(stepsLeft,
+            { x: '4em' },
+            {
+              x: '-4em',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.meet-tablet-steps-new-wrap',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1
+              }
+            }
+          );
+        }
+        if (stepsRight.length) {
+          gsap.fromTo(stepsRight,
+            { x: '-4em' },
+            {
+              x: '4em',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.meet-tablet-steps-new-wrap',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1
+              }
+            }
+          );
+        }
+
+        // Section 4: Green Lines Expand Laser Animation (Webflow t-f03374aa)
+        const numberLines = document.querySelectorAll('.numbers .green-line');
+        if (numberLines.length) {
+          gsap.utils.toArray('.numbers .green-line').forEach((line) => {
+            gsap.fromTo(line,
+              { width: '0%' },
+              {
+                width: '100%',
+                duration: 1.2,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: line.closest('.number-item'),
+                  start: 'top 85%',
+                  toggleActions: 'play none none none'
+                }
+              }
+            );
+          });
+        }
+
+        // Section 4: Numbers and Metric text rise animation
+        document.querySelectorAll('.numbers [numberstext]').forEach((el) => {
+          const splitNum = new SplitText(el, { type: "words, lines", linesClass: "split-line" });
+          gsap.fromTo(splitNum.words,
+            { y: "100%", opacity: 0 },
+            {
+              y: "0%",
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.02,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el.closest('.number-item') || el,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+              }
+            }
+          );
+        });
+
+        gsap.set("[text-split], [text-split-delay], [card-inner-text], [subtitle], [hero-btn], [animate=\"better-way\"], [animate=\"better-way-btn\"], [numberstext]", { autoAlpha: 1 });
       }
     })();
   </script>
