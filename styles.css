@@ -1514,7 +1514,7 @@ img, svg {
   z-index: 3;
   background-color: var(--main-green);
   height: auto;
-  min-height: 520em;
+  min-height: 0;
   position: relative;
 }
 
@@ -1730,7 +1730,7 @@ img, svg {
 /* Meet the Tablet Track: Top Watermark + Bottom Delivery Step Cards */
 .meet-steps-track {
   width: 100%;
-  height: 320em;
+  height: 175em;
   position: relative;
   overflow: visible;
   margin-top: 4em;
@@ -1874,7 +1874,8 @@ img, svg {
 /* Responsive Media Queries for Section 3 */
 @media screen and (max-width: 991px) {
   .capsule {
-    height: 370em;
+    height: auto;
+    min-height: 0;
   }
   .capsule-heading {
     position: sticky;
@@ -1945,7 +1946,7 @@ img, svg {
     min-height: 11em;
   }
   .meet-steps-track {
-    height: 320em;
+    height: 165em;
     margin-top: 3em;
   }
   .meet-the-tablet-new {
@@ -1986,7 +1987,7 @@ img, svg {
 @media screen and (max-width: 479px) {
   .capsule {
     height: auto;
-    min-height: 520em;
+    min-height: 0;
   }
   .capsule-heading {
     top: 4.8em;
@@ -2019,7 +2020,7 @@ img, svg {
     padding: 1.2em;
   }
   .meet-steps-track {
-    height: 330em;
+    height: 155em;
     margin-top: 2.5em;
   }
   .meet-the-tablet-new {

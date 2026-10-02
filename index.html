@@ -1356,57 +1356,53 @@
               trigger: meetTrack,
               start: 'top top',
               end: 'bottom bottom',
-              scrub: 1.0,
+              scrub: 0.6,
               invalidateOnRefresh: true
             }
           });
 
-          // 1. Watermark: Enters from below in first 10%, stays pinned, fades at very end (92% - 100%)
+          // 1. Watermark: Enters smoothly from below in first 8%, stays pinned, holds until handoff
           meetMasterTl.fromTo(meetTabletSec,
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, ease: 'power2.out', duration: 0.10 },
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, ease: 'power2.out', duration: 0.08 },
             0
           );
-          meetMasterTl.to(meetTabletSec, { opacity: 1, duration: 0.82 }, 0.10);
+          meetMasterTl.to(meetTabletSec, { opacity: 1, duration: 0.88 }, 0.08);
+          // Instant smooth handoff right as Section 4 enters (0.96 -> 1.00)
           meetMasterTl.to(meetTabletSec,
-            { opacity: 0, y: -25, ease: 'power1.in', duration: 0.08 },
-            0.92
+            { opacity: 0, y: -20, ease: 'power1.in', duration: 0.04 },
+            0.96
           );
 
           // 2. Horizontal Steps Rail (Left to Right Scrub):
-          // Scrubs Card 1 -> Card 2 -> Card 3 -> Card 4 between 0.05 and 0.70 of the scroll track!
+          // Scrubs Card 1 -> Card 2 -> Card 3 -> Card 4 between 0.05 and 0.72 of the scroll track!
           meetMasterTl.fromTo(stepsRail,
             { x: () => calcStepsRail().startX },
             {
               x: () => calcStepsRail().endX,
               ease: 'power1.inOut',
-              duration: 0.65
+              duration: 0.67
             },
             0.05
           );
-          // READING HOLD: Card 4 rests dead center from 0.70 to 0.92 (generous reading runway)
+          // READING HOLD: Card 4 rests dead center from 0.72 to 0.96 (comfortable reading runway)
           meetMasterTl.to(stepsRail,
-            { x: () => calcStepsRail().endX, duration: 0.22 },
-            0.70
+            { x: () => calcStepsRail().endX, duration: 0.24 },
+            0.72
           );
-          // Graceful fade into Section 4 at 0.92 to 1.00
+          // Instant smooth handoff into Section 4 right at 0.96 -> 1.00 (zero dead space)
           meetMasterTl.to(stepsRail,
-            { opacity: 0, y: 20, ease: 'power1.in', duration: 0.08 },
-            0.92
+            { opacity: 0, y: -15, ease: 'power1.in', duration: 0.04 },
+            0.96
           );
 
           // 3. Canvas Video Frame-to-Frame Sync:
-          // Synced 1:1 with delivery step cards (0.05 to 0.70):
-          // - Card 1 enters ("Just drop it"): Frame 145 -> 180 (Tablet strikes water, splash, enters water)
-          // - Card 2 enters ("Zero emissions"): Frame 180 -> 220 (Tablet submerged deep underwater)
-          // - Card 3 enters ("Reinventing delivery"): Frame 220 -> 270 (Tablet actively dissolves with fizzy effervescent bubbles)
-          // - Card 4 enters ("0 run-off"): Frame 270 -> 313 (Tablet fully dissolved into crystal-clear water)
           meetMasterTl.fromTo(frameObj,
             { frame: 145 },
             {
               frame: 313,
               ease: 'none',
-              duration: 0.65,
+              duration: 0.67,
               immediateRender: false,
               onUpdate: () => {
                 drawCurrentFrame();
@@ -1414,16 +1410,16 @@
             },
             0.05
           );
-          // READING HOLD (0.70 to 0.92): Holds frame 313 (crystal-clear water) while Card 4 is centered
+          // READING HOLD (0.72 to 1.00): Holds frame 313 (crystal-clear water)
           meetMasterTl.to(frameObj,
             {
               frame: 313,
-              duration: 0.22,
+              duration: 0.28,
               onUpdate: () => {
                 drawCurrentFrame();
               }
             },
-            0.70
+            0.72
           );
         }
 
