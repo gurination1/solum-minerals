@@ -554,7 +554,7 @@
           <div class="products-items">
             <!-- Product 1: CropTab -->
             <a href="#apply-form" class="product-item product-1 w-inline-block" apply="open">
-              <img src="assets/croptab_npk.webp" loading="eager" alt="CropTab™ NPK" class="product-image" />
+              <img src="assets/croptab_npk.png" loading="eager" alt="CropTab™ NPK" class="product-image" />
               <div class="product-description">
                 <div class="_w-336">
                   <h3 class="text-32-regular">CropTab™ NPK</h3>
@@ -574,7 +574,7 @@
 
             <!-- Product 2: NutriPeak -->
             <a href="#apply-form" class="product-item product-2 w-inline-block" apply="open">
-              <img src="assets/nutripeak_npk.webp" loading="eager" alt="NutriPeak™ Micronutrient Fertilizers" class="product-image" />
+              <img src="assets/nutripeak_npk.png" loading="eager" alt="NutriPeak™ Micronutrient Fertilizers" class="product-image" />
               <div class="product-description">
                 <div class="_w-400">
                   <h3 class="text-32-regular">NutriPeak™<br />Micronutrient Fertilizers</h3>
@@ -594,7 +594,7 @@
 
             <!-- Product 3: ElevateFeed -->
             <a href="#apply-form" class="product-item product-3 w-inline-block" apply="open">
-              <img src="assets/elevatefeed.webp" loading="eager" alt="ElevateFeed™ Feed Additives" class="product-image" />
+              <img src="assets/elevatefeed.png" loading="eager" alt="ElevateFeed™ Feed Additives" class="product-image" />
               <div class="product-description">
                 <div class="_w-380">
                   <h3 class="text-32-regular">ElevateFeed™<br />Feed Additives</h3>
@@ -1386,20 +1386,35 @@
             );
           }
 
-          // Lateral parallax drift as user scrubs past
-          gsap.fromTo(stepEl,
-            { x: item.drift === 'left' ? '3em' : '-3em' },
-            {
-              x: item.drift === 'left' ? '-3em' : '3em',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: stepEl,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
+          // Lateral parallax drift as user scrubs past (desktop only to prevent mobile overflow)
+          if (window.innerWidth >= 992) {
+            gsap.fromTo(stepEl,
+              { x: item.drift === 'left' ? '2.5em' : '-2.5em' },
+              {
+                x: item.drift === 'left' ? '-2.5em' : '2.5em',
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: stepEl,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: 1
+                }
               }
+            );
+          }
+
+          // Smooth exit fade-out so cards dissolve gracefully without cutting off
+          gsap.to(stepEl, {
+            opacity: 0,
+            y: -25,
+            ease: 'power1.out',
+            scrollTrigger: {
+              trigger: stepEl,
+              start: 'bottom 30%',
+              end: 'bottom 10%',
+              scrub: true
             }
-          );
+          });
         });
 
         // Section 4: Green Lines Expand Laser Animation (Webflow t-f03374aa)

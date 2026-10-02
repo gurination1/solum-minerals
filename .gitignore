@@ -8,6 +8,9 @@ node_modules/
 !assets/farm_main_preview2.jpg
 !assets/community_man.jpg
 !assets/green_gradient.png
+!assets/croptab_npk.png
+!assets/nutripeak_npk.png
+!assets/elevatefeed.png
 !assets/tab_frames/*.jpg
 
 # Backup frame dirs

@@ -1759,10 +1759,10 @@ img, svg {
 .meet-tablet-steps-new {
   z-index: 4;
   grid-column-gap: 16em;
-  grid-row-gap: 16em;
+  grid-row-gap: 14em;
   flex-flow: column;
-  padding-top: 55em;
-  padding-bottom: 50em;
+  padding-top: 50em;
+  padding-bottom: 35em;
   display: flex;
   position: relative;
 }
@@ -1783,17 +1783,17 @@ img, svg {
 
 .meet-tablet-step {
   z-index: 2;
-  background: rgba(30, 42, 18, 0.72);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
+  background: rgba(22, 32, 14, 0.78);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(244, 237, 230, 0.22);
-  border-radius: 8px;
+  border-radius: 10px;
   flex-flow: column;
   width: 25em;
   padding: 2em;
   display: flex;
   position: relative;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
   will-change: transform, opacity;
 }
 
@@ -1834,7 +1834,7 @@ img, svg {
 /* Responsive Media Queries for Section 3 */
 @media screen and (max-width: 991px) {
   .capsule {
-    height: 300em;
+    height: 370em;
   }
   .capsule-heading {
     position: sticky;
@@ -1905,25 +1905,25 @@ img, svg {
     min-height: 11em;
   }
   .meet-tablet-steps-new {
-    padding-top: 45em;
-    padding-bottom: 40em;
-    grid-row-gap: 12em;
+    padding-top: 36em;
+    padding-bottom: 28em;
+    grid-row-gap: 9em;
   }
   .meet-tablet-step {
-    width: 90vw;
-    max-width: 24em;
+    width: 100%;
+    max-width: 22em;
   }
-  .meet-tablet-steps-line-left {
-    padding-left: var(--padding-tablet);
-  }
+  .meet-tablet-steps-line-left,
   .meet-tablet-steps-line-right {
+    padding-left: var(--padding-tablet);
     padding-right: var(--padding-tablet);
+    justify-content: center;
   }
 }
 
 @media screen and (max-width: 479px) {
   .capsule {
-    height: 300em;
+    height: 360em;
   }
   .capsule-heading {
     top: 4.8em;
@@ -1955,15 +1955,23 @@ img, svg {
     min-height: 13em;
     padding: 1.2em;
   }
+  .meet-tablet-steps-new {
+    padding-top: 30em;
+    padding-bottom: 26em;
+    grid-row-gap: 7.5em;
+  }
   .meet-tablet-step {
-    width: 92vw;
+    width: calc(100vw - 2.5em);
     max-width: 22em;
-    padding: 1.5em;
+    margin: 0 auto;
+    padding: 1.4em 1.25em;
   }
   .meet-tablet-steps-line-left,
   .meet-tablet-steps-line-right {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    width: 100%;
   }
 }
 
