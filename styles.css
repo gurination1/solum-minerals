@@ -885,6 +885,7 @@ img, svg {
   color: var(--main-green);
   height: 66em;
   position: relative;
+  overflow: hidden;
 }
 
 .container {
@@ -912,7 +913,7 @@ img, svg {
 
 /* Left Column (Mirrored Reciprocal of Parent Right): 70% Stat & Animated Plant */
 .up-to-70-wrap {
-  padding-top: 7.5em;
+  padding-top: 5em;
   padding-left: var(--padding-web);
   padding-right: 3.13em;
   padding-bottom: 0;
@@ -922,6 +923,7 @@ img, svg {
   display: flex;
   height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .up-to-70-title {
@@ -930,6 +932,7 @@ img, svg {
   flex-flow: column;
   width: 36.2em;
   display: flex;
+  flex: 0 0 auto;
 }
 
 .h2-style.green {
@@ -967,9 +970,12 @@ img, svg {
 .corn-animated-wrap {
   justify-content: center;
   align-items: flex-end;
-  width: 100%;
-  max-width: 44em;
+  width: fit-content;
+  max-width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   margin: 0 auto;
+  align-self: center;
   display: flex;
   position: relative;
 }
@@ -977,9 +983,12 @@ img, svg {
 .crop-base-layer,
 .corn-ai-specimen,
 .corn-outlined {
-  width: 100%;
-  max-width: 44em;
-  height: auto;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 42em;
+  object-fit: contain;
+  object-position: bottom center;
   display: block;
   user-select: none;
   pointer-events: none;
@@ -991,7 +1000,7 @@ img, svg {
   object-fit: cover;
   object-position: 50% 100%;
   width: 100%;
-  max-width: 44em;
+  max-width: 100%;
   height: 0em;
   position: absolute;
   bottom: 0;
@@ -1407,6 +1416,16 @@ img, svg {
     padding-right: var(--padding-tablet);
     padding-bottom: 3em;
     width: 100%;
+    overflow: visible;
+    height: auto;
+  }
+
+  .corn-animated-wrap {
+    width: 100%;
+    max-width: 36em;
+    margin: 2em auto 0;
+    flex: none;
+    align-self: center;
   }
 
   .up-to-70-title {
@@ -1426,6 +1445,8 @@ img, svg {
   .corn-filled {
     width: 100%;
     max-width: 36em;
+    height: auto;
+    max-height: none;
   }
 }
 
