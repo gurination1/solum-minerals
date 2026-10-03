@@ -1,32 +1,10 @@
-# Dependencies
-node_modules/
-
-# Scratch & test screenshots
-*.png
-*.jpg
-!assets/farm_main_preview.jpg
-!assets/farm_main_preview2.jpg
-!assets/community_man.jpg
-!assets/green_gradient.png
-!assets/croptab_npk.png
-!assets/nutripeak_npk.png
-!assets/elevatefeed.png
-!assets/corn_plant_*.png
-!assets/crop_specimen_ai.png
-!assets/crop_specimen_dormant.png
-!assets/crop_specimen_base.png
-!assets/crop_specimen_absorbed.png
-!assets/corn_broad_*.png
-!assets/tab_frames/*.jpg
-
-# Backup frame dirs
-assets/tab_frames_backup/
-assets/tab_frames_prev/
-assets/tab_frames_veo/
-
-# Root temporary files
-tab_step_*.jpg
-tab_uw_*.jpg
-underwater_*.jpg
-croptab_sample.*
-ix2_data.json
+*.py
+*.log
+scratch_*
+test_*
+orig_*
+original_*
+cleaned_*
+remaining_*
+frame_*.avif
+assets/video*.mp4
