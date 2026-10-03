@@ -745,96 +745,75 @@
         images[i] = img;
       });
 
-      function animateToFrame(endFrame) {
-        isAnimating = true;
-        growBtn.classList.add('is-disabled');
-        const startFrame = currentFrame;
-        const startTime = performance.now();
-        const duration = 1200;
+      // Fluid continuous click-to-grow engine (Video or Canvas)
+      let currentProgress = 0;
+      let targetProgress = 0;
+      let animId = null;
+      let lastTime = 0;
 
-        function step(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeProgress = 1 - Math.pow(1 - progress, 3);
-          currentFrame = Math.round(startFrame + (endFrame - startFrame) * easeProgress);
-          drawFrame(currentFrame);
+      function updateGrowth(now) {
+        if (!lastTime) lastTime = now;
+        const dt = Math.min((now - lastTime) / 1000, 0.1);
+        lastTime = now;
 
-          if (progress < 1) {
-            requestAnimationFrame(step);
+        if (currentProgress < targetProgress) {
+          const dist = targetProgress - currentProgress;
+          const speed = Math.max(0.45, dist * 2.5);
+          currentProgress = Math.min(targetProgress, currentProgress + speed * dt);
+
+          if (isVideoMode && veoVideo) {
+            const dur = veoVideo.duration || 10;
+            veoVideo.currentTime = Math.min(currentProgress * (dur - 0.05), dur - 0.05);
           } else {
-            currentFrame = endFrame;
-            drawFrame(currentFrame);
-            isAnimating = false;
-            
-            if (currentFrame >= totalFrames - 1) {
-              growBtn.classList.add('is-disabled');
-              if (growBtnText) growBtnText.textContent = 'growth complete';
-              if (description) description.style.display = 'none';
-              if (heading) {
-                heading.style.opacity = '0';
-                setTimeout(() => {
-                  heading.innerHTML = config.completeHeading || 'Growth complete.<br/>Page coming soon.';
-                  heading.style.opacity = '1';
-                }, 400);
-              }
-            } else {
-              growBtn.classList.remove('is-disabled');
-            }
+            const frameIdx = Math.min(totalFrames - 1, Math.round(currentProgress * (totalFrames - 1)));
+            drawFrame(frameIdx);
           }
         }
 
-        requestAnimationFrame(step);
+        if (currentProgress >= 1.0) {
+          animId = null;
+          showGrowthComplete();
+          return;
+        }
+
+        if (currentProgress < targetProgress) {
+          animId = requestAnimationFrame(updateGrowth);
+        } else {
+          animId = null;
+        }
       }
 
-      function animateVideoToStage(targetStage) {
-        if (!veoVideo || isAnimating) return;
-        isAnimating = true;
-        growBtn.classList.add('is-disabled');
-
-        const dur = veoVideo.duration || 10;
-        const targetTime = Math.min(targetStage * (dur / totalVideoStages), dur - 0.05);
-
-        veoVideo.play();
-
-        function checkVideoProgress() {
-          if (veoVideo.currentTime >= targetTime || veoVideo.currentTime >= dur - 0.05) {
-            veoVideo.pause();
-            veoVideo.currentTime = targetTime;
-            videoStage = targetStage;
-            isAnimating = false;
-
-            if (videoStage >= totalVideoStages) {
-              growBtn.classList.add('is-disabled');
-              if (growBtnText) growBtnText.textContent = 'growth complete';
-              if (description) description.style.display = 'none';
-              if (heading) {
-                heading.style.opacity = '0';
-                setTimeout(() => {
-                  heading.innerHTML = config.completeHeading || 'Growth complete.<br/>Page coming soon.';
-                  heading.style.opacity = '1';
-                }, 400);
-              }
-            } else {
-              growBtn.classList.remove('is-disabled');
-            }
-          } else {
-            requestAnimationFrame(checkVideoProgress);
-          }
+      function showGrowthComplete() {
+        if (growBtn) {
+          growBtn.classList.add('is-disabled');
+          growBtn.style.pointerEvents = 'none';
         }
-        requestAnimationFrame(checkVideoProgress);
+        if (growBtnText) growBtnText.textContent = 'growth complete';
+        if (description) {
+          description.style.transition = 'opacity 0.6s ease';
+          description.style.opacity = '0';
+          setTimeout(() => { description.style.display = 'none'; }, 600);
+        }
+        if (heading) {
+          heading.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          heading.style.opacity = '0';
+          heading.style.transform = 'translateY(-10px)';
+          setTimeout(() => {
+            heading.innerHTML = config.completeHeading || 'Growth complete.<br/>Page coming soon.';
+            heading.style.opacity = '1';
+            heading.style.transform = 'translateY(0)';
+          }, 600);
+        }
       }
 
       if (growBtn) {
         growBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (isAnimating) return;
-          if (isVideoMode) {
-            if (videoStage >= totalVideoStages) return;
-            animateVideoToStage(videoStage + 1);
-          } else {
-            if (currentFrame >= totalFrames - 1) return;
-            targetFrame = Math.min(currentFrame + framesPerClick, totalFrames - 1);
-            animateToFrame(targetFrame);
+          if (targetProgress >= 1.0) return;
+          targetProgress = Math.min(1.0, targetProgress + 0.25);
+          if (!animId) {
+            lastTime = performance.now();
+            animId = requestAnimationFrame(updateGrowth);
           }
         });
       }
