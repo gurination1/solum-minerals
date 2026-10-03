@@ -16,9 +16,106 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/splide.min.css" />
-  <link rel="stylesheet" href="styles.css?v=20261002_10" />
+  <link rel="stylesheet" href="styles.css?v=20261003_01" />
 </head>
 <body>
+
+  <!-- ==========================================================================
+       Skiper9: 5-Bar Stairs Preloader with Smooth Progress Bar
+       ========================================================================== -->
+  <div id="skiper9-preloader" class="skiper9-preloader" aria-hidden="false">
+    <div class="skiper9-stairs">
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+    </div>
+    <div class="skiper9-content" id="skiper9-content">
+      <h1 class="skiper9-heading" id="skiper9-heading">
+        <span class="skiper9-word" style="--word-delay: 0.00s;">The</span>
+        <span class="skiper9-word" style="--word-delay: 0.16s;">first-ever</span>
+        <span class="skiper9-word" style="--word-delay: 0.32s;">carbon-capsule</span>
+        <span class="skiper9-word" style="--word-delay: 0.48s;">fertilizer.</span>
+        <span class="skiper9-word" style="--word-delay: 0.64s;">Period.</span>
+      </h1>
+      <div class="skiper9-meta">
+        <div class="skiper9-bar-container">
+          <div class="skiper9-bar-track">
+            <div class="skiper9-bar-fill" id="skiper9-fill"></div>
+          </div>
+          <div class="skiper9-counter" id="skiper9-counter">0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Immediate lock and smooth progress engine
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    window.isPreloaderActive = true;
+
+    (function() {
+      const preloader = document.getElementById('skiper9-preloader');
+      const fill = document.getElementById('skiper9-fill');
+      const counter = document.getElementById('skiper9-counter');
+      if (!preloader || !fill || !counter) return;
+
+      let progress = 0;
+      let animDone = false;
+      const startTime = performance.now();
+      const minDuration = 1800; // 1.8s for smooth, luxurious pacing
+
+      function updateLoader(currentTime) {
+        if (animDone) return;
+        const elapsed = currentTime - startTime;
+        const timeFraction = Math.min(elapsed / minDuration, 1.0);
+        // Smooth easeOutCubic curve
+        const curve = 1 - Math.pow(1 - timeFraction, 2.5);
+        const targetProgress = Math.min(100, Math.round(curve * 100));
+
+        if (targetProgress > progress) {
+          progress = targetProgress;
+        }
+
+        fill.style.width = progress + '%';
+        counter.textContent = progress + '%';
+
+        if (progress >= 100 && elapsed >= minDuration) {
+          animDone = true;
+          setTimeout(() => {
+            preloader.classList.add('revealing');
+
+            // Trigger hero text entrance animation right as stairs open!
+            window.__heroShouldPlay = true;
+            if (typeof window.playHeroTextAnimation === 'function') {
+              window.playHeroTextAnimation();
+            }
+
+            setTimeout(() => {
+              preloader.classList.add('done');
+              document.documentElement.style.overflow = '';
+              document.body.style.overflow = '';
+              window.isPreloaderActive = false;
+              if (window.lenis) {
+                window.lenis.start();
+              }
+              if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+              }
+            }, 1200);
+          }, 140);
+          return;
+        }
+
+        requestAnimationFrame(updateLoader);
+      }
+
+      requestAnimationFrame(updateLoader);
+    })();
+  </script>
+
 
   <!-- ==========================================================================
        Navigation Bar
@@ -109,7 +206,7 @@
               <div class="link-item_links">
                 <div class="gap-75"></div>
                 <a href="#approach" class="nav-link">Approach</a>
-                <a href="#sustainability" class="nav-link">Sustainability</a>
+                <a href="sustainability.html" class="nav-link">Sustainability</a>
                 <div class="gap-3em"></div>
               </div>
             </div>
@@ -600,7 +697,7 @@
 <div class="footer-hero">
 <section animate="h2" class="cta-block"><div class="w-layout-blockcontainer container w-container"><div class="cta-block-wrap"><div class="cta-block-text"><div class="cta-block-heading"><div class="h2-cta-heading"><h2 class="h2-style">See the Difference for Yourself</h2></div><div class="cta-block-description"><div class="text-16-regular-caps" inner="animate">See what CropTab™ can do — starting with your own acres. We review each request to reserve early access for farms that can benefit most.</div></div></div><div class="cta-btns"><a apply="open" class="btn-filled-white w-inline-block" data-lenis-stop="" data-w-id="693eba56-1cc8-a9f8-ba5a-60177d80819a" href="#"><div class="btn-content"><img alt="" class="dot-icon left" loading="eager" src="assets/green_dot.svg"/><div class="text-14-caps green">See If You Qualify</div><img alt="" class="dot-icon right" loading="eager" src="assets/green_dot.svg"/></div><div class="btn-background white-filled"></div></a><a class="btn-white w-inline-block" data-w-id="693eba56-1cc8-a9f8-ba5a-60177d8081a1" href="#apply-form" apply="open"><div class="btn-content"><img alt="" class="dot-icon left" loading="eager" src="assets/beige_dot.svg"/><div class="text-14-caps">talk to our team</div><img alt="" class="dot-icon right" loading="eager" src="assets/beige_dot.svg"/></div><div class="btn-background"></div></a></div></div><div class="cta-img-wrap"><img alt="Farmer Partner" class="footer-cta-img-1" loading="eager" src="assets/cta_img_1.webp"/><img alt="Wheat Panicles" class="footer-cta-img-3" loading="eager" src="assets/cta_img_2.webp"/><img alt="Crop Sprout" class="footer-cta-img-6" loading="eager" src="assets/cta_img_3.webp"/><img alt="Seedling" class="footer-cta-img-4" loading="eager" src="assets/cta_img_3.webp"/><img alt="Cabbage Rosette" class="footer-cta-img-5" loading="eager" src="assets/cta_img_4.webp"/><img alt="Field Harvest" class="footer-cta-img-2" loading="eager" src="assets/cta_img_5.webp"/></div></div></div></section>
 <div class="footer-hero-wrap">
-<section class="footer" data-wf--footer--variant="base"><div class="w-layout-blockcontainer container w-container"><div class="footer-wrap"><div class="footer-top"><div class="footer-links"><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">products</div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dfed" href="#products"><div class="text-14-caps green">Macronutrient Fertilizers</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dff1" href="#products"><div class="text-14-caps green">Micronutrient Fertilizers</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dff5" href="#products"><div class="text-14-caps green">Feed Additives</div><div class="underline green"></div></a></div></div><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">science</div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dffd" href="#s-second"><div class="text-14-caps green">CropTab™ NPK</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e001" href="#products"><div class="text-14-caps green">Nutripeak™ Micros</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e009" href="#products"><div class="text-14-caps green">ElevateFeed™</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e005" href="#s-carbon"><div class="text-14-caps green">Food Safety</div><div class="underline green"></div></a></div></div><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">about</div><div class="footer-links-group"><a class="footer-link w-inline-block" href="#s-numbers"><div class="text-14-caps green">About us</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e015" href="#s-second"><div class="text-14-caps green">Approach</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e019" href="#s-carbon"><div class="text-14-caps green">Sustainability</div><div class="underline green"></div></a></div></div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e01e" href="#products"><div class="text-14-caps green">blog</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e022" href="#apply-form" apply="open"><div class="text-14-caps green">contact</div><div class="underline green"></div></a><div class="div-block-3 mobile"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e027" href="/privacy"><div class="text-14-caps green">Privacy Policy</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e02b" href="/terms-of-use"><div class="text-14-caps green">terms of use</div><div class="underline green"></div></a></div></div></div><div class="footer-right"><div class="gap-20"><div class="text-14-caps green align-right">if you have any questions <br/>feel free to contact us:</div><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e035" href="mailto:HELLO@SOLUMMINERALS.COM"><div class="text-20-medium"><div class="link-2" href="#">HELLO@SOLUMMINERALS.COM</div></div><div class="underline green"></div></a></div><div class="socials-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e03b" href="https://www.linkedin.com/company/solum-minerals/" target="_blank"><div class="text-14-caps green">linkedin</div><div class="underline green"></div></a></div></div></div><div class="footer-bottom"><div class="text-14-caps green">© 2026. SOLUM MINERALS INC.</div><div class="farm-icon-green-wrap" id="w-node-b3a0c33e-3bc4-0595-82ef-052d44f3dfe4"><div class="farm-icon-green w-embed" style="display:flex;align-items:center;justify-content:center;"><svg fill="none" height="100%" viewbox="0 0 120 74" width="100%" xmlns="http://www.w3.org/2000/svg"><g transform="translate(60, 37) scale(0.72)" fill="currentColor"><path d="M-2,34 C-18,26 -28,8 -24,-12 C-20,-28 -2,-38 -2,-38 C-2,-38 -8,-20 -6,-4 C-4,10 6,24 -2,34 Z"/><path d="M2,34 C18,26 28,8 24,-12 C20,-28 2,-38 2,-38 C2,-38 8,-20 6,-4 C4,10 -6,24 2,34 Z" opacity="0.85"/><circle cx="0" cy="-14" r="5"/></g></svg></div></div><div class="footer-bottom-links"><div class="div-block-3"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e04a" href="/privacy"><div class="text-14-caps green">Privacy Policy</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e04e" href="/terms-of-use"><div class="text-14-caps green">terms of use</div><div class="underline green"></div></a></div><a href="https://gurdharam.com/" target="_blank" rel="noopener noreferrer" class="footer-link w-inline-block"><div class="text-14-caps green">made by gurdharam</div><div class="underline green"></div></a></div></div></div></section>
+<section class="footer" data-wf--footer--variant="base"><div class="w-layout-blockcontainer container w-container"><div class="footer-wrap"><div class="footer-top"><div class="footer-links"><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">products</div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dfed" href="#products"><div class="text-14-caps green">Macronutrient Fertilizers</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dff1" href="#products"><div class="text-14-caps green">Micronutrient Fertilizers</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dff5" href="#products"><div class="text-14-caps green">Feed Additives</div><div class="underline green"></div></a></div></div><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">science</div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3dffd" href="#s-second"><div class="text-14-caps green">CropTab™ NPK</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e001" href="#products"><div class="text-14-caps green">Nutripeak™ Micros</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e009" href="#products"><div class="text-14-caps green">ElevateFeed™</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e005" href="#s-carbon"><div class="text-14-caps green">Food Safety</div><div class="underline green"></div></a></div></div><div class="footer-links-group-wrap"><div class="text-14-caps green opacity-60">about</div><div class="footer-links-group"><a class="footer-link w-inline-block" href="#s-numbers"><div class="text-14-caps green">About us</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e015" href="#s-second"><div class="text-14-caps green">Approach</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e019" href="sustainability.html"><div class="text-14-caps green">Sustainability</div><div class="underline green"></div></a></div></div><div class="footer-links-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e01e" href="#products"><div class="text-14-caps green">blog</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e022" href="#apply-form" apply="open"><div class="text-14-caps green">contact</div><div class="underline green"></div></a><div class="div-block-3 mobile"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e027" href="/privacy"><div class="text-14-caps green">Privacy Policy</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e02b" href="/terms-of-use"><div class="text-14-caps green">terms of use</div><div class="underline green"></div></a></div></div></div><div class="footer-right"><div class="gap-20"><div class="text-14-caps green align-right">if you have any questions <br/>feel free to contact us:</div><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e035" href="mailto:HELLO@SOLUMMINERALS.COM"><div class="text-20-medium"><div class="link-2" href="#">HELLO@SOLUMMINERALS.COM</div></div><div class="underline green"></div></a></div><div class="socials-group"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e03b" href="https://www.linkedin.com/company/solum-minerals/" target="_blank"><div class="text-14-caps green">linkedin</div><div class="underline green"></div></a></div></div></div><div class="footer-bottom"><div class="text-14-caps green">© 2026. SOLUM MINERALS INC.</div><div class="farm-icon-green-wrap" id="w-node-b3a0c33e-3bc4-0595-82ef-052d44f3dfe4"><div class="farm-icon-green w-embed" style="display:flex;align-items:center;justify-content:center;"><svg fill="none" height="100%" viewbox="0 0 120 74" width="100%" xmlns="http://www.w3.org/2000/svg"><g transform="translate(60, 37) scale(0.72)" fill="currentColor"><path d="M-2,34 C-18,26 -28,8 -24,-12 C-20,-28 -2,-38 -2,-38 C-2,-38 -8,-20 -6,-4 C-4,10 6,24 -2,34 Z"/><path d="M2,34 C18,26 28,8 24,-12 C20,-28 2,-38 2,-38 C2,-38 8,-20 6,-4 C4,10 -6,24 2,34 Z" opacity="0.85"/><circle cx="0" cy="-14" r="5"/></g></svg></div></div><div class="footer-bottom-links"><div class="div-block-3"><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e04a" href="/privacy"><div class="text-14-caps green">Privacy Policy</div><div class="underline green"></div></a><a class="footer-link w-inline-block" data-w-id="b3a0c33e-3bc4-0595-82ef-052d44f3e04e" href="/terms-of-use"><div class="text-14-caps green">terms of use</div><div class="underline green"></div></a></div><a href="https://gurdharam.com/" target="_blank" rel="noopener noreferrer" class="footer-link w-inline-block"><div class="text-14-caps green">made by gurdharam</div><div class="underline green"></div></a></div></div></div></section>
 </div>
 </div>
 
@@ -713,6 +810,9 @@
             wheelMultiplier: 1.0
           });
           window.lenis = lenis;
+          if (window.isPreloaderActive) {
+            lenis.stop();
+          }
 
           function raf(time) {
             lenis.raf(time);
@@ -1172,8 +1272,114 @@
           createScrollTrigger(el, tl);
         });
 
-        // [text-split-delay]: Delayed character reveal for Hero H1, H2, and Section 3
+        // --------------------------------------------------------------------
+        // Dedicated Hero Entrance Sequence (Synced with Skiper9 Reveal)
+        // --------------------------------------------------------------------
+        const h1_1 = document.getElementById('h1-1');
+        const h1_2 = document.getElementById('h1-2');
+        const heroSubtitle = document.querySelector('[subtitle]');
+        const heroBtn = document.querySelector('[hero-btn]');
+        const tabletWrap = document.getElementById('tablet-3d-container');
+
+        let splitH1_1 = null, splitH1_2 = null, splitSub = null;
+
+        if (h1_1) {
+          splitH1_1 = new SplitText(h1_1, { type: "chars, words, lines" });
+          gsap.set(splitH1_1.chars, { autoAlpha: 0 });
+          gsap.set(h1_1, { opacity: 1 });
+        }
+        if (h1_2) {
+          splitH1_2 = new SplitText(h1_2, { type: "chars, words, lines" });
+          gsap.set(splitH1_2.chars, { autoAlpha: 0 });
+          gsap.set(h1_2, { opacity: 1 });
+        }
+        if (heroSubtitle) {
+          splitSub = new SplitText(heroSubtitle, { type: "words, lines", linesClass: "split-line" });
+          gsap.set(splitSub.words, { y: "110%", opacity: 0 });
+          gsap.set(heroSubtitle, { opacity: 1 });
+        }
+        if (heroBtn) {
+          gsap.set(heroBtn, { autoAlpha: 0, opacity: 1 });
+        }
+
+        let heroAnimated = false;
+        window.playHeroTextAnimation = function() {
+          if (heroAnimated) return;
+          heroAnimated = true;
+
+          const heroTL = gsap.timeline();
+          window.heroEntranceTL = heroTL;
+
+          // 1. "Fertilizer, Reinvented." character scramble dissolve
+          // Fires as Left Stair Columns 1 & 2 sweep up into ceiling
+          if (splitH1_1 && splitH1_1.chars.length) {
+            heroTL.fromTo(splitH1_1.chars,
+              { autoAlpha: 0 },
+              {
+                autoAlpha: 1,
+                duration: 0.55,
+                ease: "power2.out",
+                stagger: { each: 0.022, from: "random" }
+              },
+              0.35
+            );
+          }
+
+          // 2. 3D Tablet Centerpiece: Rise From Base (where it goes on scroll down)
+          heroTL.add(() => {
+            if (typeof window.playTabletEntranceAnimation === 'function') {
+              window.playTabletEntranceAnimation();
+            }
+          }, 0.35);
+
+          // 3. "For Your Crops. / For the Planet." character scramble reveal
+          // Fires as Right Stair Columns 4 & 5 lift up
+          if (splitH1_2 && splitH1_2.chars.length) {
+            heroTL.fromTo(splitH1_2.chars,
+              { autoAlpha: 0 },
+              {
+                autoAlpha: 1,
+                duration: 0.55,
+                ease: "power2.out",
+                stagger: { each: 0.022, from: "random" }
+              },
+              0.75
+            );
+          }
+
+          // 4. Hero Subtitle words rise from line mask
+          if (splitSub && splitSub.words.length) {
+            heroTL.fromTo(splitSub.words,
+              { y: "110%", opacity: 0 },
+              {
+                y: "0%",
+                opacity: 1,
+                duration: 0.65,
+                stagger: 0.018,
+                ease: "power2.out"
+              },
+              1.05
+            );
+          }
+
+          // 5. Hero CTA Button fade and spring into view
+          if (heroBtn) {
+            heroTL.fromTo(heroBtn,
+              { autoAlpha: 0, y: 15 },
+              { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" },
+              1.30
+            );
+          }
+        };
+
+        // If preloader already requested hero play or preloader isn't active, play immediately!
+        if (window.__heroShouldPlay || !window.isPreloaderActive) {
+          window.playHeroTextAnimation();
+        }
+
+        // [text-split-delay]: Delayed character reveal for remaining sections (excluding Hero)
         document.querySelectorAll("[text-split-delay]").forEach((el) => {
+          if (el.id === 'h1-1' || el.id === 'h1-2') return; // Handled exclusively by hero entrance
           const delayValue = parseFloat(el.getAttribute("text-split-delay")) || 0;
           const split = new SplitText(el, { type: "chars, words, lines" });
           const tl = gsap.timeline({ paused: true });
@@ -1205,32 +1411,6 @@
           gsap.set(split.words, { y: "110%", opacity: 0 });
           cardSplits.push({ el, split });
         });
-
-
-
-        // Hero Subtitle & CTA Button Entrance on load (Webflow t-16058dd6)
-        const heroSubtitle = document.querySelector('[subtitle]');
-        const heroBtn = document.querySelector('[hero-btn]');
-        if (heroSubtitle) {
-          const splitSub = new SplitText(heroSubtitle, { type: "words, lines", linesClass: "split-line" });
-          gsap.fromTo(splitSub.words,
-            { y: "100%", opacity: 0 },
-            {
-              y: "0%",
-              opacity: 1,
-              duration: 0.7,
-              delay: 0.41,
-              stagger: 0.02,
-              ease: "power2.out"
-            }
-          );
-        }
-        if (heroBtn) {
-          gsap.fromTo(heroBtn,
-            { autoAlpha: 0 },
-            { autoAlpha: 1, duration: 0.6, delay: 0.36, ease: "power2.out" }
-          );
-        }
 
         // ====================================================================
         // Section 3: Dual Headlines Animation (Desktop & Mobile)

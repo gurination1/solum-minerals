@@ -171,19 +171,70 @@
     const heroTrack = document.getElementById('hero');
     const heroHeading2 = document.getElementById('hero-heading-2');
 
-    // 1. Entrance Animation (Webflow a-11)
-    container.style.opacity = '0';
-    container.style.transform = 'translate3d(0, -3em, 0)';
-    container.style.transition = 'transform 1.4s cubic-bezier(0.075, 0.82, 0.165, 1), opacity 0.6s ease';
+    // 1. Entrance Animation from Base (Where it goes on scroll down)
+    const BASE_START_Y = 48; // Base position where tablet goes when scrolled down (+48em)
+    let isEntranceActive = false;
+    let entranceDone = false;
 
-    setTimeout(() => {
-      container.style.opacity = '1';
-      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-      const urlParams = new URLSearchParams(window.location.search);
-      if (currentScroll === 0 && !urlParams.has('test_scroll')) {
-        container.style.transform = 'translate3d(0, 0em, 0)';
+    const initialScroll = window.pageYOffset || document.documentElement.scrollTop;
+    if (initialScroll === 0) {
+      isEntranceActive = true;
+      container.style.opacity = '0';
+      container.style.transform = `translate3d(0, ${BASE_START_Y}em, 0)`;
+      if (onScrollUpdate) {
+        // Start in the authentic scroll-down pose (tilted forward & banked at the base)
+        onScrollUpdate(1.0, 1.0, 0);
       }
-    }, 150);
+    }
+
+    function playEntrance() {
+      if (entranceDone) return;
+      entranceDone = true;
+
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > 15) {
+        isEntranceActive = false;
+        handleScroll();
+        return;
+      }
+
+      isEntranceActive = true;
+      container.style.transition = 'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease';
+      container.style.opacity = '1';
+      container.style.transform = 'translate3d(0, 0em, 0)';
+
+      const startTime = performance.now();
+      const duration = 1400; // 1.4s smooth rise from base into default hover
+
+      function step(now) {
+        if (!isEntranceActive) return;
+        const elapsed = now - startTime;
+        const t = Math.min(1.0, elapsed / duration);
+        // cubic-bezier(0.16, 1, 0.3, 1) easeOut curve
+        const ease = 1 - Math.pow(1 - t, 3);
+        const currentRiverT = Math.max(0, 1.0 - ease);
+
+        if (onScrollUpdate) {
+          onScrollUpdate(currentRiverT, currentRiverT, -0.015 * (1 - t));
+        }
+
+        if (t < 1.0) {
+          requestAnimationFrame(step);
+        } else {
+          isEntranceActive = false;
+          container.style.transition = 'none';
+          handleScroll();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    window.playTabletEntranceAnimation = playEntrance;
+
+    // If preloader has already completed or is not active, play immediately
+    if (window.__heroShouldPlay || !window.isPreloaderActive) {
+      playEntrance();
+    }
 
     // 2. Continuous Scroll River Tracking (Webflow a-7)
     let lastProgress = 0;
@@ -198,6 +249,17 @@
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('test_scroll')) {
         scrollY = parseFloat(urlParams.get('test_scroll')) * scrollRange;
+      }
+
+      // If user scrolls during entrance, abort entrance and take over immediately
+      if (isEntranceActive) {
+        if (scrollY > 15 || urlParams.has('test_scroll')) {
+          isEntranceActive = false;
+          container.style.transition = 'none';
+        } else {
+          // While entrance is running and scroll is 0, let entrance animate transform
+          return;
+        }
       }
 
       const progress = Math.min(1, Math.max(0, scrollY / scrollRange));
