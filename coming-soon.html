@@ -745,13 +745,61 @@
         images[i] = img;
       });
 
-      // Fluid continuous click-to-grow engine (Video or Canvas)
+      // Native Smooth Video & Canvas Click-to-Grow Engine
+      let targetTime = 0;
+      let isPlayingVideo = false;
+
+      // Canvas fallback variables
       let currentProgress = 0;
       let targetProgress = 0;
       let animId = null;
       let lastTime = 0;
 
-      function updateGrowth(now) {
+      function onAddWater() {
+        if (isVideoMode && veoVideo) {
+          const dur = veoVideo.duration || 10;
+          if (targetTime >= dur - 0.1) return;
+
+          // Each click advances growth by 25% (2.5s)
+          targetTime = Math.min(dur - 0.05, targetTime + (dur / 4));
+
+          // Set smooth natural playback rate
+          veoVideo.playbackRate = 1.0;
+          veoVideo.play().catch(() => {});
+
+          if (!isPlayingVideo) {
+            isPlayingVideo = true;
+            checkVideoPlayback();
+          }
+        } else {
+          // Canvas fallback: smooth 60fps frame tween
+          if (targetProgress >= 1.0) return;
+          targetProgress = Math.min(1.0, targetProgress + 0.25);
+          if (!animId) {
+            lastTime = performance.now();
+            animId = requestAnimationFrame(updateCanvasGrowth);
+          }
+        }
+      }
+
+      function checkVideoPlayback() {
+        if (!veoVideo) return;
+        const dur = veoVideo.duration || 10;
+
+        if (veoVideo.currentTime >= targetTime || veoVideo.currentTime >= dur - 0.08) {
+          veoVideo.pause();
+          isPlayingVideo = false;
+
+          if (targetTime >= dur - 0.1 || veoVideo.currentTime >= dur - 0.1) {
+            showGrowthComplete();
+          }
+          return;
+        }
+
+        requestAnimationFrame(checkVideoPlayback);
+      }
+
+      function updateCanvasGrowth(now) {
         if (!lastTime) lastTime = now;
         const dt = Math.min((now - lastTime) / 1000, 0.1);
         lastTime = now;
@@ -761,13 +809,8 @@
           const speed = Math.max(0.45, dist * 2.5);
           currentProgress = Math.min(targetProgress, currentProgress + speed * dt);
 
-          if (isVideoMode && veoVideo) {
-            const dur = veoVideo.duration || 10;
-            veoVideo.currentTime = Math.min(currentProgress * (dur - 0.05), dur - 0.05);
-          } else {
-            const frameIdx = Math.min(totalFrames - 1, Math.round(currentProgress * (totalFrames - 1)));
-            drawFrame(frameIdx);
-          }
+          const frameIdx = Math.min(totalFrames - 1, Math.round(currentProgress * (totalFrames - 1)));
+          drawFrame(frameIdx);
         }
 
         if (currentProgress >= 1.0) {
@@ -777,7 +820,7 @@
         }
 
         if (currentProgress < targetProgress) {
-          animId = requestAnimationFrame(updateGrowth);
+          animId = requestAnimationFrame(updateCanvasGrowth);
         } else {
           animId = null;
         }
@@ -809,12 +852,7 @@
       if (growBtn) {
         growBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (targetProgress >= 1.0) return;
-          targetProgress = Math.min(1.0, targetProgress + 0.25);
-          if (!animId) {
-            lastTime = performance.now();
-            animId = requestAnimationFrame(updateGrowth);
-          }
+          onAddWater();
         });
       }
 
