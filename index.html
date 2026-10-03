@@ -9,10 +9,13 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="solum_logo.svg" />
 
-  <!-- Preload local fonts & hero background -->
+  <!-- Preload local fonts, hero background & video assets -->
   <link rel="preload" href="assets/fonts/aeonik-regular.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/fonts/aeonik-medium.woff" as="font" type="font/woff" crossorigin />
   <link rel="preload" href="assets/hero_bg.webp" as="image" />
+  <link rel="preload" href="assets/corn_clean_poster.webp" as="image" type="image/webp" />
+  <link rel="preload" href="assets/numbers_farm_clean_poster.webp" as="image" type="image/webp" />
+  <link rel="prefetch" href="assets/corn_clean.mp4" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/splide.min.css" />
@@ -93,11 +96,15 @@
               window.playHeroTextAnimation();
             }
 
+            // Warm and start background videos as stairs open
+            warmVideos();
+
             setTimeout(() => {
               preloader.classList.add('done');
               document.documentElement.style.overflow = '';
               document.body.style.overflow = '';
               window.isPreloaderActive = false;
+              warmVideos();
               if (window.lenis) {
                 window.lenis.start();
               }
@@ -113,6 +120,39 @@
       }
 
       requestAnimationFrame(updateLoader);
+
+      // Pre-warm and buffer videos immediately while preloader is active
+      function warmVideos() {
+        document.querySelectorAll('.farmer-video').forEach(v => {
+          v.muted = true;
+          v.defaultMuted = true;
+          const p = v.play();
+          if (p !== undefined) {
+            p.catch(() => {});
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', warmVideos);
+      } else {
+        warmVideos();
+      }
+
+      // Viewport observer: ensure immediate active decoding 300px before scrolling into view
+      if ('IntersectionObserver' in window) {
+        const vidObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const v = entry.target.querySelector('video') || (entry.target.tagName === 'VIDEO' ? entry.target : null);
+              if (v && v.paused) {
+                v.play().catch(() => {});
+              }
+            }
+          });
+        }, { rootMargin: '300px 0px' });
+        document.querySelectorAll('.corn-video-wrap-new, .numbers-video').forEach(el => vidObserver.observe(el));
+      }
     })();
   </script>
 
@@ -384,7 +424,7 @@
 
           <!-- Right Column (Mirrored Reciprocal of Parent Left): Stock Video Card with Text Overlay -->
           <div class="corn-video-wrap-new" data-w-id="7e8b480f-fad0-4834-a1f1-c0b6f92922da">
-            <video autoplay loop muted playsinline class="farmer-video" preload="auto">
+            <video autoplay loop muted playsinline webkit-playsinline class="farmer-video" preload="auto" poster="assets/corn_clean_poster.webp">
               <source src="assets/corn_clean.mp4" type="video/mp4" />
             </video>
             <div class="video-overlay-gradient"></div>
@@ -539,7 +579,7 @@
       <div class="w-layout-blockcontainer container w-container">
         <div class="numbers-wrap">
           <div class="numbers-video">
-            <video autoplay loop muted playsinline webkit-playsinline class="farmer-video" preload="auto">
+            <video autoplay loop muted playsinline webkit-playsinline class="farmer-video" preload="auto" poster="assets/numbers_farm_clean_poster.webp">
               <source src="assets/numbers_farm_clean.mp4" type="video/mp4" />
             </video>
           </div>
