@@ -17,7 +17,8 @@ const MIME_TYPES = {
   '.mp4': 'video/mp4',
   '.json': 'application/json',
   '.woff2': 'font/woff2',
-  '.woff': 'font/woff'
+  '.woff': 'font/woff',
+  '.avif': 'image/avif'
 };
 
 // In-memory cache for ultra-fast frame serving
@@ -39,6 +40,8 @@ const server = http.createServer((req, res) => {
   let pathname = parsedUrl.pathname;
   if (pathname === '/' || pathname === '') {
     pathname = '/index.html';
+  } else if (pathname === '/sustainability' || pathname === '/sustainability/') {
+    pathname = '/sustainability.html';
   }
 
   // Fast path: cached WebP frame

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sustainable Low-Carbon Fertilizers | SOLUM Minerals</title>
+  <meta name="description" content="SOLUM Minerals' low-carbon fertilizers cut ~500–600 lb CO₂e per acre, end nutrient leaching, and replace 25 tons of fertilizer with one 13 kg box." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="Sustainable Low-Carbon Fertilizers | SOLUM Minerals" />
+  <meta property="og:description" content="SOLUM Minerals' low-carbon fertilizers cut ~500–600 lb CO₂e per acre, end nutrient leaching, and replace 25 tons of fertilizer with one 13 kg box." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="styles.css?v=20261003_01" />
+  <style>
+    body {
+      background-color: var(--main-green);
+      color: var(--beige);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Skiper9: 5-Bar Stairs Preloader with Smooth Progress Bar
+       ========================================================================== -->
+  <div id="skiper9-preloader" class="skiper9-preloader" aria-hidden="false">
+    <div class="skiper9-stairs">
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+      <div class="stair-bar"></div>
+    </div>
+    <div class="skiper9-content" id="skiper9-content">
+      <h1 class="skiper9-heading" id="skiper9-heading">
+        <span class="skiper9-word" style="--word-delay: 0.00s;">The</span>
+        <span class="skiper9-word" style="--word-delay: 0.16s;">first-ever</span>
+        <span class="skiper9-word" style="--word-delay: 0.32s;">carbon-capsule</span>
+        <span class="skiper9-word" style="--word-delay: 0.48s;">fertilizer.</span>
+        <span class="skiper9-word" style="--word-delay: 0.64s;">Period.</span>
+      </h1>
+      <div class="skiper9-meta">
+        <div class="skiper9-bar-container">
+          <div class="skiper9-bar-track">
+            <div class="skiper9-bar-fill" id="skiper9-fill"></div>
+          </div>
+          <div class="skiper9-counter" id="skiper9-counter">0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Immediate lock and smooth progress engine
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    window.isPreloaderActive = true;
+
+    (function() {
+      const preloader = document.getElementById('skiper9-preloader');
+      const fill = document.getElementById('skiper9-fill');
+      const counter = document.getElementById('skiper9-counter');
+      if (!preloader || !fill || !counter) return;
+
+      let progress = 0;
+      let animDone = false;
+      const startTime = performance.now();
+      const minDuration = 1800; // 1.8s for smooth pacing
+
+      function updateLoader(currentTime) {
+        if (animDone) return;
+        const elapsed = currentTime - startTime;
+        const timeFraction = Math.min(elapsed / minDuration, 1.0);
+        // Smooth easeOutCubic curve
+        const curve = 1 - Math.pow(1 - timeFraction, 2.5);
+        const targetProgress = Math.min(100, Math.round(curve * 100));
+
+        if (targetProgress > progress) {
+          progress = targetProgress;
+        }
+
+        fill.style.width = progress + '%';
+        counter.textContent = progress + '%';
+
+        if (progress >= 100 && elapsed >= minDuration) {
+          animDone = true;
+          setTimeout(() => {
+            preloader.classList.add('revealing');
+            setTimeout(() => {
+              preloader.classList.add('done');
+              document.documentElement.style.overflow = '';
+              document.body.style.overflow = '';
+              window.isPreloaderActive = false;
+            }, 1200);
+          }, 140);
+          return;
+        }
+
+        requestAnimationFrame(updateLoader);
+      }
+
+      requestAnimationFrame(updateLoader);
+    })();
+  </script>
+
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <header role="banner" class="navbar" id="navbar">
+    <div class="nav-wrap">
+      
+      <!-- Menu Button (Desktop: Left, Mobile: Right) -->
+      <div class="menu-btn-wrap" id="menu-btn" role="button" tabindex="0" aria-label="Open navigation menu">
+        <div class="icon-menu light" id="menu-lottie-light"></div>
+        <div class="icon-menu green" id="menu-lottie-green"></div>
+        <span class="text-14-caps menu-text">Menu</span>
+      </div>
+
+      <!-- Solum Minerals Brand Logo (Desktop: Center, Mobile: Left) -->
+      <a href="index.html" class="logo-header-wrap" aria-label="SOLUM Minerals Home">
+        <div class="logo-header web">
+          <svg width="150" height="34" viewBox="0 0 150 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(18, 17) scale(0.38)" fill="currentColor">
+              <path d="M-2,34 C-18,26 -28,8 -24,-12 C-20,-28 -2,-38 -2,-38 C-2,-38 -8,-20 -6,-4 C-4,10 6,24 -2,34 Z"/>
+              <path d="M2,34 C18,26 28,8 24,-12 C20,-28 2,-38 2,-38 C2,-38 8,-20 6,-4 C4,10 -6,24 2,34 Z" opacity="0.88"/>
+              <circle cx="0" cy="-14" r="4.5"/>
+            </g>
+            <text x="38" y="16" font-family="'Aeonik', -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="0.12em" fill="currentColor">SOLUM</text>
+            <text x="38" y="29" font-family="'Aeonik', -apple-system, sans-serif" font-size="9" font-weight="400" letter-spacing="0.24em" fill="currentColor" opacity="0.85">MINERALS</text>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Desktop Spacer (Balances grid on desktop) -->
+      <div class="nav-spacer" aria-hidden="true"></div>
+
+    </div>
+
+    <!-- ========================================================================
+         Side Navigation Drawer (Source Exact Webflow Replica)
+         ======================================================================== -->
+    <div class="menu-side-bar" id="menu-side-bar" aria-hidden="true">
+      <div class="menu-side-bar-inner">
+        
+        <!-- Header: Authentic Brand Logo & Close Button -->
+        <div class="close-btn-wrap" id="close-menu-btn" role="button" tabindex="0" aria-label="Close menu">
+          <div class="logo-inside-wrap">
+            <svg width="150" height="34" viewBox="0 0 150 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(18, 17) scale(0.38)" fill="currentColor">
+                <path d="M-2,34 C-18,26 -28,8 -24,-12 C-20,-28 -2,-38 -2,-38 C-2,-38 -8,-20 -6,-4 C-4,10 6,24 -2,34 Z"/>
+                <path d="M2,34 C18,26 28,8 24,-12 C20,-28 2,-38 2,-38 C2,-38 8,-20 6,-4 C4,10 -6,24 2,34 Z" opacity="0.88"/>
+                <circle cx="0" cy="-14" r="4.5"/>
+              </g>
+              <text x="38" y="16" font-family="'Aeonik', -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="0.12em" fill="currentColor">SOLUM</text>
+              <text x="38" y="29" font-family="'Aeonik', -apple-system, sans-serif" font-size="9" font-weight="400" letter-spacing="0.24em" fill="currentColor" opacity="0.85">MINERALS</text>
+            </svg>
+          </div>
+          <div class="text-14-caps close">close</div>
+        </div>
+
+        <div class="light-divider"></div>
+
+        <!-- Menu Navigation Items -->
+        <div class="menu-items">
+          <div class="menu-items-wrap">
+            
+            <!-- Products -->
+            <div class="link-item" data-menu="products">
+              <div class="menu-link-heading">
+                <img src="assets/arrow_icon.svg" alt="" class="icon-36" aria-hidden="true" />
+                <div class="menu-link-title">
+                  <div class="heading-77">Products</div>
+                </div>
+              </div>
+              <div class="link-item_links">
+                <div class="gap-75"></div>
+                <a href="coming-soon.html?page=croptab" class="nav-link">CropTab™ NPK</a>
+                <a href="coming-soon.html?page=nutripeak" class="nav-link">Nutripeak™ Micros</a>
+                <a href="coming-soon.html?page=elevate-feed" class="nav-link">ElevateFeed™</a>
+                <div class="gap-3em"></div>
+              </div>
+            </div>
+
+            <!-- About -->
+            <div class="link-item active" data-menu="about">
+              <div class="menu-link-heading">
+                <img src="assets/arrow_icon.svg" alt="" class="icon-36" aria-hidden="true" />
+                <div class="menu-link-title">
+                  <div class="heading-77">About</div>
+                </div>
+              </div>
+              <div class="link-item_links">
+                <div class="gap-75"></div>
+                <a href="index.html#approach" class="nav-link">Approach</a>
+                <a href="sustainability.html" class="nav-link w--current" aria-current="page" style="opacity: 1; font-weight: 500;">Sustainability</a>
+                <div class="gap-3em"></div>
+              </div>
+            </div>
+
+            <!-- Science -->
+            <div class="link-item" data-menu="science">
+              <div class="menu-link-heading">
+                <img src="assets/arrow_icon.svg" alt="" class="icon-36" aria-hidden="true" />
+                <div class="menu-link-title">
+                  <div class="heading-77">Science</div>
+                </div>
+              </div>
+              <div class="link-item_links">
+                <div class="gap-75"></div>
+                <a href="coming-soon.html?page=science-croptab" class="nav-link">CropTab™ NPK</a>
+                <a href="coming-soon.html?page=science-nutripeak" class="nav-link">Nutripeak™ Micros</a>
+                <a href="coming-soon.html?page=science-elevatefeed" class="nav-link">ElevateFeed™</a>
+                <a href="coming-soon.html?page=science-foodsafety" class="nav-link">Food Safety</a>
+                <div class="gap-3em"></div>
+              </div>
+            </div>
+
+            <!-- Blog -->
+            <div class="link-item" data-menu="blog">
+              <div class="menu-link-heading">
+                <img src="assets/arrow_icon.svg" alt="" class="icon-36" aria-hidden="true" />
+                <a href="coming-soon.html?page=blog" class="menu-link-title">
+                  <div class="heading-77">Blog</div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="link-item" data-menu="contact">
+              <div class="menu-link-heading">
+                <img src="assets/arrow_icon.svg" alt="" class="icon-36" aria-hidden="true" />
+                <a href="index.html#apply-form" class="menu-link-title">
+                  <div class="heading-77">Contact</div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Links -->
+          <div class="menu-bottom-links-group">
+            <div class="menu-bottom-links-1">
+              <div class="text-14-caps light-green">farm the leap</div>
+              <a href="mailto:hello@solumminerals.com" class="text-14-caps light-green link">hello@solumminerals.com</a>
+            </div>
+            <div class="menu-bottom-links-2">
+              <a href="https://www.linkedin.com/company/solum-minerals/" target="_blank" rel="noopener noreferrer" class="text-14-caps light-green link">linkedin</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      
+      <!-- Backdrop Dimmer -->
+      <div class="menu-side-bg" id="menu-side-bg"></div>
+    </div>
+
+  </header>
+
+  <!-- ==========================================================================
+       Interactive Sprout & Sustainability Section (Veo Video Ready)
+       ========================================================================== -->
+  <main class="main" id="main-content">
+    <section class="approach-hero coming-soon">
+      <div class="coming-soon-wrap">
+        
+        <!-- Veo Generative Video Layer (Plays if user drops sustainability_hero.mp4) -->
+        <video id="veo-video" class="sustainability-video-bg" autoplay loop muted playsinline></video>
+        
+        <!-- Interactive 120-Frame Growth Canvas -->
+        <div class="canvas" id="canvas-container">
+          <canvas id="soon-canvas"></canvas>
+        </div>
+
+        <!-- Central Content Overlay -->
+        <div class="coming-soon-heading">
+          <h1 id="soon-heading" class="text-40-regular align-center">This page needs a little water</h1>
+          <div id="soon-description" class="text-14-caps">it’s coming soon</div>
+          
+          <div class="coming-soon-buttons">
+            <!-- Add Water Button -->
+            <a id="grow-button" href="javascript:void(0)" class="btn-filled-white" role="button" aria-label="Add more water to stimulate crop growth">
+              <div class="btn-content">
+                <span class="dot-icon"></span>
+                <span class="text-16-regular-caps green" id="grow-btn-text">add more water</span>
+                <span class="dot-icon"></span>
+              </div>
+              <div class="btn-background white-filled"></div>
+            </a>
+            
+            <!-- Return to Main Home -->
+            <a href="index.html" class="btn-white btn-hero" aria-label="Back to main page">
+              <div class="btn-content">
+                <img src="assets/beige_dot.svg" alt="" class="dot-icon left" />
+                <span class="text-14-caps">back to main</span>
+                <img src="assets/beige_dot.svg" alt="" class="dot-icon right" />
+              </div>
+              <div class="btn-background"></div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer-hero-wrap">
+      <footer class="footer" data-wf--footer--variant="base">
+        <div class="w-layout-blockcontainer container w-container">
+          <div class="footer-wrap">
+            <div class="footer-top">
+              <div class="footer-links">
+                
+                <div class="footer-links-group-wrap">
+                  <div class="text-14-caps green opacity-60">products</div>
+                  <div class="footer-links-group">
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=croptab"><div class="text-14-caps green">Macronutrient Fertilizers</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=nutripeak"><div class="text-14-caps green">Micronutrient Fertilizers</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=elevate-feed"><div class="text-14-caps green">Feed Additives</div><div class="underline green"></div></a>
+                  </div>
+                </div>
+
+                <div class="footer-links-group-wrap">
+                  <div class="text-14-caps green opacity-60">science</div>
+                  <div class="footer-links-group">
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=science-croptab"><div class="text-14-caps green">CropTab™ NPK</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=science-nutripeak"><div class="text-14-caps green">Nutripeak™ Micros</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=science-elevatefeed"><div class="text-14-caps green">ElevateFeed™</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block" href="coming-soon.html?page=science-foodsafety"><div class="text-14-caps green">Food Safety</div><div class="underline green"></div></a>
+                  </div>
+                </div>
+
+                <div class="footer-links-group-wrap">
+                  <div class="text-14-caps green opacity-60">about</div>
+                  <div class="footer-links-group">
+                    <a class="footer-link w-inline-block" href="index.html#approach"><div class="text-14-caps green">Approach</div><div class="underline green"></div></a>
+                    <a class="footer-link w-inline-block w--current" href="sustainability.html"><div class="text-14-caps green" style="font-weight: 600;">Sustainability</div><div class="underline green"></div></a>
+                  </div>
+                </div>
+
+                <div class="footer-links-group">
+                  <a class="footer-link w-inline-block" href="coming-soon.html?page=blog"><div class="text-14-caps green">blog</div><div class="underline green"></div></a>
+                  <a class="footer-link w-inline-block" href="index.html#apply-form"><div class="text-14-caps green">contact</div><div class="underline green"></div></a>
+                </div>
+
+              </div>
+
+              <div class="footer-right">
+                <div class="gap-20">
+                  <div class="text-14-caps green align-right">if you have any questions <br/>feel free to contact us:</div>
+                  <a class="footer-link w-inline-block" href="mailto:HELLO@SOLUMMINERALS.COM">
+                    <div class="text-20-medium"><div class="link-2">HELLO@SOLUMMINERALS.COM</div></div>
+                    <div class="underline green"></div>
+                  </a>
+                </div>
+                <div class="socials-group">
+                  <a class="footer-link w-inline-block" href="https://www.linkedin.com/company/solum-minerals/" target="_blank" rel="noopener noreferrer">
+                    <div class="text-14-caps green">linkedin</div>
+                    <div class="underline green"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-bottom">
+              <div class="text-14-caps green">© 2026. SOLUM MINERALS INC.</div>
+              <div class="farm-icon-green-wrap">
+                <div class="farm-icon-green" style="display:flex;align-items:center;justify-content:center;">
+                  <svg fill="none" height="100%" viewBox="0 0 120 74" width="100%" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(60, 37) scale(0.72)" fill="currentColor">
+                      <path d="M-2,34 C-18,26 -28,8 -24,-12 C-20,-28 -2,-38 -2,-38 C-2,-38 -8,-20 -6,-4 C-4,10 6,24 -2,34 Z"/>
+                      <path d="M2,34 C18,26 28,8 24,-12 C20,-28 2,-38 2,-38 C2,-38 8,-20 6,-4 C4,10 -6,24 2,34 Z" opacity="0.85"/>
+                      <circle cx="0" cy="-14" r="5"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div class="footer-bottom-links">
+                <div class="div-block-3">
+                  <a class="footer-link w-inline-block" href="/privacy"><div class="text-14-caps green">Privacy Policy</div><div class="underline green"></div></a>
+                  <a class="footer-link w-inline-block" href="/terms-of-use"><div class="text-14-caps green">terms of use</div><div class="underline green"></div></a>
+                </div>
+                <a href="https://gurdharam.com/" target="_blank" rel="noopener noreferrer" class="footer-link w-inline-block">
+                  <div class="text-14-caps green">made by gurdharam</div>
+                  <div class="underline green"></div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Lottie Engine -->
+  <script src="assets/lottie.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Navigation Drawer Setup (Touch & Click Only)
+      const menuBtn = document.getElementById('menu-btn');
+      const closeBtn = document.getElementById('close-menu-btn');
+      const sideBar = document.getElementById('menu-side-bar');
+      const backdrop = document.getElementById('menu-side-bg');
+      const linkItems = document.querySelectorAll('.link-item');
+
+      let animLight = null;
+      let animGreen = null;
+      let isMenuOpen = false;
+
+      if (typeof lottie !== 'undefined') {
+        const lightContainer = document.getElementById('menu-lottie-light');
+        if (lightContainer) {
+          animLight = lottie.loadAnimation({
+            container: lightContainer,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'assets/detail2.json'
+          });
+        }
+        const greenContainer = document.getElementById('menu-lottie-green');
+        if (greenContainer) {
+          animGreen = lottie.loadAnimation({
+            container: greenContainer,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'assets/detail2_updated.json'
+          });
+        }
+      }
+
+      function playMenuLottie(forward) {
+        [animLight, animGreen].forEach(a => {
+          if (!a) return;
+          a.setDirection(forward ? 1 : -1);
+          a.setSpeed(1.25);
+          a.play();
+        });
+      }
+
+      function openMenu() {
+        if (isMenuOpen) return;
+        isMenuOpen = true;
+        if (sideBar) {
+          sideBar.classList.add('open');
+          sideBar.setAttribute('aria-hidden', 'false');
+        }
+        playMenuLottie(true);
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        if (!isMenuOpen) return;
+        isMenuOpen = false;
+        if (sideBar) {
+          sideBar.classList.remove('open');
+          sideBar.setAttribute('aria-hidden', 'true');
+        }
+        playMenuLottie(false);
+        document.body.style.overflow = '';
+      }
+
+      if (menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isMenuOpen) closeMenu();
+          else openMenu();
+        });
+      }
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMenuOpen) closeMenu();
+      });
+
+      // Mobile Accordion Toggle
+      linkItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          if (window.innerWidth > 991) return;
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          const isOpen = item.classList.contains('active');
+          linkItems.forEach((other) => {
+            other.classList.remove('active');
+            other.style.opacity = '0.35';
+          });
+          if (!isOpen) {
+            item.classList.add('active');
+            item.style.opacity = '1';
+          } else {
+            linkItems.forEach((other) => other.style.opacity = '1');
+          }
+        });
+      });
+
+      // 2. Veo Video Autodetect (if user adds assets/sustainability_hero.mp4)
+      const veoVideo = document.getElementById('veo-video');
+      if (veoVideo) {
+        const testVideo = new Image();
+        fetch('assets/sustainability_hero.mp4', { method: 'HEAD' })
+          .then(resp => {
+            if (resp.ok) {
+              veoVideo.src = 'assets/sustainability_hero.mp4';
+              veoVideo.classList.add('active');
+              console.log('🎬 Veo 4K video mounted');
+            }
+          })
+          .catch(() => {});
+      }
+
+      // 3. Interactive 120-Frame Growth Canvas
+      const canvas = document.getElementById('soon-canvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+      const growBtn = document.getElementById('grow-button');
+      const growBtnText = document.getElementById('grow-btn-text');
+      const heading = document.getElementById('soon-heading');
+      const description = document.getElementById('soon-description');
+
+      // 120 frame sequence matching original Farm Minerals architecture
+      const frameHashList = [
+        "68fa8866c7b4232e602f2522", "68fa886646aeb14b047b8c7d", "68fa8866d12be9d1c53b75b6", "68fa88660194235c3f611ab2",
+        "68fa88661f7ccb26c2c92fcf", "68fa8866651effb0fb6ce5f0", "68fa8866bfba5a51fecbb2a0", "68fa886665ef7e2e4aa72005",
+        "68fa88661241f43a60e625fe", "68fa8866d5ec8c5699289321", "68fa88666910c395644283d7", "68fa8866602180e66322f307",
+        "68fa886a965356eac47e263a", "68fa88661062ffbb1ba647e0", "68fa8866ae1578ad521d4c3d", "68fa886646aeb14b047b8c9a",
+        "68fa886de739f2eb52c1519d", "68fa886605bb52c764703326", "68fa886625ccf0f66b39eeab", "68fa8866897d930488a5926b",
+        "68fa8866fd92e4fa86cc331a", "68fa886645b8c4cf7f6041bf", "68fa886687613cac751277bc", "68fa8866acd92d4676e48599",
+        "68fa88661d0dcc80e3c9cbfd", "68fa886628fbbd90ec6f2d51", "68fa88662b78fc984a81fca2", "68fa8866c930df063afd1550",
+        "68fa8866cf2009e9bc2a8668", "68fa88664c90c257a5aa7bb2", "68fa88666ea8e1916dfde9d8", "68fa8867714d802bc3f8b191",
+        "68fa8867b6c7f42b76dd06bc", "68fa886771646c53e313210c", "68fa8867bd51a5f112763bc6", "68fa8867f91ec5dd7a9b1e4b",
+        "68fa886797ecb86fc73e6ffb", "68fa8867480df0eb556ca28b", "68fa88672f1c6e4ca9f37088", "68fa88675bd9347202b46d24",
+        "68fa8867308181c24dae084f", "68fa886732e41fa173fb0d43", "68fa8867d3ec3c0a7a9c032c", "68fa8867ded83bd5814e2dac",
+        "68fa88671bd7e56a119c9f36", "68fa8867b1c7323cc6d7ecd9", "68fa886839ab32abbaa7635e", "68fa88686d1e59686b78362b",
+        "68fa8868121820e1e0b5db2c", "68fa8868cd001cf6cb33c1d3", "68fa88685c7157f1ed8da264", "68fa886898c3f04697ff52db",
+        "68fa8868560b1c81e002773e", "68fa8868856ad1d61df77c5e", "68fa88680edf963ea38b950a", "68fa8868586ee629f9e3990c",
+        "68fa88683d4851660c532bae", "68fa8868e7cbe0feb720e22c", "68fa88681260f04fc2d73d31", "68fa88683dc4aeed727b1fc1",
+        "68fa886980c0130cf6df35dd", "68fa88687605343ea85a13e3", "68fa88698986af1829838e84", "68fa8869fe688b394c673aab",
+        "68fa886af91ec5dd7a9b2083", "68fa88694a0c2d19329cda78", "68fa88694eabaae56b847d1a", "68fa8869583bec67e81bc21e",
+        "68fa8869dc01f11c81c6053c", "68fa886980c0130cf6df35fd", "68fa8869fedbfa31d9917dac", "68fa886afc33d7be328b9ddd",
+        "68fa886a956b5d3aafa0ecc1", "68fa886a83c4788236703e64", "68fa886ace86a11ef4fd0e39", "68fa886a895653cb4cc0ed45",
+        "68fa886a409fde0499730d5b", "68fa886a5fe05fcafc23ecee", "68fa886aefea2cf1c387d8da", "68fa886a3c67b4df0e846c2e",
+        "68fa886bded83bd5814e2e78", "68fa886b80554e630f310343", "68fa886b7d259072245095a6", "68fa886b13bc8cf9464705f8",
+        "68fa886b9d1f30952bddf3ac", "68fa886bbaac5fbe166f70e2", "68fa886b7160739d502dc2b9", "68fa886b4aea35091e33f696",
+        "68fa886cbd51a5f112763c8d", "68fa886c79876f063a1258fa", "68fa886c34d7b4adaeaa2c9f", "68fa88798bf9ba36ad25cd1c",
+        "68fa886c1bd7e56a119c9fd2", "68fa886c0e7efb696d57ef14", "68fa886c28fbbd90ec6f2f0e", "68fa886c5b25547aa8ea5199",
+        "68fa886c9083168bb153259c", "68fa886d8986af1829838fdc", "68fa886dae6ace087be13510", "68fa886dc8a065dffe06a5d0",
+        "68fa886d9991755871844c0c", "68fa886d1feabf2f1e87c290", "68fa886d201a6f422c4ceba1", "68fa886d9e84e0fff4f52deb",
+        "68fa886e9e84e0fff4f52e14", "68fa886e1da89caec16e5321", "68fa886e5c7157f1ed8da40c", "68fa886e65ef7e2e4aa722f8",
+        "68fa886e9f776a5723a039f5", "68fa886e1feabf2f1e87c2ca", "68fa886eddf35a9a27a8f100", "68fa886e2b1ad83cba7eff18",
+        "68fa886f05e4df730dd7af56", "68fa886f147c29e210ca330e", "68fa886f0e7efb696d57efb7", "68fa886f7d2590722450967a",
+        "68fa886fded83bd5814e2ef7", "68fa886fb70221ae675322e4", "68fa886f9a88b0c2b55c7fac", "68fa886fd9caa1cea06a0293"
+      ];
+
+      const frameUrls = frameHashList.map((hash, i) => {
+        const num = String(i).padStart(5, '0');
+        return `https://cdn.prod.website-files.com/68b5b8542c5c0a63b1d91b3b/${hash}_soon_${num}.avif`;
+      });
+
+      const totalFrames = frameUrls.length;
+      const images = [];
+      let currentFrame = 0;
+      let targetFrame = 0;
+      let isAnimating = false;
+      const framesPerClick = 30;
+
+      function setCanvasSize() {
+        if (!canvas || !ctx) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function drawFrame(idx) {
+        if (!canvas || !ctx) return;
+        const img = images[idx];
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        const cw = window.innerWidth;
+        const ch = window.innerHeight;
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
+        const scale = Math.max(cw / iw, ch / ih);
+        const x = (cw - iw * scale) / 2;
+        const y = (ch - ih * scale) / 2;
+
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(img, x, y, iw * scale, ih * scale);
+      }
+
+      setCanvasSize();
+      window.addEventListener('resize', () => {
+        setCanvasSize();
+        drawFrame(currentFrame);
+      });
+
+      // Preload initial frames immediately
+      frameUrls.forEach((url, i) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          if (i === 0 && currentFrame === 0) {
+            drawFrame(0);
+          }
+        };
+        images[i] = img;
+      });
+
+      // Smooth frame tweening
+      function animateToFrame(endFrame) {
+        isAnimating = true;
+        growBtn.classList.add('is-disabled');
+        const startFrame = currentFrame;
+        const startTime = performance.now();
+        const duration = 1200; // 1.2s smooth reveal
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const easeProgress = 1 - Math.pow(1 - progress, 3);
+          currentFrame = Math.round(startFrame + (endFrame - startFrame) * easeProgress);
+          drawFrame(currentFrame);
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            currentFrame = endFrame;
+            drawFrame(currentFrame);
+            isAnimating = false;
+            
+            if (currentFrame >= totalFrames - 1) {
+              // Final Growth state reached
+              growBtn.classList.add('is-disabled');
+              if (growBtnText) growBtnText.textContent = 'growth complete';
+              if (description) description.style.display = 'none';
+              if (heading) {
+                heading.style.opacity = '0';
+                setTimeout(() => {
+                  heading.innerHTML = 'Growth complete.<br/>Page coming soon.';
+                  heading.style.opacity = '1';
+                }, 400);
+              }
+            } else {
+              growBtn.classList.remove('is-disabled');
+            }
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      if (growBtn) {
+        growBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (isAnimating || currentFrame >= totalFrames - 1) return;
+          targetFrame = Math.min(currentFrame + framesPerClick, totalFrames - 1);
+          animateToFrame(targetFrame);
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
