@@ -4661,6 +4661,11 @@ img, svg {
   opacity: 0;
 }
 
+.skiper9-preloader.revealing ~ * #tablet-3d-container,
+.skiper9-preloader.done ~ * #tablet-3d-container {
+  opacity: 1;
+}
+
 .skiper9-content {
   position: relative;
   z-index: 10;

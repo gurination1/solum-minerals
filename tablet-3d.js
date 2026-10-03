@@ -176,24 +176,37 @@
     let isEntranceActive = false;
     let entranceDone = false;
 
-    const initialScroll = window.pageYOffset || document.documentElement.scrollTop;
+    function getScrollY() {
+      if (window.lenis && typeof window.lenis.scroll === 'number') {
+        return window.lenis.scroll;
+      }
+      return window.pageYOffset || document.documentElement.scrollTop || 0;
+    }
+
+    const initialScroll = getScrollY();
     if (initialScroll === 0) {
       isEntranceActive = true;
       container.style.opacity = '0';
       container.style.transform = `translate3d(0, ${BASE_START_Y}em, 0)`;
       if (onScrollUpdate) {
-        // Start in the authentic scroll-down pose (tilted forward & banked at the base)
         onScrollUpdate(1.0, 1.0, 0);
       }
+    } else {
+      // If page opened/reloaded already scrolled, show container immediately
+      container.style.opacity = '1';
     }
 
     function playEntrance() {
       if (entranceDone) return;
       entranceDone = true;
 
-      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      // Always guarantee container visibility once entrance is triggered
+      container.style.opacity = '1';
+
+      const currentScroll = getScrollY();
       if (currentScroll > 15) {
         isEntranceActive = false;
+        container.style.transition = 'none';
         handleScroll();
         return;
       }
@@ -245,10 +258,15 @@
       const scrollRange = heroHeight * 0.85;
       if (scrollRange <= 0) return;
 
-      let scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      let scrollY = getScrollY();
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('test_scroll')) {
         scrollY = parseFloat(urlParams.get('test_scroll')) * scrollRange;
+      }
+
+      // Container MUST be visible once preloader finishes or user scrolls
+      if (container.style.opacity !== '1' && (!window.isPreloaderActive || scrollY > 0 || entranceDone)) {
+        container.style.opacity = '1';
       }
 
       // If user scrolls during entrance, abort entrance and take over immediately
@@ -296,8 +314,6 @@
         heroImg.style.transform = `scale(${1.0 + bgScaleT * 0.12})`;
       }
 
-
-
       if (onScrollUpdate) {
         const velocity = progress - lastProgress;
         onScrollUpdate(progress, easeT, velocity);
@@ -306,7 +322,18 @@
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
+
+    function hookLenis() {
+      if (window.lenis && typeof window.lenis.on === 'function') {
+        window.lenis.on('scroll', handleScroll);
+      } else {
+        setTimeout(hookLenis, 50);
+      }
+    }
+    hookLenis();
+
     handleScroll();
   }
 
